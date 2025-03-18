@@ -1,0 +1,530 @@
+/* Importação de fontes */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+/* Estilização geral */
+body {
+    font-family: "Outfit", sans-serif;
+}
+
+.content-wrapper {
+    background-color: #f1f5f9;
+}
+
+/* Inicializar cores */
+:root {
+    --color-bg-orange: #ff6f3c;
+    --color-bg-orange-light: #ffa07a;
+    --color-text-orange: #ff6f3c;
+    --color-hover-orange: #ffa07a;
+
+    --color-bg-orange-3e: #cb5616;
+    --color-text-orange-3e: #cb5616;
+
+    --color-bg-teal: #008080;
+    --color-bg-teal-light: #20b2aa;
+    --color-text-teal: #008080;
+    --color-hover-teal: #20b2aa;
+
+    --color-bg-gray-light: #f5f5f5;
+    --color-bg-gray-dark: #333333;
+    --color-bg-white: #ffffff;
+    --color-text-gray-light: #f5f5f5;
+    --color-text-gray-dark: #333333;
+    --color-text-white: #ffffff;
+
+    --color-bg-success: #28a745;
+    --color-bg-warning: #ffc107;
+    --color-bg-error: #dc3545;
+    --color-text-success: #28a745;
+    --color-text-warning: #ffc107;
+    --color-text-error: #dc3545;
+    --color-hover-success: #2ba367;
+    --color-hover-warning: #ffca2c;
+    --color-hover-error: #c82333;
+
+    --gradient-orange-teal: linear-gradient(
+        90deg,
+        var(--color-bg-orange) 0%,
+        var(--color-bg-teal) 100%
+    );
+}
+
+/* Estilização de navegação */
+
+.nav-link.active {
+    background: linear-gradient(
+        to right,
+        rgba(0, 123, 255, 0.1) 0%,
+        transparent 100%
+    ) !important;
+    color: #fff !important;
+}
+
+h1,
+h3,
+button {
+    font-family: "Outfit", sans-serif;
+}
+
+a {
+    font-family: "Outfit", sans-serif;
+    color: var(--color-text-orange-3e);
+}
+
+a:hover {
+    color: var(--color-text-gray-dark);
+}
+
+#nav-icon,
+#nav-menu,
+#dark-mode-toggle {
+    font-size: 1rem;
+}
+
+/* Alertas */
+.alert-success {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+    text-align: center;
+    position: relative;
+}
+
+.alert .close,
+.alert .mailbox-attachment-close {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.alert-danger {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+    text-align: center;
+    position: relative;
+}
+
+.alert-warning {
+    background-color: #fff3cd !important;
+    color: #856404 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+    text-align: center;
+    position: relative;
+}
+
+.rounded-circle {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilização de rapidas */
+
+/* Estilização de tabelas */
+.table {
+    border: 1px solid #dee2e6;
+}
+
+.table tr th a {
+    color: var(--color-bg-gray-dark);
+    font-size: 15px;
+    font-family: "Outfit", sans-serif !important;
+}
+
+/* Estilização de tooltip */
+.text-danger[title] {
+    cursor: pointer;
+    border-bottom: 1px dotted;
+}
+
+/* Estilização de listas */
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item strong {
+    flex: 1;
+    text-align: left;
+    margin-right: 1rem;
+}
+
+.list-group-item span {
+    flex: 2;
+    text-align: left;
+}
+
+/* Estilização de títulos */
+.breadcrumb {
+    background-color: transparent !important;
+    margin-bottom: -1rem !important;
+}
+
+.page-title {
+    font-family: "Outfit", sans-serif;
+    font-size: 2.5rem;
+    color: #4a4a4a !important;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.card-title {
+    font-family: "Outfit", sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#footer-card-view {
+    padding-bottom: 100px;
+}
+
+hr {
+    border-top: 1px solid #e9ecef;
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+}
+
+/* Estilização de botões */
+
+/* Icones */
+.btn-add:hover {
+    color: var(--color-bg-gray-dark);
+    transition: color 0.2s ease;
+}
+
+.btn-view {
+    background-color: var(--color-bg-teal);
+    color: var(--color-text-white);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view:hover {
+    background-color: var(--color-bg-teal);
+    color: var(--color-text-white);
+}
+
+.btn-edit {
+    background-color: var(--color-bg-orange);
+    color: var(--color-text-white);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: var(--color-bg-orange);
+    color: var(--color-text-white);
+}
+
+.btn-delete {
+    background-color: var(--color-bg-error);
+    color: var(--color-text-white);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: var(--color-bg-error);
+    color: var(--color-text-white);
+}
+
+/* Modais e index */
+.btn {
+    font-family: "Outfit", sans-serif;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
+}
+
+.btn-add:hover {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+}
+
+/* Estilização de Modais (Botoes) */
+.modalAdd,
+.modalEdit,
+.modalView {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modalAdd:hover,
+.modalEdit:hover,
+.modalView:hover {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+}
+
+.modalCancel {
+    background-color: var(--color-bg-gray-dark);
+    color: var(--color-text-white);
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modalCancel:hover {
+    background-color: var(--color-bg-gray-dark);
+    color: var(--color-text-white);
+}
+
+.modalDelete {
+    background-color: var(--color-bg-error);
+    color: var(--color-text-white);
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.modalDelete:hover {
+    background-color: var(--color-hover-error);
+}
+
+/* Outline modal */
+.card-primary.card-outline {
+    border-top: 3px solid var(--color-text-orange-3e);
+    border-bottom: 1px solid var(--color-text-orange-3e);
+    border-radius: 10px;
+}
+
+/* Espaçamento entre os botões */
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Espaçamento entre botões dentro de células */
+
+.table-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* Estilização de inputs */
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.form-control:focus {
+    outline: none !important;
+    border-color: var(--color-bg-orange) !important;
+    box-shadow: none !important;
+}
+
+.item-row {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.item-row .control-label {
+    margin-top: 10px;
+}
+
+.item-row:hover {
+    background-color: #f0f0f0;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Estilização de breadcrumb */
+.bread-crumb-home {
+    color: var(--color-text-orange-3e) !important;
+}
+
+/* Estilização de loader */
+.loader {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gym-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gym-loader .icon {
+    font-size: 2rem;
+    margin: 0 0.5rem;
+    opacity: 0;
+    animation: spin 0.5s linear infinite, fade 1.5s infinite;
+}
+
+.gym-loader .icon:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.gym-loader .icon:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.gym-loader .icon:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.mobile-navbar .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #333;
+}
+
+.mobile-navbar .navbar-brand i {
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.mobile-navbar .navbar-brand span {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.mobile-navbar .navbar-brand:hover i {
+    background-color: #007bff;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        margin-top: -70px !important;
+        padding: 0 !important;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fade {
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50px);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Estilização de navegação */
+    .container-fluid {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .content .mt-4 {
+        margin-top: 5px !important;
+    }
+
+    /* Estilização de card e titulo */
+    .card-title {
+        margin-top: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-navbar {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .mobile-navbar {
+        display: flex;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-dialog-filter {
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin: 0;
+        width: auto;
+        min-height: 500px;
+        max-width: 600px;
+    }
+
+    .modal-content-filter {
+        min-width: 300px;
+        min-height: 500px;
+    }
+
+    .modal-content-filter .form-control {
+        width: 300px !important;
+    }
+}
