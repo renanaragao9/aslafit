@@ -24,6 +24,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/equipamentos', ['controller' => 'Equipments', 'action' => 'index']);
         $routes->connect('/equipamentos/visualizar/:id', ['controller' => 'Equipments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # trainingDivisions
+        $routes->connect('/TrainingDivisions', ['controller' => 'TrainingDivisions', 'action' => 'index']);
+        $routes->connect('/TrainingDivisions/view/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -50,5 +54,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/equipamento-adicionar', ['controller' => 'Equipments', 'action' => 'addEquipments', 'method' => 'POST']);
         $routes->connect('/equipamento-editar/:id', ['controller' => 'Equipments', 'action' => 'editEquipments', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/equipamento-excluir/:id', ['controller' => 'Equipments', 'action' => 'deleteEquipments', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Rotas de divisões de treinamento API
+        $routes->connect('/divisoes-treinamento', ['controller' => 'TrainingDivisions', 'action' => 'fetchTrainingDivisions', 'method' => 'GET']);
+        $routes->connect('/divisao-treinamento/:id', ['controller' => 'TrainingDivisions', 'action' => 'fetchtrainingDivision', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/divisao-treinamento-adicionar', ['controller' => 'TrainingDivisions', 'action' => 'addTrainingDivisions', 'method' => 'POST']);
+        $routes->connect('/divisao-treinamento-editar/:id', ['controller' => 'TrainingDivisions', 'action' => 'editTrainingDivisions', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/divisao-treinamento-excluir/:id', ['controller' => 'TrainingDivisions', 'action' => 'deleteTrainingDivisions', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

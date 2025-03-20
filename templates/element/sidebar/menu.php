@@ -1,5 +1,3 @@
-<!-- Adicione ícones aos links usando a classe .nav-icon
-com font-awesome ou qualquer outra biblioteca de ícones -->
 <?php
 
 use App\Utility\AccessChecker;
@@ -30,8 +28,20 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
   </a>
 </li>
 
-<?php if (hasPermission($loggedUserId, 'Roles/index') || hasPermission($loggedUserId, 'Users/index')): ?>
-  <li class="nav-item has-treeview <?= ($this->request->getParam('controller') === 'Roles' || $this->request->getParam('controller') === 'Users' ? 'menu-open' : '') ?>">
+<?php if (
+  hasPermission($loggedUserId, 'Roles/index') ||
+  hasPermission($loggedUserId, 'Users/index') ||
+  hasPermission($loggedUserId, 'Equipments/index') ||
+  hasPermission($loggedUserId, 'TrainingDivisions/index')
+): ?>
+  <li class="nav-item has-treeview 
+  <?= (
+    $this->request->getParam('controller') === 'Roles' ||
+    $this->request->getParam('controller') === 'Users' ||
+    $this->request->getParam('controller') === 'Equipments' ||
+    $this->request->getParam('controller') === 'TrainingDivisions'
+    ? 'menu-open' : '')
+  ?>">
     <a href="#" class="nav-link <?= $this->request->getParam('controller') === 'Roles' || $this->request->getParam('controller') === 'Users' ? 'active' : '' ?>">
       <i class="nav-icon fas fa-edit"></i>
       <p>
@@ -49,6 +59,18 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
       <?php if (hasPermission($loggedUserId, 'Roles/index')): ?>
         <li class="nav-item">
           <?= generateNavItem('Roles', 'index', 'fa-light fa-circle-notch', 'Perfis', $this->request, $this->Html) ?>
+        </li>
+      <?php endif; ?>
+
+      <?php if (hasPermission($loggedUserId, 'Equipments/index')): ?>
+        <li class="nav-item">
+          <?= generateNavItem('Equipments', 'index', 'fa-light fa-circle-notch', 'Equipamentos', $this->request, $this->Html) ?>
+        </li>
+      <?php endif; ?>
+
+      <?php if (hasPermission($loggedUserId, 'TrainingDivisions/index')): ?>
+        <li class="nav-item">
+          <?= generateNavItem('TrainingDivisions', 'index', 'fa-light fa-circle-notch', 'Divisões de Treino', $this->request, $this->Html) ?>
         </li>
       <?php endif; ?>
     </ul>
