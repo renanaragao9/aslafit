@@ -9,18 +9,22 @@ return function (RouteBuilder $routes): void {
 
     $routes->scope('/', function (RouteBuilder $routes) {
 
-        # Authenticated routes
+        # Rotas autenticadas
         $routes->connect('/login', ['controller' => 'Auth', 'action' => 'login']);
         $routes->connect('/logout', ['controller' => 'Auth', 'action' => 'logout']);
         $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
         $routes->connect('/reset-password', ['controller' => 'Auth', 'action' => 'resetPassword']);
         $routes->connect('/change-password/*', ['controller' => 'Auth', 'action' => 'changePassword']);
 
-        # Users routes
-        $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
-        $routes->connect('/user/visualizar/:id', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        # Rotas de usuários
+        $routes->connect('/usuarios', ['controller' => 'Users', 'action' => 'index']);
+        $routes->connect('/usuario/visualizar/:id', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
-        # Fallback route
+        # Rotas de equipamentos
+        $routes->connect('/equipamentos', ['controller' => 'Equipments', 'action' => 'index']);
+        $routes->connect('/equipamentos/visualizar/:id', ['controller' => 'Equipments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
 
@@ -33,11 +37,18 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/auth/logout', ['controller' => 'Auth', 'action' => 'logout']);
         $routes->fallbacks(DashedRoute::class);
 
-        # users routes API
-        $routes->connect('/users', ['controller' => 'Users', 'action' => 'fetchUsers', 'method' => 'GET']);
-        $routes->connect('/user/:id', ['controller' => 'Users', 'action' => 'fetchUser', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/user-add', ['controller' => 'Users', 'action' => 'addUser', 'method' => 'POST']);
-        $routes->connect('/user-edit/:id', ['controller' => 'Users', 'action' => 'editUser', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/user-delete/:id', ['controller' => 'Users', 'action' => 'deleteUser', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+        # Rotas de usuários API
+        $routes->connect('/usuarios', ['controller' => 'Users', 'action' => 'fetchUsers', 'method' => 'GET']);
+        $routes->connect('/usuario/:id', ['controller' => 'Users', 'action' => 'fetchUser', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/usuario-adicionar', ['controller' => 'Users', 'action' => 'addUser', 'method' => 'POST']);
+        $routes->connect('/usuario-editar/:id', ['controller' => 'Users', 'action' => 'editUser', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/usuario-excluir/:id', ['controller' => 'Users', 'action' => 'deleteUser', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Rotas de equipamentos API
+        $routes->connect('/equipamentos', ['controller' => 'Equipments', 'action' => 'fetchEquipments', 'method' => 'GET']);
+        $routes->connect('/equipamento/:id', ['controller' => 'Equipments', 'action' => 'fetchequipment', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/equipamento-adicionar', ['controller' => 'Equipments', 'action' => 'addEquipments', 'method' => 'POST']);
+        $routes->connect('/equipamento-editar/:id', ['controller' => 'Equipments', 'action' => 'editEquipments', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/equipamento-excluir/:id', ['controller' => 'Equipments', 'action' => 'deleteEquipments', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };
