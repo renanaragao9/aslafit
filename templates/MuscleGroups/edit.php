@@ -11,37 +11,49 @@
             </div>
             <div class="modal-body">
                 <?= $this->Form->create($muscleGroup, ['url' => ['action' => 'edit', $muscleGroup->id], 'id' => 'editForm-' . $muscleGroup->id]) ?>
-                    <div class="row">
-                                                                                    <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('name', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('active', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                                            </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
-                        <?= $this->Form->button(
-                            __('Editar'),
-                            [
-                                'class' => 'btn modalEdit',
-                                'id' => 'editSaveButton' . $muscleGroup->id,
-                            ]) 
-                        ?>
+                <div class="row">
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'name',
+                                [
+                                    'class' => 'form-control',
+                                    'label' => __('Nome'),
+                                    'required' => true
+                                ]
+                            )
+                            ?>
+                        </div>
                     </div>
-                <?= $this->Form->end() ?>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'active',
+                                [
+                                    'type' => 'checkbox',
+                                    'label' => __('Ativo'),
+                                    'class' => 'form-check-input'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
+                <?= $this->Form->button(
+                    __('Editar'),
+                    [
+                        'class' => 'btn modalEdit',
+                        'id' => 'editSaveButton' . $muscleGroup->id,
+                    ]
+                )
+                ?>
+            </div>
+            <?= $this->Form->end() ?>
         </div>
     </div>
+</div>
 </div>

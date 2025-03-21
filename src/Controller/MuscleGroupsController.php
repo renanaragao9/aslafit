@@ -67,7 +67,7 @@ class MuscleGroupsController extends AppController
         }
 
         $muscleGroup = $this->MuscleGroups->get($id, [
-            'contain' => ['Exercises'],
+            'contain' => ['Exercises.Equipments'],
         ]);
 
         $this->set(compact('muscleGroup'));
@@ -86,10 +86,10 @@ class MuscleGroupsController extends AppController
             $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
 
             if ($this->MuscleGroups->save($muscleGroup)) {
-                $this->Flash->success(__('O muscle group foi salvo com sucesso.'));
+                $this->Flash->success(__('Grupo muscular salvo com sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('O muscle group não pode ser salvo. Por favor, tente novamente.'));
+                $this->Flash->error(__('Grupo muscular não pode ser salvo. Por favor, tente novamente.'));
                 return $this->redirect(['action' => 'index']);
             }
         }
@@ -113,11 +113,11 @@ class MuscleGroupsController extends AppController
             $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
 
             if ($this->MuscleGroups->save($muscleGroup)) {
-                $this->Flash->success(__('O muscle group foi editado com sucesso.'));
-                $this->log('O muscle group foi editado com sucesso.', 'info');
+                $this->Flash->success(__('Grupo muscular editado com sucesso.'));
+                $this->log('Grupo muscular editado com sucesso.', 'info');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('O muscle group não pode ser editado. Por favor, tente novamente.'));
+                $this->Flash->error(__('Grupo muscular não pode ser editado. Por favor, tente novamente.'));
                 return $this->redirect(['action' => 'index']);
             }
         }
@@ -137,10 +137,10 @@ class MuscleGroupsController extends AppController
         $muscleGroup = $this->MuscleGroups->get($id);
 
         if ($this->MuscleGroups->delete($muscleGroup)) {
-            $this->log('O muscle group foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('O muscle group foi deletado com sucesso..'));
+            $this->log('Grupo muscular deletado com sucesso.', 'info');
+            $this->Flash->success(__('Grupo muscular deletado com sucesso.'));
         } else {
-            $this->Flash->error(__('O muscle group não pode ser deletado. Por favor, tente novamente.'));
+            $this->Flash->error(__('Grupo muscular não pode ser deletado. Por favor, tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -157,20 +157,20 @@ class MuscleGroupsController extends AppController
         ]);
 
         $csvData = [];
-        $header = ['id', 'name', 'active', 'created', 'modified'];
+        $header = ['ID', 'Nome', 'Ativo', 'Criado', 'Modificado'];
         $csvData[] = $header;
 
         foreach ($muscleGroups as $MuscleGroups) {
             $csvData[] = [
                 $MuscleGroups->id,
                 $MuscleGroups->name,
-                $MuscleGroups->active,
+                $MuscleGroups->active ? 'Sim' : 'Não',
                 $MuscleGroups->created,
                 $MuscleGroups->modified
             ];
         }
 
-        $filename = 'muscleGroups_' . date('Y-m-d_H-i-s') . '.csv';
+        $filename = 'grupo_muscular' . date('Y-m-d_H-i-s') . '.csv';
         $filePath = TMP . $filename;
 
         $file = fopen($filePath, 'w');
@@ -186,164 +186,4 @@ class MuscleGroupsController extends AppController
 
         return $response;
     }
-
-    /*
-        # Controller API Template
-        # Path: src/Controllers/API/MuscleGroupsController.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-        # Não esqueça de adicionar as rotas no arquivo src/Config/routes.php
-        # Para acessar a API, utilize a URL: http://localhost:8765/api/muscleGroups
-    */
-
-    /*
-        <?php
-
-        namespace App\Controller\Api;
-
-        use App\Controller\AppController;
-        use Cake\Http\Response;
-
-        class MuscleGroupsController extends AppController
-        {
-            public function fetchMuscleGroups(): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->MuscleGroups->find('all')->toArray();
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function fetchmuscleGroup($id): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->MuscleGroups->get($id);
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function addMuscleGroups(): Response
-            {
-                $this->request->allowMethod(['post']);
-
-                $muscleGroup = $this->MuscleGroups->newEmptyEntity();
-                $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
-
-                if ($this->MuscleGroups->save($muscleGroup)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $muscleGroup
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to add muscle group'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function editMuscleGroups($id): Response
-            {
-                $this->request->allowMethod(['put', 'patch']);
-
-                $muscleGroup = $this->MuscleGroups->get($id);
-                $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
-
-                if ($this->MuscleGroups->save($muscleGroup)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $muscleGroup
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to update muscle group'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function deleteMuscleGroups($id): Response
-            {
-                $this->request->allowMethod(['delete']);
-
-                $muscleGroup = $this->MuscleGroups->get($id);
-
-                if ($this->MuscleGroups->delete($muscleGroup)) {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'muscle group deleted successfully'
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to delete muscle group'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-        }
-    */
-
-    /*
-        # Rotas API Template
-        # Path: src/Config/routes.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-    */
-
-    /*
-        # MuscleGroups routes template prefix API   
-
-        # MuscleGroups routes API
-        $routes->connect('/MuscleGroups', ['controller' => 'MuscleGroups', 'action' => 'fetchMuscleGroups', 'method' => 'GET']);
-        $routes->connect('/MuscleGroups/:id', ['controller' => 'MuscleGroups', 'action' => 'fetchmuscleGroup', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/MuscleGroups-add', ['controller' => 'MuscleGroups', 'action' => 'addMuscleGroups', 'method' => 'POST']);
-        $routes->connect('/MuscleGroups-edit/:id', ['controller' => 'MuscleGroups', 'action' => 'editMuscleGroups', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/MuscleGroups-delete/:id', ['controller' => 'MuscleGroups', 'action' => 'deleteMuscleGroups', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
-    */
-
-    /*
-        # muscleGroups routes simple template prefix /
-        
-        # muscleGroups routes
-        $routes->connect('/MuscleGroups', ['controller' => 'MuscleGroups', 'action' => 'index']);
-        $routes->connect('/MuscleGroups/view/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
-    */
 }

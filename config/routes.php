@@ -28,6 +28,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/TrainingDivisions', ['controller' => 'TrainingDivisions', 'action' => 'index']);
         $routes->connect('/TrainingDivisions/view/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # muscleGroups
+        $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'index']);
+        $routes->connect('/grupo-muscular/view/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -61,5 +65,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/divisao-treinamento-adicionar', ['controller' => 'TrainingDivisions', 'action' => 'addTrainingDivisions', 'method' => 'POST']);
         $routes->connect('/divisao-treinamento-editar/:id', ['controller' => 'TrainingDivisions', 'action' => 'editTrainingDivisions', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/divisao-treinamento-excluir/:id', ['controller' => 'TrainingDivisions', 'action' => 'deleteTrainingDivisions', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # MuscleGroups routes API
+        $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'fetchMuscleGroups', 'method' => 'GET']);
+        $routes->connect('/grupo-muscular/:id', ['controller' => 'MuscleGroups', 'action' => 'fetchmuscleGroup', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/grupo-muscular-add', ['controller' => 'MuscleGroups', 'action' => 'addMuscleGroups', 'method' => 'POST']);
+        $routes->connect('/grupo-muscular-edit/:id', ['controller' => 'MuscleGroups', 'action' => 'editMuscleGroups', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/grupo-muscular-delete/:id', ['controller' => 'MuscleGroups', 'action' => 'deleteMuscleGroups', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };
