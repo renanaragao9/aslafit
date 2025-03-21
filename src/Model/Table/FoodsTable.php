@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -69,8 +70,7 @@ class FoodsTable extends Table
         $validator
             ->scalar('link')
             ->maxLength('link', 555)
-            ->requirePresence('link', 'create')
-            ->notEmptyString('link');
+            ->allowEmptyString('link');
 
         $validator
             ->boolean('active')

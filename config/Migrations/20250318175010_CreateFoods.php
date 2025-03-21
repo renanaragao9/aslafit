@@ -24,7 +24,7 @@ class CreateFoods extends AbstractMigration
         $table->addColumn('link', 'string', [
             'default' => null,
             'limit' => 555,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('active', 'boolean', [
             'default' => true,

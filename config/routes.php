@@ -32,6 +32,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'index']);
         $routes->connect('/grupo-muscular/visualizar/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # foods routes
+        $routes->connect('/alimentos', ['controller' => 'Foods', 'action' => 'index']);
+        $routes->connect('/alimento/view/:id', ['controller' => 'Foods', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -69,8 +73,15 @@ return function (RouteBuilder $routes): void {
         # MuscleGroups routes API
         $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'fetchMuscleGroups', 'method' => 'GET']);
         $routes->connect('/grupo-muscular/:id', ['controller' => 'MuscleGroups', 'action' => 'fetchmuscleGroup', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/grupo-muscular-add', ['controller' => 'MuscleGroups', 'action' => 'addMuscleGroups', 'method' => 'POST']);
-        $routes->connect('/grupo-muscular-edit/:id', ['controller' => 'MuscleGroups', 'action' => 'editMuscleGroups', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/grupo-muscular-delete/:id', ['controller' => 'MuscleGroups', 'action' => 'deleteMuscleGroups', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/grupo-muscular-adicionar', ['controller' => 'MuscleGroups', 'action' => 'addMuscleGroups', 'method' => 'POST']);
+        $routes->connect('/grupo-muscular-editar/:id', ['controller' => 'MuscleGroups', 'action' => 'editMuscleGroups', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/grupo-muscular-excluir/:id', ['controller' => 'MuscleGroups', 'action' => 'deleteMuscleGroups', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Foods routes API
+        $routes->connect('/alimentos', ['controller' => 'Foods', 'action' => 'fetchFoods', 'method' => 'GET']);
+        $routes->connect('/alimento/:id', ['controller' => 'Foods', 'action' => 'fetchfood', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/alimento-adicionar', ['controller' => 'Foods', 'action' => 'addFoods', 'method' => 'POST']);
+        $routes->connect('/alimento-editar/:id', ['controller' => 'Foods', 'action' => 'editFoods', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/alimento-excluir/:id', ['controller' => 'Foods', 'action' => 'deleteFoods', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

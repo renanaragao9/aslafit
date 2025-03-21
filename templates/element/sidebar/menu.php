@@ -33,7 +33,8 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
   hasPermission($loggedUserId, 'Users/index') ||
   hasPermission($loggedUserId, 'Equipments/index') ||
   hasPermission($loggedUserId, 'TrainingDivisions/index') ||
-  hasPermission($loggedUserId, 'MuscleGroups/index')
+  hasPermission($loggedUserId, 'MuscleGroups/index') ||
+  hasPermission($loggedUserId, 'Foods/index')
 ): ?>
   <li class="nav-item has-treeview 
   <?= (
@@ -41,7 +42,8 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
     $this->request->getParam('controller') === 'Users' ||
     $this->request->getParam('controller') === 'Equipments' ||
     $this->request->getParam('controller') === 'TrainingDivisions' ||
-    $this->request->getParam('controller') === 'MuscleGroups'
+    $this->request->getParam('controller') === 'MuscleGroups' ||
+    $this->request->getParam('controller') === 'Foods'
     ? 'menu-open' : '')
   ?>">
     <a href="#" class="nav-link <?= $this->request->getParam('controller') === 'Roles' || $this->request->getParam('controller') === 'Users' ? 'active' : '' ?>">
@@ -79,6 +81,12 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
       <?php if (hasPermission($loggedUserId, 'MuscleGroups/index')): ?>
         <li class="nav-item">
           <?= generateNavItem('MuscleGroups', 'index', 'fa-light fa-circle-notch', 'Grupos Musculares', $this->request, $this->Html) ?>
+        </li>
+      <?php endif; ?>
+
+      <?php if (hasPermission($loggedUserId, 'Foods/index')): ?>
+        <li class="nav-item">
+          <?= generateNavItem('Foods', 'index', 'fa-light fa-circle-notch', 'Alimentos', $this->request, $this->Html) ?>
         </li>
       <?php endif; ?>
     </ul>

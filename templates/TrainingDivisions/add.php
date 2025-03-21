@@ -18,7 +18,8 @@
                                 'name',
                                 [
                                     'class' => 'form-control',
-                                    'label' => __('Nome')
+                                    'label' => __('Nome'),
+                                    'required' => true
                                 ]
                             )
                             ?>
