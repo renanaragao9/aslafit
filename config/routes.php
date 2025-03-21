@@ -26,11 +26,11 @@ return function (RouteBuilder $routes): void {
 
         # trainingDivisions
         $routes->connect('/TrainingDivisions', ['controller' => 'TrainingDivisions', 'action' => 'index']);
-        $routes->connect('/TrainingDivisions/view/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/TrainingDivisions/visualizar/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
         # muscleGroups
         $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'index']);
-        $routes->connect('/grupo-muscular/view/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/grupo-muscular/visualizar/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);

@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo');
+$this->assign('title', 'Equipamentos');
 ?>
 
 <div class="content mt-4">
@@ -62,10 +62,6 @@ $this->assign('title', 'Titulo');
                                 <i class="fa-regular fa-file-csv"></i>
                                 Exportar
                             </a>
-                            <button type="button" class="btn btn-filter btn-sm mb-2 mb-md-0 col-12 col-md-auto" data-toggle="modal" data-target="#filterModal">
-                                <i class="fa-regular fa-filter-list"></i>
-                                Filtrar
-                            </button>
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0">
@@ -162,51 +158,6 @@ $this->assign('title', 'Titulo');
 <?php
 include __DIR__ . '/add.php';
 ?>
-
-<!-- Modal de Filtro -->
-<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-dialog-filter" role="document">
-        <div class="modal-content modal-content-filter">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">
-                    Filtrar Equipments
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="filterForm" class="form-inline w-100" method="get"
-                    action="<?= $this->Url->build(['action' => 'index']) ?>">
-                    <div class="form-row w-100">
-                        <div class="form-group col-12">
-                            <!-- Adicione aqui os input para o filtro -->
-                            <?= $this->Form->control(
-                                'id',
-                                [
-                                    'type' => 'select',
-                                    'options' => null,
-                                    'empty' => 'Selecione uma opção',
-                                    'label' => false,
-                                    'class' => 'form-control w-100'
-                                ]
-                            )
-                            ?>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button class="btn modalView" type="submit" form="filterForm">
-                    Filtrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     var searchUrl = '<?= $this->Url->build(['action' => 'index']) ?>';

@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\MuscleGroups\AddService;
+use App\Service\MuscleGroups\ViewService;
+use App\Service\MuscleGroups\EditService;
+use App\Service\MuscleGroups\DeleteService;
+use App\Service\MuscleGroups\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
 class MuscleGroupsController extends AppController
 {
-
     private $identity;
 
     public function initialize(): void
@@ -56,8 +60,7 @@ class MuscleGroupsController extends AppController
 
         $muscleGroups = $this->paginate($query);
 
-
-        $this->set(compact('muscleGroups',));
+        $this->set(compact('muscleGroups'));
     }
 
     public function view($id = null)
@@ -66,9 +69,10 @@ class MuscleGroupsController extends AppController
             return;
         }
 
-        $muscleGroup = $this->MuscleGroups->get($id, [
-            'contain' => ['Exercises.Equipments'],
-        ]);
+        $id = (int)$id;
+
+        $service = new ViewService($this->MuscleGroups);
+        $muscleGroup = $service->run($id);
 
         $this->set(compact('muscleGroup'));
     }
@@ -79,22 +83,16 @@ class MuscleGroupsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $muscleGroup = $this->MuscleGroups->newEmptyEntity();
+        $service = new AddService($this->MuscleGroups);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
-
-            if ($this->MuscleGroups->save($muscleGroup)) {
-                $this->Flash->success(__('Grupo muscular salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Grupo muscular não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('muscleGroup'));
+        $this->set('muscleGroup', $service->getNewEntity());
         return null;
     }
 
@@ -104,25 +102,16 @@ class MuscleGroupsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $muscleGroup = $this->MuscleGroups->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->MuscleGroups);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $muscleGroup = $this->MuscleGroups->patchEntity($muscleGroup, $this->request->getData());
-
-            if ($this->MuscleGroups->save($muscleGroup)) {
-                $this->Flash->success(__('Grupo muscular editado com sucesso.'));
-                $this->log('Grupo muscular editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Grupo muscular não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('muscleGroup'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
@@ -132,17 +121,10 @@ class MuscleGroupsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->MuscleGroups);
+        $result = $service->run($id);
 
-        $muscleGroup = $this->MuscleGroups->get($id);
-
-        if ($this->MuscleGroups->delete($muscleGroup)) {
-            $this->log('Grupo muscular deletado com sucesso.', 'info');
-            $this->Flash->success(__('Grupo muscular deletado com sucesso.'));
-        } else {
-            $this->Flash->error(__('Grupo muscular não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -152,38 +134,7 @@ class MuscleGroupsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $muscleGroups = $this->MuscleGroups->find('all', [
-            'contain' => ['Exercises'],
-        ]);
-
-        $csvData = [];
-        $header = ['ID', 'Nome', 'Ativo', 'Criado', 'Modificado'];
-        $csvData[] = $header;
-
-        foreach ($muscleGroups as $MuscleGroups) {
-            $csvData[] = [
-                $MuscleGroups->id,
-                $MuscleGroups->name,
-                $MuscleGroups->active ? 'Sim' : 'Não',
-                $MuscleGroups->created,
-                $MuscleGroups->modified
-            ];
-        }
-
-        $filename = 'grupo_muscular' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->MuscleGroups);
+        return $service->run();
     }
 }

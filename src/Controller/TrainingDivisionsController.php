@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\TrainingDivisions\AddService;
+use App\Service\TrainingDivisions\ViewService;
+use App\Service\TrainingDivisions\EditService;
+use App\Service\TrainingDivisions\DeleteService;
+use App\Service\TrainingDivisions\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
@@ -55,7 +60,7 @@ class TrainingDivisionsController extends AppController
 
         $trainingDivisions = $this->paginate($query);
 
-        $this->set(compact('trainingDivisions',));
+        $this->set(compact('trainingDivisions'));
     }
 
     public function view($id = null)
@@ -64,9 +69,9 @@ class TrainingDivisionsController extends AppController
             return;
         }
 
-        $trainingDivision = $this->TrainingDivisions->get($id, [
-            'contain' => ['ExerciseTrainingDivision'],
-        ]);
+        $service = new ViewService($this->TrainingDivisions);
+        $id = (int)$id;
+        $trainingDivision = $service->run($id);
 
         $this->set(compact('trainingDivision'));
     }
@@ -77,22 +82,16 @@ class TrainingDivisionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $trainingDivision = $this->TrainingDivisions->newEmptyEntity();
+        $service = new AddService($this->TrainingDivisions);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $trainingDivision = $this->TrainingDivisions->patchEntity($trainingDivision, $this->request->getData());
-
-            if ($this->TrainingDivisions->save($trainingDivision)) {
-                $this->Flash->success(__('Divisão de treino foi salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Divisão de treino não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('trainingDivision'));
+        $this->set('trainingDivision', $service->getNewEntity());
         return null;
     }
 
@@ -102,25 +101,16 @@ class TrainingDivisionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $trainingDivision = $this->TrainingDivisions->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->TrainingDivisions);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $trainingDivision = $this->TrainingDivisions->patchEntity($trainingDivision, $this->request->getData());
-
-            if ($this->TrainingDivisions->save($trainingDivision)) {
-                $this->Flash->success(__('Divisão de treino editado com sucesso.'));
-                $this->log('Divisão de treino editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Divisão de treino não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('trainingDivision'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
@@ -130,17 +120,10 @@ class TrainingDivisionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->TrainingDivisions);
+        $result = $service->run($id);
 
-        $trainingDivision = $this->TrainingDivisions->get($id);
-
-        if ($this->TrainingDivisions->delete($trainingDivision)) {
-            $this->log('Divisão de treino foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('Divisão de treino foi deletado com sucesso..'));
-        } else {
-            $this->Flash->error(__('Divisão de treino não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -150,38 +133,7 @@ class TrainingDivisionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $trainingDivisions = $this->TrainingDivisions->find('all', [
-            'contain' => ['ExerciseTrainingDivision'],
-        ]);
-
-        $csvData = [];
-        $header = ['id', 'name', 'active', 'created', 'modified'];
-        $csvData[] = $header;
-
-        foreach ($trainingDivisions as $TrainingDivisions) {
-            $csvData[] = [
-                $TrainingDivisions->id,
-                $TrainingDivisions->name,
-                $TrainingDivisions->active,
-                $TrainingDivisions->created,
-                $TrainingDivisions->modified
-            ];
-        }
-
-        $filename = 'trainingDivisions_' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->TrainingDivisions);
+        return $service->run();
     }
 }

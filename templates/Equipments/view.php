@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo');
+$this->assign('title', 'Visualizar equipamento');
 ?>
 <section class="content mt-4">
     <div class="container-fluid">

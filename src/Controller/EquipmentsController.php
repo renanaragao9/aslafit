@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\Equipments\AddService;
+use App\Service\Equipments\ViewService;
+use App\Service\Equipments\EditService;
+use App\Service\Equipments\DeleteService;
+use App\Service\Equipments\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
@@ -29,7 +34,7 @@ class EquipmentsController extends AppController
 
     public function index(): void
     {
-        if (!$this->checkPermission('Equipments/index')) {
+        if (!$this->checkPermission('equipments/index')) {
             return;
         }
 
@@ -55,134 +60,80 @@ class EquipmentsController extends AppController
 
         $equipments = $this->paginate($query);
 
-
-        $this->set(compact('equipments',));
+        $this->set(compact('equipments'));
     }
 
     public function view($id = null)
     {
-        if (!$this->checkPermission('Equipments/index')) {
+        if (!$this->checkPermission('equipments/index')) {
             return;
         }
 
-        $equipment = $this->Equipments->get($id, [
-            'contain' => ['Exercises.MuscleGroups'],
-        ]);
+        $id = (int)$id;
+        $service = new ViewService($this->Equipments);
+        $equipment = $service->run($id);
 
         $this->set(compact('equipment'));
     }
 
     public function add(): ?Response
     {
-        if (!$this->checkPermission('Equipments/add')) {
+        if (!$this->checkPermission('equipments/add')) {
             return $this->redirect(['action' => 'index']);
         }
 
-        $equipment = $this->Equipments->newEmptyEntity();
+        $service = new AddService($this->Equipments);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $equipment = $this->Equipments->patchEntity($equipment, $this->request->getData());
-
-            if ($this->Equipments->save($equipment)) {
-                $this->Flash->success(__('O equipamento foi salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O equipamento não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('equipment'));
+        $this->set('equipment', $service->getNewEntity());
         return null;
     }
 
     public function edit(?int $id = null): ?Response
     {
-        if (!$this->checkPermission('Equipments/edit')) {
+        if (!$this->checkPermission('equipments/edit')) {
             return $this->redirect(['action' => 'index']);
         }
 
-        $equipment = $this->Equipments->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->Equipments);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $equipment = $this->Equipments->patchEntity($equipment, $this->request->getData());
-
-            if ($this->Equipments->save($equipment)) {
-                $this->Flash->success(__('O equipamento foi editado com sucesso.'));
-                $this->log('O equipamento foi editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O equipamento não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('equipment'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
     public function delete(?int $id = null): Response
     {
-        if (!$this->checkPermission('Equipments/delete')) {
+        if (!$this->checkPermission('equipments/delete')) {
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->Equipments);
+        $result = $service->run($id);
 
-        $equipment = $this->Equipments->get($id);
-
-        if ($this->Equipments->delete($equipment)) {
-            $this->log('O equipamento foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('O equipamento foi deletado com sucesso.'));
-        } else {
-            $this->Flash->error(__('O equipamento não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
     public function export(): Response
     {
-        if (!$this->checkPermission('Equipments/index')) {
+        if (!$this->checkPermission('equipments/index')) {
             return $this->redirect(['action' => 'index']);
         }
 
-        $equipments = $this->Equipments->find('all', [
-            'contain' => ['Exercises'],
-        ]);
-
-        $csvData = [];
-        $header = ['id', 'name', 'active', 'created', 'modified'];
-        $csvData[] = $header;
-
-        foreach ($equipments as $Equipments) {
-            $csvData[] = [
-                $Equipments->id,
-                $Equipments->name,
-                $Equipments->active,
-                $Equipments->created,
-                $Equipments->modified
-            ];
-        }
-
-        $filename = 'equipamentos' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->Equipments);
+        return $service->run();
     }
 }

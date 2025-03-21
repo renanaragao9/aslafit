@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo');
+$this->assign('title', 'Divisões de treino');
 ?>
 
 <div class="content mt-4">
@@ -62,10 +62,6 @@ $this->assign('title', 'Titulo');
                                 <i class="fa-regular fa-file-csv"></i>
                                 Exportar
                             </a>
-                            <button type="button" class="btn btn-filter btn-sm mb-2 mb-md-0 col-12 col-md-auto" data-toggle="modal" data-target="#filterModal">
-                                <i class="fa-regular fa-filter-list"></i>
-                                Filtrar
-                            </button>
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0">
@@ -156,7 +152,6 @@ $this->assign('title', 'Titulo');
 
 <?php
 include __DIR__ . '/add.php';
-include __DIR__ . '/filter.php';
 ?>
 
 <script>
