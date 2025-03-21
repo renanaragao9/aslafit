@@ -28,8 +28,8 @@ class ExportService
                 $food->name,
                 $food->link,
                 $food->active ? 'Sim' : 'Não',
-                $food->created->format('Y-m-d H:i:s'),
-                $food->modified->format('Y-m-d H:i:s')
+                $food->created->format('d/m/Y H:i:s'),
+                $food->modified->format('d/m/Y H:i:s')
             );
         }
 

@@ -34,7 +34,11 @@ return function (RouteBuilder $routes): void {
 
         # foods routes
         $routes->connect('/alimentos', ['controller' => 'Foods', 'action' => 'index']);
-        $routes->connect('/alimento/view/:id', ['controller' => 'Foods', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/alimento/visualizar/:id', ['controller' => 'Foods', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # itemTypes routes
+        $routes->connect('/tipo-item', ['controller' => 'ItemTypes', 'action' => 'index']);
+        $routes->connect('/tipo-item/visualizar/:id', ['controller' => 'ItemTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
@@ -83,5 +87,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/alimento-adicionar', ['controller' => 'Foods', 'action' => 'addFoods', 'method' => 'POST']);
         $routes->connect('/alimento-editar/:id', ['controller' => 'Foods', 'action' => 'editFoods', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/alimento-excluir/:id', ['controller' => 'Foods', 'action' => 'deleteFoods', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # ItemTypes routes API
+        $routes->connect('/tipo-item', ['controller' => 'ItemTypes', 'action' => 'fetchItemTypes', 'method' => 'GET']);
+        $routes->connect('/tipo-item/:id', ['controller' => 'ItemTypes', 'action' => 'fetchitemType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-item-adicionar', ['controller' => 'ItemTypes', 'action' => 'addItemTypes', 'method' => 'POST']);
+        $routes->connect('/tipo-item-editar/:id', ['controller' => 'ItemTypes', 'action' => 'editItemTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-item-excluir/:id', ['controller' => 'ItemTypes', 'action' => 'deleteItemTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

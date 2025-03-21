@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\ItemTypes\AddService;
+use App\Service\ItemTypes\ViewService;
+use App\Service\ItemTypes\EditService;
+use App\Service\ItemTypes\DeleteService;
+use App\Service\ItemTypes\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
 class ItemTypesController extends AppController
 {
-
     private $identity;
 
     public function initialize(): void
@@ -57,8 +61,7 @@ class ItemTypesController extends AppController
 
         $itemTypes = $this->paginate($query);
 
-
-        $this->set(compact('itemTypes',));
+        $this->set(compact('itemTypes'));
     }
 
     public function view($id = null)
@@ -67,9 +70,10 @@ class ItemTypesController extends AppController
             return;
         }
 
-        $itemType = $this->ItemTypes->get($id, [
-            'contain' => ['Items', 'ItemsFields'],
-        ]);
+        $id = (int)$id;
+
+        $service = new ViewService($this->ItemTypes);
+        $itemType = $service->run($id);
 
         $this->set(compact('itemType'));
     }
@@ -80,22 +84,16 @@ class ItemTypesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $itemType = $this->ItemTypes->newEmptyEntity();
+        $service = new AddService($this->ItemTypes);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $itemType = $this->ItemTypes->patchEntity($itemType, $this->request->getData());
-
-            if ($this->ItemTypes->save($itemType)) {
-                $this->Flash->success(__('O item type foi salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O item type não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('itemType'));
+        $this->set('itemType', $service->getNewEntity());
         return null;
     }
 
@@ -105,25 +103,16 @@ class ItemTypesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $itemType = $this->ItemTypes->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->ItemTypes);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $itemType = $this->ItemTypes->patchEntity($itemType, $this->request->getData());
-
-            if ($this->ItemTypes->save($itemType)) {
-                $this->Flash->success(__('O item type foi editado com sucesso.'));
-                $this->log('O item type foi editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O item type não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('itemType'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
@@ -133,17 +122,10 @@ class ItemTypesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->ItemTypes);
+        $result = $service->run($id);
 
-        $itemType = $this->ItemTypes->get($id);
-
-        if ($this->ItemTypes->delete($itemType)) {
-            $this->log('O item type foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('O item type foi deletado com sucesso..'));
-        } else {
-            $this->Flash->error(__('O item type não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -153,199 +135,7 @@ class ItemTypesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $itemTypes = $this->ItemTypes->find('all', [
-            'contain' => ['Items', 'ItemsFields'],
-        ]);
-
-        $csvData = [];
-        $header = ['id', 'name', 'description', 'active', 'created', 'modified'];
-        $csvData[] = $header;
-
-        foreach ($itemTypes as $ItemTypes) {
-            $csvData[] = [
-                $ItemTypes->id,
-                $ItemTypes->name,
-                $ItemTypes->description,
-                $ItemTypes->active,
-                $ItemTypes->created,
-                $ItemTypes->modified
-            ];
-        }
-
-        $filename = 'itemTypes_' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->ItemTypes);
+        return $service->run();
     }
-
-    /*
-        # Controller API Template
-        # Path: src/Controllers/API/ItemTypesController.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-        # Não esqueça de adicionar as rotas no arquivo src/Config/routes.php
-        # Para acessar a API, utilize a URL: http://localhost:8765/api/itemTypes
-    */
-
-    /*
-        <?php
-
-        namespace App\Controller\Api;
-
-        use App\Controller\AppController;
-        use Cake\Http\Response;
-
-        class ItemTypesController extends AppController
-        {
-            public function fetchItemTypes(): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->ItemTypes->find('all')->toArray();
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function fetchitemType($id): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->ItemTypes->get($id);
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function addItemTypes(): Response
-            {
-                $this->request->allowMethod(['post']);
-
-                $itemType = $this->ItemTypes->newEmptyEntity();
-                $itemType = $this->ItemTypes->patchEntity($itemType, $this->request->getData());
-
-                if ($this->ItemTypes->save($itemType)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $itemType
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to add item type'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function editItemTypes($id): Response
-            {
-                $this->request->allowMethod(['put', 'patch']);
-
-                $itemType = $this->ItemTypes->get($id);
-                $itemType = $this->ItemTypes->patchEntity($itemType, $this->request->getData());
-
-                if ($this->ItemTypes->save($itemType)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $itemType
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to update item type'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function deleteItemTypes($id): Response
-            {
-                $this->request->allowMethod(['delete']);
-
-                $itemType = $this->ItemTypes->get($id);
-
-                if ($this->ItemTypes->delete($itemType)) {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'item type deleted successfully'
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to delete item type'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-        }
-    */
-
-    /*
-        # Rotas API Template
-        # Path: src/Config/routes.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-    */
-
-    /*
-        # ItemTypes routes template prefix API   
-
-        # ItemTypes routes API
-        $routes->connect('/ItemTypes', ['controller' => 'ItemTypes', 'action' => 'fetchItemTypes', 'method' => 'GET']);
-        $routes->connect('/ItemTypes/:id', ['controller' => 'ItemTypes', 'action' => 'fetchitemType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/ItemTypes-add', ['controller' => 'ItemTypes', 'action' => 'addItemTypes', 'method' => 'POST']);
-        $routes->connect('/ItemTypes-edit/:id', ['controller' => 'ItemTypes', 'action' => 'editItemTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/ItemTypes-delete/:id', ['controller' => 'ItemTypes', 'action' => 'deleteItemTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
-    */
-
-    /*
-        # itemTypes routes simple template prefix /
-        
-        # itemTypes routes
-        $routes->connect('/ItemTypes', ['controller' => 'ItemTypes', 'action' => 'index']);
-        $routes->connect('/ItemTypes/view/:id', ['controller' => 'ItemTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
-    */
 }
