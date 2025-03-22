@@ -51,6 +51,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/cargos', ['controller' => 'Positions', 'action' => 'index']);
         $routes->connect('/cargo/visualizar/:id', ['controller' => 'Positions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # storageLocations routes
+        $routes->connect('/locais-armazenamento', ['controller' => 'StorageLocations', 'action' => 'index']);
+        $routes->connect('/local-armazenamento/visualizar/:id', ['controller' => 'StorageLocations', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -126,5 +130,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/cargo-adicionar', ['controller' => 'Positions', 'action' => 'addPositions', 'method' => 'POST']);
         $routes->connect('/cargo-editar/:id', ['controller' => 'Positions', 'action' => 'editPositions', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/cargo-excluir/:id', ['controller' => 'Positions', 'action' => 'deletePositions', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # StorageLocations routes API
+        $routes->connect('/locais-armazenamento', ['controller' => 'StorageLocations', 'action' => 'fetchStorageLocations', 'method' => 'GET']);
+        $routes->connect('/local-armazenamento/:id', ['controller' => 'StorageLocations', 'action' => 'fetchstorageLocation', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/local-armazenamento-adicionar', ['controller' => 'StorageLocations', 'action' => 'addStorageLocations', 'method' => 'POST']);
+        $routes->connect('/local-armazenamento-editar/:id', ['controller' => 'StorageLocations', 'action' => 'editStorageLocations', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/local-armazenamento-excluir/:id', ['controller' => 'StorageLocations', 'action' => 'deleteStorageLocations', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

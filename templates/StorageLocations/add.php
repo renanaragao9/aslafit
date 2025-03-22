@@ -12,42 +12,57 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('name', 
+                            <?= $this->Form->control(
+                                'name',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'class' => 'form-control',
+                                    'label' => __('Nome'),
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('description', 
+                            <?= $this->Form->control(
+                                'description',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'class' => 'form-control',
+                                    'label' => __('Descrição')
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('active', 
+                            <?= $this->Form->control(
+                                'active',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'type' => 'checkbox',
+                                    'label' => __('Ativo')
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>
