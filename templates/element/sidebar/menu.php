@@ -96,6 +96,7 @@ $menuSections = [
     'icon' => 'fa-regular fa-hands-holding-dollar',
     'items' => [
       ['controller' => 'FormPayments', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Formas de pagamentos', 'permission' => 'FormPayments/index'],
+      ['controller' => 'PlanTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de planos', 'permission' => 'PlanTypes/index'],
     ],
   ],
 ];

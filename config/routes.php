@@ -59,6 +59,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/fornecedores', ['controller' => 'Suppliers', 'action' => 'index']);
         $routes->connect('/fornecedor/visualizar/:id', ['controller' => 'Suppliers', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # planTypes routes
+        $routes->connect('/tipo-planos', ['controller' => 'PlanTypes', 'action' => 'index']);
+        $routes->connect('/tipo-plano/visualizar/:id', ['controller' => 'PlanTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -148,5 +152,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/fornecedor-adicionar', ['controller' => 'Suppliers', 'action' => 'addSuppliers', 'method' => 'POST']);
         $routes->connect('/fornecedor-editar/:id', ['controller' => 'Suppliers', 'action' => 'editSuppliers', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/fornecedor-excluir/:id', ['controller' => 'Suppliers', 'action' => 'deleteSuppliers', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # PlanTypes routes API
+        $routes->connect('/tipo-planos', ['controller' => 'PlanTypes', 'action' => 'fetchPlanTypes', 'method' => 'GET']);
+        $routes->connect('/tipo-plano/:id', ['controller' => 'PlanTypes', 'action' => 'fetchplanType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-plano-adicionar', ['controller' => 'PlanTypes', 'action' => 'addPlanTypes', 'method' => 'POST']);
+        $routes->connect('/tipo-plano-editar/:id', ['controller' => 'PlanTypes', 'action' => 'editPlanTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-plano-excluir/:id', ['controller' => 'PlanTypes', 'action' => 'deletePlanTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };
