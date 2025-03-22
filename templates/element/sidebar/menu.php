@@ -78,7 +78,7 @@ $menuSections = [
     'items' => [
       ['controller' => 'ItemTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de Item', 'permission' => 'ItemTypes/index'],
       ['controller' => 'StorageLocations', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Locais de armazenamento', 'permission' => 'StorageLocations/index'],
-
+      ['controller' => 'Suppliers', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Fornecedores', 'permission' => 'Suppliers/index'],
     ],
   ],
   [

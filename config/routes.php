@@ -55,6 +55,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/locais-armazenamento', ['controller' => 'StorageLocations', 'action' => 'index']);
         $routes->connect('/local-armazenamento/visualizar/:id', ['controller' => 'StorageLocations', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # suppliers routes
+        $routes->connect('/fornecedores', ['controller' => 'Suppliers', 'action' => 'index']);
+        $routes->connect('/fornecedor/visualizar/:id', ['controller' => 'Suppliers', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -137,5 +141,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/local-armazenamento-adicionar', ['controller' => 'StorageLocations', 'action' => 'addStorageLocations', 'method' => 'POST']);
         $routes->connect('/local-armazenamento-editar/:id', ['controller' => 'StorageLocations', 'action' => 'editStorageLocations', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/local-armazenamento-excluir/:id', ['controller' => 'StorageLocations', 'action' => 'deleteStorageLocations', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Suppliers routes API
+        $routes->connect('/fornecedores', ['controller' => 'Suppliers', 'action' => 'fetchSuppliers', 'method' => 'GET']);
+        $routes->connect('/fornecedor/:id', ['controller' => 'Suppliers', 'action' => 'fetchsupplier', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/fornecedor-adicionar', ['controller' => 'Suppliers', 'action' => 'addSuppliers', 'method' => 'POST']);
+        $routes->connect('/fornecedor-editar/:id', ['controller' => 'Suppliers', 'action' => 'editSuppliers', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/fornecedor-excluir/:id', ['controller' => 'Suppliers', 'action' => 'deleteSuppliers', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };
