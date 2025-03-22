@@ -11,51 +11,75 @@
             </div>
             <div class="modal-body">
                 <?= $this->Form->create($position, ['url' => ['action' => 'edit', $position->id], 'id' => 'editForm-' . $position->id]) ?>
-                    <div class="row">
-                                                                                    <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('name', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('description', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('base_salary', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('active', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                                            </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
-                        <?= $this->Form->button(
-                            __('Editar'),
-                            [
-                                'class' => 'btn modalEdit',
-                                'id' => 'editSaveButton' . $position->id,
-                            ]) 
-                        ?>
+                <div class="row">
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'name',
+                                [
+                                    'label' => 'Nome',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
+                            ?>
+                        </div>
                     </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'base_salary',
+                                [
+                                    'label' => 'Salário Base',
+                                    'type' => 'text',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                    'data-format' => 'currency'
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'description',
+                                [
+                                    'label' => 'Descrição',
+                                    'type' => 'textarea',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'active',
+                                [
+                                    'type' => 'checkbox',
+                                    'label' => 'Ativo',
+                                    'class' => 'form-check-input'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <?= $this->Form->button(
+                        __('Salvar'),
+                        [
+                            'class' => 'btn modalEdit',
+                            'id' => 'editSaveButton' . $position->id,
+                            'escape' => false
+                        ]
+                    )
+                    ?>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

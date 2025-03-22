@@ -47,6 +47,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/forma-pagamentos', ['controller' => 'FormPayments', 'action' => 'index']);
         $routes->connect('/forma-pagamento/visualizar/:id', ['controller' => 'FormPayments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # positions routes
+        $routes->connect('/cargos', ['controller' => 'Positions', 'action' => 'index']);
+        $routes->connect('/cargo/visualizar/:id', ['controller' => 'Positions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -115,5 +119,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/forma-pagamento-adicionar', ['controller' => 'FormPayments', 'action' => 'addFormPayments', 'method' => 'POST']);
         $routes->connect('/forma-pagamento-editar/:id', ['controller' => 'FormPayments', 'action' => 'editFormPayments', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/forma-pagamento-excluir/:id', ['controller' => 'FormPayments', 'action' => 'deleteFormPayments', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Positions routes API
+        $routes->connect('/cargos', ['controller' => 'Positions', 'action' => 'fetchPositions', 'method' => 'GET']);
+        $routes->connect('/cargo/:id', ['controller' => 'Positions', 'action' => 'fetchposition', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/cargo-adicionar', ['controller' => 'Positions', 'action' => 'addPositions', 'method' => 'POST']);
+        $routes->connect('/cargo-editar/:id', ['controller' => 'Positions', 'action' => 'editPositions', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/cargo-excluir/:id', ['controller' => 'Positions', 'action' => 'deletePositions', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

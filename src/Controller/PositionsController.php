@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\Positions\AddService;
+use App\Service\Positions\ViewService;
+use App\Service\Positions\EditService;
+use App\Service\Positions\DeleteService;
+use App\Service\Positions\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
 class PositionsController extends AppController
 {
-
     private $identity;
 
     public function initialize(): void
@@ -58,8 +62,7 @@ class PositionsController extends AppController
 
         $positions = $this->paginate($query);
 
-
-        $this->set(compact('positions',));
+        $this->set(compact('positions'));
     }
 
     public function view($id = null)
@@ -68,9 +71,10 @@ class PositionsController extends AppController
             return;
         }
 
-        $position = $this->Positions->get($id, [
-            'contain' => ['Collaborators'],
-        ]);
+        $id = (int)$id;
+
+        $service = new ViewService($this->Positions);
+        $position = $service->run($id);
 
         $this->set(compact('position'));
     }
@@ -81,22 +85,16 @@ class PositionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $position = $this->Positions->newEmptyEntity();
+        $service = new AddService($this->Positions);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $position = $this->Positions->patchEntity($position, $this->request->getData());
-
-            if ($this->Positions->save($position)) {
-                $this->Flash->success(__('O position foi salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O position não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('position'));
+        $this->set('position', $service->getNewEntity());
         return null;
     }
 
@@ -106,25 +104,16 @@ class PositionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $position = $this->Positions->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->Positions);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $position = $this->Positions->patchEntity($position, $this->request->getData());
-
-            if ($this->Positions->save($position)) {
-                $this->Flash->success(__('O position foi editado com sucesso.'));
-                $this->log('O position foi editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O position não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('position'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
@@ -134,17 +123,10 @@ class PositionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->Positions);
+        $result = $service->run($id);
 
-        $position = $this->Positions->get($id);
-
-        if ($this->Positions->delete($position)) {
-            $this->log('O position foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('O position foi deletado com sucesso..'));
-        } else {
-            $this->Flash->error(__('O position não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -154,200 +136,7 @@ class PositionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $positions = $this->Positions->find('all', [
-            'contain' => ['Collaborators'],
-        ]);
-
-        $csvData = [];
-        $header = ['id', 'name', 'description', 'base_salary', 'active', 'created', 'modified'];
-        $csvData[] = $header;
-
-        foreach ($positions as $Positions) {
-            $csvData[] = [
-                $Positions->id,
-                $Positions->name,
-                $Positions->description,
-                $Positions->base_salary,
-                $Positions->active,
-                $Positions->created,
-                $Positions->modified
-            ];
-        }
-
-        $filename = 'positions_' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->Positions);
+        return $service->run();
     }
-
-    /*
-        # Controller API Template
-        # Path: src/Controllers/API/PositionsController.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-        # Não esqueça de adicionar as rotas no arquivo src/Config/routes.php
-        # Para acessar a API, utilize a URL: http://localhost:8765/api/positions
-    */
-
-    /*
-        <?php
-
-        namespace App\Controller\Api;
-
-        use App\Controller\AppController;
-        use Cake\Http\Response;
-
-        class PositionsController extends AppController
-        {
-            public function fetchPositions(): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->Positions->find('all')->toArray();
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function fetchposition($id): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->Positions->get($id);
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function addPositions(): Response
-            {
-                $this->request->allowMethod(['post']);
-
-                $position = $this->Positions->newEmptyEntity();
-                $position = $this->Positions->patchEntity($position, $this->request->getData());
-
-                if ($this->Positions->save($position)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $position
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to add position'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function editPositions($id): Response
-            {
-                $this->request->allowMethod(['put', 'patch']);
-
-                $position = $this->Positions->get($id);
-                $position = $this->Positions->patchEntity($position, $this->request->getData());
-
-                if ($this->Positions->save($position)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $position
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to update position'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function deletePositions($id): Response
-            {
-                $this->request->allowMethod(['delete']);
-
-                $position = $this->Positions->get($id);
-
-                if ($this->Positions->delete($position)) {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'position deleted successfully'
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to delete position'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-        }
-    */
-
-    /*
-        # Rotas API Template
-        # Path: src/Config/routes.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-    */
-
-    /*
-        # Positions routes template prefix API   
-
-        # Positions routes API
-        $routes->connect('/Positions', ['controller' => 'Positions', 'action' => 'fetchPositions', 'method' => 'GET']);
-        $routes->connect('/Positions/:id', ['controller' => 'Positions', 'action' => 'fetchposition', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/Positions-add', ['controller' => 'Positions', 'action' => 'addPositions', 'method' => 'POST']);
-        $routes->connect('/Positions-edit/:id', ['controller' => 'Positions', 'action' => 'editPositions', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/Positions-delete/:id', ['controller' => 'Positions', 'action' => 'deletePositions', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
-    */
-
-    /*
-        # positions routes simple template prefix /
-        
-        # positions routes
-        $routes->connect('/Positions', ['controller' => 'Positions', 'action' => 'index']);
-        $routes->connect('/Positions/view/:id', ['controller' => 'Positions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
-    */
 }

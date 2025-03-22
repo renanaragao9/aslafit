@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo'); 
+$this->assign('title', 'Cargos');
 ?>
 
 <div class="content mt-4">
@@ -16,7 +16,7 @@ $this->assign('title', 'Titulo');
                             <div class="row align-items-center">
                                 <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                                     <h3 class="card-title">
-                                        <?= __('Gerenciar positions') ?>
+                                        <?= __('Gerenciar cargos') ?>
                                     </h3>
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
@@ -25,12 +25,12 @@ $this->assign('title', 'Titulo');
                                             <li class="breadcrumb-item">
                                                 <a class="bread-crumb-home"
                                                     href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>"><i
-                                                    class="fa-regular fa-house"></i>
+                                                        class="fa-regular fa-house"></i>
                                                     Início
                                                 </a>
                                             </li>
                                             <li class="breadcrumb-item active" aria-current="page">
-                                                <?= __('positions') ?>
+                                                <?= __('Cargos') ?>
                                             </li>
                                         </ol>
                                     </nav>
@@ -58,212 +58,81 @@ $this->assign('title', 'Titulo');
                                 Atualizar
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none" id="refreshSpinner"></span>
                             </a>
-                            <a href="<?= $this->Url->build(['action' => 'export']) ?>" class="btn btn-export btn-sm mb-0 col-12 col-md-auto text-dark dark-mode-text-white" id="exportButton"> 
+                            <a href="<?= $this->Url->build(['action' => 'export']) ?>" class="btn btn-export btn-sm mb-0 col-12 col-md-auto text-dark dark-mode-text-white" id="exportButton">
                                 <i class="fa-regular fa-file-csv"></i>
                                 Exportar
                             </a>
-                            <button type="button" class="btn btn-filter btn-sm mb-2 mb-md-0 col-12 col-md-auto" data-toggle="modal" data-target="#filterModal">
-                                <i class="fa-regular fa-filter-list"></i>
-                                Filtrar
-                            </button>
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('id') ?>
+                                    <th>
+                                        <?= $this->Paginator->sort('id', 'Id') ?>
                                     </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('name') ?>
+                                    <th>
+                                        <?= $this->Paginator->sort('name', 'Nome') ?>
                                     </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('description') ?>
+                                    <th>
+                                        <?= $this->Paginator->sort('base_salary', 'Salário Base') ?>
                                     </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('base_salary') ?>
+                                    <th>
+                                        <?= $this->Paginator->sort('active', 'Ativo') ?>
                                     </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('active') ?>
-                                    </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('created') ?>
-                                    </th>
-                                                                        <th>
-                                        <?= $this->Paginator->sort('modified') ?>
-                                    </th>
-                                                                        <th class="actions">
+                                    <th class="actions">
                                         <?= __('Ações') ?>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody id="TableBody">
                                 <?php foreach ($positions as $position): ?>
-                                <tr>
-                                                                             <td>
-                                        <?= $this->Number->format($position->id) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= h($position->name) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= h($position->description) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= $this->Number->format($position->base_salary) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= h($position->active) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= h($position->created) ?>
-                                    </td>
-                                                                               <td>
-                                        <?= h($position->modified) ?>
-                                    </td>
-                                                                           <td class="actions">
-                                        <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $position->id ?>">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <?php if (AccessChecker::hasPermission($loggedUserId, 'positions/edit')): ?>
-                                            <a href="#" class="btn btn-edit btn-sm" data-toggle="modal" data-target="#editModal-<?= $position->id ?>">
-                                                <i class="fas fa-edit"></i>
+                                    <tr>
+                                        <td>
+                                            <?= $this->Number->format($position->id) ?>
+                                        </td>
+                                        <td>
+                                            <?= h($position->name) ?>
+                                        </td>
+                                        <td>
+                                            <?= 'R$ ' . number_format($position->base_salary, 2, ',', '.') ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($position->active): ?>
+                                                <span class="badge badge-success"><?= __('Sim') ?></span>
+                                            <?php else: ?>
+                                                <span class="badge badge-danger"><?= __('Não') ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="actions">
+                                            <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $position->id ?>">
+                                                <i class="fas fa-eye"></i>
                                             </a>
-                                        <?php endif; ?>
-                                        <?php if (AccessChecker::hasPermission($loggedUserId, 'positions/delete')): ?>
-                                            <a href="#" class="btn btn-delete btn-sm" data-toggle="modal" data-target="#deleteModal-<?= $position->id ?>">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-
-                                <!-- Incluir os modais de edição, visualização e exclusão -->
-                                <?php
-                                    include __DIR__ . '/edit.php';
-                                ?>
-
-                                <!-- Modal de Delete -->
-                                <div class="modal fade" id="deleteModal-<?= $position->id ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-<?= $position->id ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel-<?= $position->id ?>">
-                                                    <?= __('Confirmar Exclusão') ?>
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>
-                                                    <?= __('Você tem certeza que deseja excluir {0}?', $position->name) ?>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="button" class="btn modalCancel" data-dismiss="modal">
-                                                    Cancelar
-                                                </button>
-                                                <?= $this->Form->postLink(__('Excluir'),
-                                                    [
-                                                        'action' => 'delete', $position->id
-                                                    ], 
-                                                    [
-                                                        'class' => 'btn modalDelete', 
-                                                        'id' => 'deleteButton-' . $position->id, 
-                                                        'data-id' => $position->id
-                                                    ])
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal de Detalhes -->
-                                <div class="modal fade" id="detailsModal-<?= $position->id ?>" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel-<?= $position->id ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="detailsModalLabel-<?= $position->id ?>">
-                                                    Visualizar
-                                                    <?= h($position->name) ?>
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-12 col-md-6">
-                                                            <ul class="list-group list-group-flush">
-                                                                  
-                                                                    <li class="list-group-item">
-                                                                        <strong>Id:</strong>
-                                                                        <span> <?= h($position->id) ?> </span>
-                                                                    </li>
-                                                                       
-                                                                    <li class="list-group-item">
-                                                                        <strong>Name:</strong>
-                                                                        <span> <?= h($position->name) ?> </span>
-                                                                    </li>
-                                                                       
-                                                                    <li class="list-group-item">
-                                                                        <strong>Description:</strong>
-                                                                        <span> <?= h($position->description) ?> </span>
-                                                                    </li>
-                                                                                                                                         </ul>
-                                                            <hr />
-                                                        </div>
-                                                        <div class="col-12 col-md-6">
-                                                            <ul class="list-group list-group-flush">
-                                                                  
-                                                                  
-                                                                  
-                                                                                                                                     <li class="list-group-item">
-                                                                        <strong>Base Salary:</strong>
-                                                                        <span><?= h($position->base_salary) ?> </span>
-                                                                    </li>
-                                                                     
-                                                                                                                                     <li class="list-group-item">
-                                                                        <strong>Active:</strong>
-                                                                        <span><?= h($position->active) ?> </span>
-                                                                    </li>
-                                                                     
-                                                                                                                                     <li class="list-group-item">
-                                                                        <strong>Created:</strong>
-                                                                        <span><?= h($position->created) ?> </span>
-                                                                    </li>
-                                                                     
-                                                                                                                                     <li class="list-group-item">
-                                                                        <strong>Modified:</strong>
-                                                                        <span><?= h($position->modified) ?> </span>
-                                                                    </li>
-                                                                     
-                                                                                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn modalView" id="viewButton" data-dismiss="modal">
-                                                    Fechar
-                                                </button>
-                                                <a href="<?= $this->Url->build(['action' => 'view', $position->id]) ?>" class="btn modalView">
-                                                    Ver Detalhes
+                                            <?php if (AccessChecker::hasPermission($loggedUserId, 'positions/edit')): ?>
+                                                <a href="#" class="btn btn-edit btn-sm" data-toggle="modal" data-target="#editModal-<?= $position->id ?>">
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <?php endif; ?>
+                                            <?php if (AccessChecker::hasPermission($loggedUserId, 'positions/delete')): ?>
+                                                <a href="#" class="btn btn-delete btn-sm" data-toggle="modal" data-target="#deleteModal-<?= $position->id ?>">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                    include __DIR__ . '/edit.php';
+                                    include __DIR__ . '/delete.php';
+                                    include __DIR__ . '/view_index.php';
+                                    ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <?= $this->Paginator->first('<< ' . __('primeira'))?>
+                            <?= $this->Paginator->first('<< ' . __('primeira')) ?>
                             <?= $this->Paginator->prev('< ' . __('anterior')) ?>
                             <?= $this->Paginator->next(__('próxima') . ' >') ?>
                             <?= $this->Paginator->last(__('última') . ' >>') ?>
@@ -281,54 +150,14 @@ $this->assign('title', 'Titulo');
 </div>
 
 <?php
-    include __DIR__ . '/add.php';
+include __DIR__ . '/add.php';
 ?>
-
-<!-- Modal de Filtro -->
-<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-dialog-filter" role="document">
-        <div class="modal-content modal-content-filter">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">
-                    Filtrar Positions
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="filterForm" class="form-inline w-100" method="get"
-                    action="<?= $this->Url->build(['action' => 'index']) ?>">
-                    <div class="form-row w-100">
-                        <div class="form-group col-12">
-                            <!-- Adicione aqui os input para o filtro -->
-                            <?= $this->Form->control('id', 
-                                [
-                                    'type' => 'select',
-                                    'options' => null, 
-                                    'empty' => 'Selecione uma opção',
-                                    'label' => false, 
-                                    'class' => 'form-control w-100' 
-                                ])
-                            ?>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button class="btn modalView" type="submit" form="filterForm">
-                    Filtrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     var searchUrl = '<?= $this->Url->build(['action' => 'index']) ?>';
 </script>
 
-<?php $this->Html->script('Global/index.js', ['block' => true]); ?>
+<?php
+$this->Html->script('Global/index.js', ['block' => true]);
+$this->Html->script('Global/format_currency.js', ['block' => true]);
+?>

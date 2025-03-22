@@ -85,6 +85,15 @@ $menuSections = [
     'items' => [
       ['controller' => 'Users', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Usuários', 'permission' => 'Users/index'],
       ['controller' => 'Roles', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Perfis', 'permission' => 'Roles/index'],
+      ['controller' => 'Positions', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Cargos', 'permission' => 'Positions/index'],
+
+    ],
+  ],
+  [
+    'label' => 'Financeiro',
+    'icon' => 'fa-regular fa-hands-holding-dollar',
+    'items' => [
+      ['controller' => 'FormPayments', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Formas de pagamentos', 'permission' => 'FormPayments/index'],
     ],
   ],
 ];
