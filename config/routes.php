@@ -40,6 +40,13 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/tipo-item', ['controller' => 'ItemTypes', 'action' => 'index']);
         $routes->connect('/tipo-item/visualizar/:id', ['controller' => 'ItemTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # mealTypes routes
+        $routes->connect('/tipo-refeicoes', ['controller' => 'MealTypes', 'action' => 'index']);
+        $routes->connect('/tipo-refeicao/visualizar/:id', ['controller' => 'MealTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
+        $routes->connect('/forma-pagamentos', ['controller' => 'FormPayments', 'action' => 'index']);
+        $routes->connect('/forma-pagamento/visualizar/:id', ['controller' => 'FormPayments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -89,10 +96,24 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/alimento-excluir/:id', ['controller' => 'Foods', 'action' => 'deleteFoods', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
 
         # ItemTypes routes API
-        $routes->connect('/tipo-item', ['controller' => 'ItemTypes', 'action' => 'fetchItemTypes', 'method' => 'GET']);
+        $routes->connect('/tipo-itens', ['controller' => 'ItemTypes', 'action' => 'fetchItemTypes', 'method' => 'GET']);
         $routes->connect('/tipo-item/:id', ['controller' => 'ItemTypes', 'action' => 'fetchitemType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/tipo-item-adicionar', ['controller' => 'ItemTypes', 'action' => 'addItemTypes', 'method' => 'POST']);
         $routes->connect('/tipo-item-editar/:id', ['controller' => 'ItemTypes', 'action' => 'editItemTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/tipo-item-excluir/:id', ['controller' => 'ItemTypes', 'action' => 'deleteItemTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # MealTypes routes API
+        $routes->connect('/tipos-refeicao', ['controller' => 'MealTypes', 'action' => 'fetchMealTypes', 'method' => 'GET']);
+        $routes->connect('/tipo-refeicao/:id', ['controller' => 'MealTypes', 'action' => 'fetchmealType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-refeicao-adicionar', ['controller' => 'MealTypes', 'action' => 'addMealTypes', 'method' => 'POST']);
+        $routes->connect('/tipo-refeicao-editar/:id', ['controller' => 'MealTypes', 'action' => 'editMealTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-refeicao-excluir/:id', ['controller' => 'MealTypes', 'action' => 'deleteMealTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # FormPayments routes API
+        $routes->connect('/forma-pagamentos', ['controller' => 'FormPayments', 'action' => 'fetchFormPayments', 'method' => 'GET']);
+        $routes->connect('/forma-pagamento/:id', ['controller' => 'FormPayments', 'action' => 'fetchformPayment', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/forma-pagamento-adicionar', ['controller' => 'FormPayments', 'action' => 'addFormPayments', 'method' => 'POST']);
+        $routes->connect('/forma-pagamento-editar/:id', ['controller' => 'FormPayments', 'action' => 'editFormPayments', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/forma-pagamento-excluir/:id', ['controller' => 'FormPayments', 'action' => 'deleteFormPayments', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

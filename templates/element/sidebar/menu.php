@@ -17,86 +17,89 @@ function generateNavItem($controller, $action, $iconClass, $label, $request, $ht
     ['class' => 'nav-link ' . ($request->getParam('controller') === $controller ? 'active' : ''), 'escape' => false]
   );
 }
+
+function generateMenuSection($section, $loggedUserId, $request, $htmlHelper)
+{
+  $hasPermission = false;
+  $menuItems = '';
+
+  foreach ($section['items'] as $item) {
+    if (hasPermission($loggedUserId, $item['permission'])) {
+      $hasPermission = true;
+      $menuItems .= '<li class="nav-item">' . generateNavItem(
+        $item['controller'],
+        $item['action'],
+        $item['icon'],
+        $item['label'],
+        $request,
+        $htmlHelper
+      ) . '</li>';
+    }
+  }
+
+  if ($hasPermission) {
+    $isActive = in_array($request->getParam('controller'), array_column($section['items'], 'controller')) ? 'menu-open' : '';
+    $isLinkActive = $isActive ? 'active' : '';
+
+    return <<<HTML
+<li class="nav-item has-treeview $isActive">
+    <a href="#" class="nav-link $isLinkActive">
+        <i class="{$section['icon']}"></i>
+        <p>
+            {$section['label']}
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        $menuItems
+    </ul>
+</li>
+HTML;
+  }
+
+  return '';
+}
+
+$menuSections = [
+  [
+    'label' => 'Plano de treino',
+    'icon' => 'fa-regular fa-dumbbell',
+    'items' => [
+      ['controller' => 'Equipments', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Equipamentos', 'permission' => 'Equipments/index'],
+      ['controller' => 'TrainingDivisions', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Divisões de Treino', 'permission' => 'TrainingDivisions/index'],
+      ['controller' => 'MuscleGroups', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Grupos Musculares', 'permission' => 'MuscleGroups/index'],
+      ['controller' => 'Foods', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Alimentos', 'permission' => 'Foods/index'],
+      ['controller' => 'MealTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de Refeição', 'permission' => 'MealTypes/index'],
+    ],
+  ],
+  [
+    'label' => 'Estoque',
+    'icon' => 'fa-regular fa-boxes-stacked',
+    'items' => [
+      ['controller' => 'ItemTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de Item', 'permission' => 'ItemTypes/index'],
+    ],
+  ],
+  [
+    'label' => 'Recursos humanos',
+    'icon' => 'fa-regular fa-boxes-stacked',
+    'items' => [
+      ['controller' => 'Users', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Usuários', 'permission' => 'Users/index'],
+      ['controller' => 'Roles', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Perfis', 'permission' => 'Roles/index'],
+    ],
+  ],
+];
+
 ?>
 
 <li class="nav-item">
   <a href="/" class="nav-link <?= $this->request->getPath() === '/' ? 'active' : '' ?>">
     <i class="nav-icon fas fa-tachometer-alt"></i>
-    <p>
-      Dashboard
-    </p>
+    <p>Dashboard</p>
   </a>
 </li>
 
-<?php if (
-  hasPermission($loggedUserId, 'Roles/index') ||
-  hasPermission($loggedUserId, 'Users/index') ||
-  hasPermission($loggedUserId, 'Equipments/index') ||
-  hasPermission($loggedUserId, 'TrainingDivisions/index') ||
-  hasPermission($loggedUserId, 'MuscleGroups/index') ||
-  hasPermission($loggedUserId, 'Foods/index') ||
-  hasPermission($loggedUserId, 'ItemTypes/index')
-): ?>
-  <li class="nav-item has-treeview 
-  <?= (
-    $this->request->getParam('controller') === 'Roles' ||
-    $this->request->getParam('controller') === 'Users' ||
-    $this->request->getParam('controller') === 'Equipments' ||
-    $this->request->getParam('controller') === 'TrainingDivisions' ||
-    $this->request->getParam('controller') === 'MuscleGroups' ||
-    $this->request->getParam('controller') === 'Foods' ||
-    $this->request->getParam('controller') === 'ItemTypes'
-    ? 'menu-open' : '')
-  ?>">
-    <a href="#" class="nav-link <?= $this->request->getParam('controller') === 'Roles' || $this->request->getParam('controller') === 'Users' ? 'active' : '' ?>">
-      <i class="nav-icon fas fa-edit"></i>
-      <p>
-        Cadastro
-        <i class="right fas fa-angle-left"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview">
-      <?php if (hasPermission($loggedUserId, 'Users/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('Users', 'index', 'fa-light fa-circle-notch', 'Usuários', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'Roles/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('Roles', 'index', 'fa-light fa-circle-notch', 'Perfis', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'Equipments/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('Equipments', 'index', 'fa-light fa-circle-notch', 'Equipamentos', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'TrainingDivisions/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('TrainingDivisions', 'index', 'fa-light fa-circle-notch', 'Divisões de Treino', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'MuscleGroups/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('MuscleGroups', 'index', 'fa-light fa-circle-notch', 'Grupos Musculares', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'Foods/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('Foods', 'index', 'fa-light fa-circle-notch', 'Alimentos', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-
-      <?php if (hasPermission($loggedUserId, 'ItemTypes/index')): ?>
-        <li class="nav-item">
-          <?= generateNavItem('ItemTypes', 'index', 'fa-light fa-circle-notch', 'Tipos de Item', $this->request, $this->Html) ?>
-        </li>
-      <?php endif; ?>
-    </ul>
-  </li>
-<?php endif; ?>
+<?php
+foreach ($menuSections as $section) {
+  echo generateMenuSection($section, $loggedUserId, $this->request, $this->Html);
+}
+?>

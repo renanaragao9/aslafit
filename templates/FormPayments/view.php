@@ -3,8 +3,9 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo'); 
-?>     
+$this->assign('title', 'Visualizar forma de pagamento');
+?>
+
 <section class="content mt-4">
     <div class="container-fluid">
         <div class="card card-outline card-primary">
@@ -13,7 +14,7 @@ $this->assign('title', 'Titulo');
                     <div class="row align-items-center">
                         <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                             <h3 class="card-title">
-                                <?= __('Visualizar formPayment') ?>
+                                <?= __('Visualizar forma de pagamento') ?>
                             </h3>
                         </div>
                         <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
@@ -26,7 +27,7 @@ $this->assign('title', 'Titulo');
                                         </a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="<?= $this->Url->build(['action' => 'index']) ?>">formPayment</a>
+                                        <a href="<?= $this->Url->build(['action' => 'index']) ?>">Formas de pagamentos</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         <?= __('Visualizar') ?>
@@ -39,56 +40,55 @@ $this->assign('title', 'Titulo');
                 </div>
             </div>
             <div class="card-body">
-                                  <div class="row item-row">
+                <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Name'); ?>
+                        <?= __('Id'); ?>
+                    </label>
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
+                        <?= $this->Number->format($formPayment->id) ?>
+                    </div>
+                </div>
+                <div class="row item-row">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
+                        <?= __('Nome'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($formPayment->name) ?>
                     </div>
                 </div>
-                                  <div class="row item-row">
+                <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Flag'); ?>
+                        <?= __('Bandeira'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($formPayment->flag) ?>
                     </div>
                 </div>
-                                     <div class="row item-row">
+                <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Id'); ?>
-                    </label>
-                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                                                 <?= $this->Number->format($formPayment->id) ?> 
-                                            </div>
-                </div>
-                                   <div class="row item-row">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Created'); ?>
-                    </label>
-                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                        <?= h($formPayment->created) ?>
-                    </div>
-                </div>
-                                <div class="row item-row">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Modified'); ?>
-                    </label>
-                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                        <?= h($formPayment->modified) ?>
-                    </div>
-                </div>
-                                   <div class="row item-row">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label" >
-                        <?= __('Active'); ?>
+                        <?= __('Ativo'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= $formPayment->active ? __('Sim') : __('Não'); ?>
                     </div>
                 </div>
-                             </div>
+                <div class="row item-row">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
+                        <?= __('Criado'); ?>
+                    </label>
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
+                        <?= h($formPayment->created) ?>
+                    </div>
+                </div>
+                <div class="row item-row">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
+                        <?= __('Modificado'); ?>
+                    </label>
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
+                        <?= h($formPayment->modified) ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-  
