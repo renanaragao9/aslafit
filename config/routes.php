@@ -63,6 +63,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/tipo-planos', ['controller' => 'PlanTypes', 'action' => 'index']);
         $routes->connect('/tipo-plano/visualizar/:id', ['controller' => 'PlanTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # exercises routes
+        $routes->connect('/exercicios', ['controller' => 'Exercises', 'action' => 'index']);
+        $routes->connect('/exercicio/visualizar/:id', ['controller' => 'Exercises', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -159,5 +163,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/tipo-plano-adicionar', ['controller' => 'PlanTypes', 'action' => 'addPlanTypes', 'method' => 'POST']);
         $routes->connect('/tipo-plano-editar/:id', ['controller' => 'PlanTypes', 'action' => 'editPlanTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/tipo-plano-excluir/:id', ['controller' => 'PlanTypes', 'action' => 'deletePlanTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Exercises routes API
+        $routes->connect('/exercicios', ['controller' => 'Exercises', 'action' => 'fetchExercises', 'method' => 'GET']);
+        $routes->connect('/exercicio/:id', ['controller' => 'Exercises', 'action' => 'fetchexercise', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/exercicio-adicionar', ['controller' => 'Exercises', 'action' => 'addExercises', 'method' => 'POST']);
+        $routes->connect('/exercicio-editar/:id', ['controller' => 'Exercises', 'action' => 'editExercises', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/exercicio-excluir/:id', ['controller' => 'Exercises', 'action' => 'deleteExercises', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

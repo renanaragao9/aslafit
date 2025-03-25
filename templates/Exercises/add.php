@@ -10,78 +10,114 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
+                <?= $this->Form->create(null, ['url' => ['action' => 'add'], 'type' => 'file']) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('name', 
+                            <?= $this->Form->control(
+                                'name',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => __('Nome'),
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('image', 
+                            <?= $this->Form->control(
+                                'link',
                                 [
+                                    'label' => __('Link'),
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('gif', 
+                            <?= $this->Form->control(
+                                'equipment_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => __('Equipamento'),
+                                    'options' => $equipments,
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('link', 
+                            <?= $this->Form->control(
+                                'muscle_group_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => __('Grupo Muscular'),
+                                    'options' => $muscleGroups,
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('active', 
+                            <?= $this->Form->control(
+                                'image',
                                 [
+                                    'label' => __('Imagem'),
+                                    'type' => 'file',
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('equipment_id', 
+                            <?= $this->Form->control(
+                                'gif',
                                 [
-                                    'options' => $equipments, 
+                                    'label' => __('GIF'),
+                                    'type' => 'file',
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('muscle_group_id', 
+                            <?= $this->Form->control(
+                                'active',
                                 [
-                                    'options' => $muscleGroups, 
-                                    'class' => 'form-control'
-                                ])
+                                    'type' => 'checkbox',
+                                    'label' => __('Ativo'),
+                                    'class' => 'form-check-input'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>

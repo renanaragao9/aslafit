@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo');
+$this->assign('title', 'Tipos de refeições');
 ?>
 
 <div class="content mt-4">
@@ -42,9 +42,12 @@ $this->assign('title', 'Titulo');
                     </div>
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>" onsubmit="return false;">
+                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>">
                                 <div class="input-group">
                                     <input id="searchInput" class="form-control col-12" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="search" value="<?= $this->request->getQuery('search') ?>" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><?= __('Pesquisar') ?></button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -128,7 +131,6 @@ $this->assign('title', 'Titulo');
                                         </td>
                                     </tr>
 
-                                    <!-- Incluir os modais de edição, visualização e exclusão -->
                                     <?php
                                     include __DIR__ . '/view_index.php';
                                     include __DIR__ . '/edit.php';
@@ -160,54 +162,3 @@ $this->assign('title', 'Titulo');
 <?php
 include __DIR__ . '/add.php';
 ?>
-
-<!-- Modal de Filtro -->
-<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-dialog-filter" role="document">
-        <div class="modal-content modal-content-filter">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">
-                    Filtrar Meal Types
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="filterForm" class="form-inline w-100" method="get"
-                    action="<?= $this->Url->build(['action' => 'index']) ?>">
-                    <div class="form-row w-100">
-                        <div class="form-group col-12">
-                            <!-- Adicione aqui os input para o filtro -->
-                            <?= $this->Form->control(
-                                'id',
-                                [
-                                    'type' => 'select',
-                                    'options' => null,
-                                    'empty' => 'Selecione uma opção',
-                                    'label' => false,
-                                    'class' => 'form-control w-100'
-                                ]
-                            )
-                            ?>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button class="btn modalView" type="submit" form="filterForm">
-                    Filtrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    var searchUrl = '<?= $this->Url->build(['action' => 'index']) ?>';
-</script>
-
-<?php $this->Html->script('Global/index.js', ['block' => true]); ?>

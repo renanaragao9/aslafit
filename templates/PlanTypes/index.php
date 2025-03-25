@@ -41,9 +41,12 @@ $this->assign('title', 'Tipos de plano');
                     </div>
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>" onsubmit="return false;">
+                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>">
                                 <div class="input-group">
                                     <input id="searchInput" class="form-control col-12" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="search" value="<?= $this->request->getQuery('search') ?>" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><?= __('Pesquisar') ?></button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -160,11 +163,6 @@ $this->assign('title', 'Tipos de plano');
 include __DIR__ . '/add.php';
 ?>
 
-<script>
-    var searchUrl = '<?= $this->Url->build(['action' => 'index']) ?>';
-</script>
-
 <?php
-$this->Html->script('Global/index.js', ['block' => true]);
 $this->Html->script('Global/format_currency.js', ['block' => true]);
 ?>

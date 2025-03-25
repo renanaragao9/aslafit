@@ -68,6 +68,7 @@ $menuSections = [
       ['controller' => 'Equipments', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Equipamentos', 'permission' => 'Equipments/index'],
       ['controller' => 'TrainingDivisions', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Divisões de Treino', 'permission' => 'TrainingDivisions/index'],
       ['controller' => 'MuscleGroups', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Grupos Musculares', 'permission' => 'MuscleGroups/index'],
+      ['controller' => 'Exercises', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Exercícios', 'permission' => 'Exercises/index'],
       ['controller' => 'Foods', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Alimentos', 'permission' => 'Foods/index'],
       ['controller' => 'MealTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de Refeição', 'permission' => 'MealTypes/index'],
     ],
