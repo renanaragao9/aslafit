@@ -12,100 +12,131 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('name', 
+                            <?= $this->Form->control(
+                                'name',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Nome',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('birth_date', 
+                            <?= $this->Form->control(
+                                'user_id',
                                 [
+                                    'label' => 'Usuário',
+                                    'options' => $users,
+                                    'empty' => true,
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('entry_date', 
+                            <?= $this->Form->control(
+                                'birth_date',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Data de nascimento',
+                                    'class' => 'form-control',
+                                    'type' => 'date'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('gender', 
+                            <?= $this->Form->control(
+                                'entry_date',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Data de entrada',
+                                    'class' => 'form-control',
+                                    'type' => 'date'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('weight', 
+                            <?= $this->Form->control(
+                                'weight',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Peso',
+                                    'class' => 'form-control',
+                                    'type' => 'number',
+                                    'step' => '0.01',
+                                    'placeholder' => 'Ex: 70.5'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('height', 
+                            <?= $this->Form->control(
+                                'height',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Altura',
+                                    'class' => 'form-control',
+                                    'type' => 'number',
+                                    'step' => '0.02',
+                                    'placeholder' => 'Ex: 1.80'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('color', 
+                            <?= $this->Form->control(
+                                'gender',
                                 [
+                                    'label' => 'Gênero',
+                                    'type' => 'select',
+                                    'options' => ['Masculino' => 'Masculino', 'Feminino' => 'Feminino'],
+                                    'empty' => 'Selecione o gênero',
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('img', 
+                            <?= $this->Form->control(
+                                'active',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Ativo',
+                                    'type' => 'checkbox',
+                                    'class' => 'form-check-input'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('active', 
-                                [
-                                    'class' => 'form-control'
-                                ]) 
-                            ?>
-                        </div>
-                    </div>                     <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('user_id', 
-                                [
-                                    'options' => $users, 
-                                    'empty' => true, 
-                                    'class' => 'form-control'
-                                ]) 
-                            ?>
-                        </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>

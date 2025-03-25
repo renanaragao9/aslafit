@@ -67,6 +67,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/exercicios', ['controller' => 'Exercises', 'action' => 'index']);
         $routes->connect('/exercicio/visualizar/:id', ['controller' => 'Exercises', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # students routes
+        $routes->connect('/alunos', ['controller' => 'Students', 'action' => 'index']);
+        $routes->connect('/aluno/visualizar/:id', ['controller' => 'Students', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # collaborators routes
         $routes->connect('/colaboradores', ['controller' => 'Collaborators', 'action' => 'index']);
         $routes->connect('/colaborador/visualizar/:id', ['controller' => 'Collaborators', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
@@ -181,5 +185,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/colaborador-adicionar', ['controller' => 'Collaborators', 'action' => 'addCollaborators', 'method' => 'POST']);
         $routes->connect('/colaborador-editar/:id', ['controller' => 'Collaborators', 'action' => 'editCollaborators', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/colaborador-excluir/:id', ['controller' => 'Collaborators', 'action' => 'deleteCollaborators', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Students routes API
+        $routes->connect('/alunos', ['controller' => 'Students', 'action' => 'fetchStudents', 'method' => 'GET']);
+        $routes->connect('/aluno/:id', ['controller' => 'Students', 'action' => 'fetchstudent', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/aluno-adicionar', ['controller' => 'Students', 'action' => 'addStudents', 'method' => 'POST']);
+        $routes->connect('/aluno-editar/:id', ['controller' => 'Students', 'action' => 'editStudents', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/aluno-excluir/:id', ['controller' => 'Students', 'action' => 'deleteStudents', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };
