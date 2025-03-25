@@ -67,6 +67,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/exercicios', ['controller' => 'Exercises', 'action' => 'index']);
         $routes->connect('/exercicio/visualizar/:id', ['controller' => 'Exercises', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # collaborators routes
+        $routes->connect('/colaboradores', ['controller' => 'Collaborators', 'action' => 'index']);
+        $routes->connect('/colaborador/visualizar/:id', ['controller' => 'Collaborators', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -170,5 +174,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/exercicio-adicionar', ['controller' => 'Exercises', 'action' => 'addExercises', 'method' => 'POST']);
         $routes->connect('/exercicio-editar/:id', ['controller' => 'Exercises', 'action' => 'editExercises', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/exercicio-excluir/:id', ['controller' => 'Exercises', 'action' => 'deleteExercises', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Collaborators routes API
+        $routes->connect('/colaboradores', ['controller' => 'Collaborators', 'action' => 'fetchCollaborators', 'method' => 'GET']);
+        $routes->connect('/colaborador/:id', ['controller' => 'Collaborators', 'action' => 'fetchcollaborator', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/colaborador-adicionar', ['controller' => 'Collaborators', 'action' => 'addCollaborators', 'method' => 'POST']);
+        $routes->connect('/colaborador-editar/:id', ['controller' => 'Collaborators', 'action' => 'editCollaborators', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/colaborador-excluir/:id', ['controller' => 'Collaborators', 'action' => 'deleteCollaborators', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

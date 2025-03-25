@@ -110,6 +110,13 @@ $menuSections = [
     <p>Dashboard</p>
   </a>
 </li>
+<li class="nav-item">
+  <a href="/colaboradores" class="nav-link <?= $this->request->getPath() === '/collaborators' ? 'active' : '' ?>">
+    <i class="nav-icon fas fa-users"></i>
+    <p>Colaboradores</p>
+  </a>
+</li>
+
 
 <?php
 foreach ($menuSections as $section) {

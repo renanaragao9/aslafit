@@ -444,6 +444,43 @@ input[type="file"]::file-selector-button:hover {
     background-color: var(--color-bg-orange-3e);
 }
 
+.custom-toggle-style {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.custom-toggle-style input[type="checkbox"] {
+    height: 1.5rem;
+    width: 2.8rem;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.custom-toggle-style input[type="checkbox"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: var(--color-bg-orange-3e);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--color-bg-orange-3e);
+    border-color: var(--color-bg-orange-3e);
+}
+
+.custom-control-input ~ .custom-control-label::before {
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-toggle-style:focus-within {
+    border-color: var(--color-bg-orange-3e);
+    box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+}
+
 #searchInput {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
