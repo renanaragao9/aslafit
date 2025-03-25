@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\Fichas\AddService;
+use App\Service\Fichas\ViewService;
+use App\Service\Fichas\EditService;
+use App\Service\Fichas\DeleteService;
+use App\Service\Fichas\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
 class FichasController extends AppController
 {
-
     private $identity;
 
     public function initialize(): void
@@ -71,9 +75,10 @@ class FichasController extends AppController
             return;
         }
 
-        $ficha = $this->Fichas->get($id, [
-            'contain' => ['Students', 'Assessments', 'DietPlans', 'ExerciseTrainingDivision'],
-        ]);
+        $id = (int)$id;
+
+        $service = new ViewService($this->Fichas);
+        $ficha = $service->run($id);
 
         $this->set(compact('ficha'));
     }
@@ -84,23 +89,16 @@ class FichasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $ficha = $this->Fichas->newEmptyEntity();
+        $service = new AddService($this->Fichas);
 
         if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
 
-            $ficha = $this->Fichas->patchEntity($ficha, $this->request->getData());
-
-            if ($this->Fichas->save($ficha)) {
-                $this->Flash->success(__('O ficha foi salvo com sucesso.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O ficha não pode ser salvo. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
-        $students = $this->Fichas->Students->find('list', ['limit' => 200])->all();
 
-        $this->set(compact('ficha', 'students'));
+        $this->set('ficha', $service->getNewEntity());
         return null;
     }
 
@@ -110,26 +108,16 @@ class FichasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $ficha = $this->Fichas->get($id, [
-            'contain' => [],
-        ]);
+        $service = new EditService($this->Fichas);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $result = $service->run($id, $this->request->getData());
 
-            $ficha = $this->Fichas->patchEntity($ficha, $this->request->getData());
-
-            if ($this->Fichas->save($ficha)) {
-                $this->Flash->success(__('O ficha foi editado com sucesso.'));
-                $this->log('O ficha foi editado com sucesso.', 'info');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('O ficha não pode ser editado. Por favor, tente novamente.'));
-                return $this->redirect(['action' => 'index']);
-            }
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
-        $students = $this->Fichas->Students->find('list', ['limit' => 200])->all();
 
-        $this->set(compact('ficha', 'students'));
+        $this->set($service->getEditData($id));
         return null;
     }
 
@@ -139,17 +127,10 @@ class FichasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['post', 'delete']);
+        $service = new DeleteService($this->Fichas);
+        $result = $service->run($id);
 
-        $ficha = $this->Fichas->get($id);
-
-        if ($this->Fichas->delete($ficha)) {
-            $this->log('O ficha foi deletado com sucesso.', 'info');
-            $this->Flash->success(__('O ficha foi deletado com sucesso..'));
-        } else {
-            $this->Flash->error(__('O ficha não pode ser deletado. Por favor, tente novamente.'));
-        }
-
+        $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -159,202 +140,7 @@ class FichasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $fichas = $this->Fichas->find('all', [
-            'contain' => ['Students', 'Assessments', 'DietPlans', 'ExerciseTrainingDivision'],
-        ]);
-
-        $csvData = [];
-        $header = ['id', 'start_date', 'end_date', 'description', 'notes', 'student_id', 'active', 'created', 'modified'];
-        $csvData[] = $header;
-
-        foreach ($fichas as $Fichas) {
-            $csvData[] = [
-                $Fichas->id,
-                $Fichas->start_date,
-                $Fichas->end_date,
-                $Fichas->description,
-                $Fichas->notes,
-                $Fichas->student_id,
-                $Fichas->active,
-                $Fichas->created,
-                $Fichas->modified
-            ];
-        }
-
-        $filename = 'fichas_' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = TMP . $filename;
-
-        $file = fopen($filePath, 'w');
-        foreach ($csvData as $line) {
-            fputcsv($file, $line);
-        }
-        fclose($file);
-
-        $response = $this->response->withFile(
-            $filePath,
-            ['download' => true, 'name' => $filename]
-        );
-
-        return $response;
+        $service = new ExportService($this->Fichas);
+        return $service->run();
     }
-
-    /*
-        # Controller API Template
-        # Path: src/Controllers/API/FichasController.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-        # Não esqueça de adicionar as rotas no arquivo src/Config/routes.php
-        # Para acessar a API, utilize a URL: http://localhost:8765/api/fichas
-    */
-
-    /*
-        <?php
-
-        namespace App\Controller\Api;
-
-        use App\Controller\AppController;
-        use Cake\Http\Response;
-
-        class FichasController extends AppController
-        {
-            public function fetchFichas(): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->Fichas->find('all')->toArray();
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function fetchficha($id): Response
-            {
-                $this->request->allowMethod(['get']);
-
-                try {
-                    $data = $this->Fichas->get($id);
-                    $response = [
-                        'status' => 'success',
-                        'data' => $data
-                    ];
-                } catch (\Exception $e) {
-                    $response = [
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ];
-                }
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function addFichas(): Response
-            {
-                $this->request->allowMethod(['post']);
-
-                $ficha = $this->Fichas->newEmptyEntity();
-                $ficha = $this->Fichas->patchEntity($ficha, $this->request->getData());
-
-                if ($this->Fichas->save($ficha)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $ficha
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to add ficha'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function editFichas($id): Response
-            {
-                $this->request->allowMethod(['put', 'patch']);
-
-                $ficha = $this->Fichas->get($id);
-                $ficha = $this->Fichas->patchEntity($ficha, $this->request->getData());
-
-                if ($this->Fichas->save($ficha)) {
-                    $response = [
-                        'status' => 'success',
-                        'data' => $ficha
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to update ficha'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-
-            public function deleteFichas($id): Response
-            {
-                $this->request->allowMethod(['delete']);
-
-                $ficha = $this->Fichas->get($id);
-
-                if ($this->Fichas->delete($ficha)) {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'ficha deleted successfully'
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Unable to delete ficha'
-                    ];
-                }
-
-                return $this->response
-                    ->withType('application/json')
-                    ->withStringBody(json_encode($response));
-            }
-        }
-    */
-
-    /*
-        # Rotas API Template
-        # Path: src/Config/routes.php
-        # Copie e cole o conteúdo abaixo no arquivo acima
-        # Lembre-se de alterar os valores das variáveis de acordo com o seu projeto
-    */
-
-    /*
-        # Fichas routes template prefix API   
-
-        # Fichas routes API
-        $routes->connect('/Fichas', ['controller' => 'Fichas', 'action' => 'fetchFichas', 'method' => 'GET']);
-        $routes->connect('/Fichas/:id', ['controller' => 'Fichas', 'action' => 'fetchficha', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/Fichas-add', ['controller' => 'Fichas', 'action' => 'addFichas', 'method' => 'POST']);
-        $routes->connect('/Fichas-edit/:id', ['controller' => 'Fichas', 'action' => 'editFichas', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
-        $routes->connect('/Fichas-delete/:id', ['controller' => 'Fichas', 'action' => 'deleteFichas', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
-    */
-
-    /*
-        # fichas routes simple template prefix /
-        
-        # fichas routes
-        $routes->connect('/Fichas', ['controller' => 'Fichas', 'action' => 'index']);
-        $routes->connect('/Fichas/view/:id', ['controller' => 'Fichas', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
-    */
 }

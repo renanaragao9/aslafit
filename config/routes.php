@@ -79,6 +79,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/registros-trabalho', ['controller' => 'WorkLogs', 'action' => 'index']);
         $routes->connect('/registro-trabalho/visualizar/:id', ['controller' => 'WorkLogs', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # fichas routes
+        $routes->connect('/fichas', ['controller' => 'Fichas', 'action' => 'index']);
+        $routes->connect('/ficha/visualizar/:id', ['controller' => 'Fichas', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -203,5 +207,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/registro-trabalho-adicionar', ['controller' => 'WorkLogs', 'action' => 'addWorkLogs', 'method' => 'POST']);
         $routes->connect('/registro-trabalho-editar/:id', ['controller' => 'WorkLogs', 'action' => 'editWorkLogs', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/registro-trabalho-excluir/:id', ['controller' => 'WorkLogs', 'action' => 'deleteWorkLogs', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Fichas routes API
+        $routes->connect('/fichas', ['controller' => 'Fichas', 'action' => 'fetchFichas', 'method' => 'GET']);
+        $routes->connect('/ficha/:id', ['controller' => 'Fichas', 'action' => 'fetchficha', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-adicionar', ['controller' => 'Fichas', 'action' => 'addFichas', 'method' => 'POST']);
+        $routes->connect('/ficha-editar/:id', ['controller' => 'Fichas', 'action' => 'editFichas', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-excluir/:id', ['controller' => 'Fichas', 'action' => 'deleteFichas', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

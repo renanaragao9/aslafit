@@ -89,7 +89,7 @@ $menuSections = [
       ['controller' => 'Users', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Usuários', 'permission' => 'Users/index'],
       ['controller' => 'Roles', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Perfis', 'permission' => 'Roles/index'],
       ['controller' => 'Positions', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Cargos', 'permission' => 'Positions/index'],
-
+      ['controller' => 'WorkLogs', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Registros de trabalho', 'permission' => 'WorkLogs/index'],
     ],
   ],
   [
