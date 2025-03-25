@@ -75,6 +75,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/colaboradores', ['controller' => 'Collaborators', 'action' => 'index']);
         $routes->connect('/colaborador/visualizar/:id', ['controller' => 'Collaborators', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # rotas de registros de trabalho
+        $routes->connect('/registros-trabalho', ['controller' => 'WorkLogs', 'action' => 'index']);
+        $routes->connect('/registro-trabalho/visualizar/:id', ['controller' => 'WorkLogs', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -192,5 +196,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/aluno-adicionar', ['controller' => 'Students', 'action' => 'addStudents', 'method' => 'POST']);
         $routes->connect('/aluno-editar/:id', ['controller' => 'Students', 'action' => 'editStudents', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/aluno-excluir/:id', ['controller' => 'Students', 'action' => 'deleteStudents', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # WorkLogs routes API
+        $routes->connect('/registros-trabalho', ['controller' => 'WorkLogs', 'action' => 'fetchWorkLogs', 'method' => 'GET']);
+        $routes->connect('/registro-trabalho/:id', ['controller' => 'WorkLogs', 'action' => 'fetchworkLog', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/registro-trabalho-adicionar', ['controller' => 'WorkLogs', 'action' => 'addWorkLogs', 'method' => 'POST']);
+        $routes->connect('/registro-trabalho-editar/:id', ['controller' => 'WorkLogs', 'action' => 'editWorkLogs', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/registro-trabalho-excluir/:id', ['controller' => 'WorkLogs', 'action' => 'deleteWorkLogs', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

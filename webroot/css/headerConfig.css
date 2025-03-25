@@ -311,6 +311,20 @@ hr {
     color: var(--color-text-white);
 }
 
+.btn-geografic {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
+}
+
+.btn-geografic:hover {
+    background-color: var(--color-bg-orange-3e);
+    color: var(--color-text-white);
+}
+
 /* Estilização de Modais (Botoes) */
 .modalAdd,
 .modalEdit,

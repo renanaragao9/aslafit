@@ -110,10 +110,18 @@ $menuSections = [
     <p>Dashboard</p>
   </a>
 </li>
+
 <li class="nav-item">
   <a href="/colaboradores" class="nav-link <?= $this->request->getPath() === '/collaborators' ? 'active' : '' ?>">
     <i class="nav-icon fas fa-users"></i>
     <p>Colaboradores</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a href="/alunos" class="nav-link <?= $this->request->getPath() === '/students' ? 'active' : '' ?>">
+    <i class="nav-icon fas fa-users"></i>
+    <p>Alunos</p>
   </a>
 </li>
 

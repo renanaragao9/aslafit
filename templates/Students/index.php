@@ -98,7 +98,7 @@ $this->assign('title', 'Alunos');
                                             <?= h($student->name) ?>
                                         </td>
                                         <td>
-                                            <?= $student->user ? h($student->user->name) : '-' ?>
+                                            <?= $student->user ? h($student->user->email) : '-' ?>
                                         </td>
                                         <td>
                                             <?php if ($student->active): ?>
