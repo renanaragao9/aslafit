@@ -97,10 +97,6 @@ class CreateAssessments extends AbstractMigration
             'scale' => 2,
             'null' => true,
         ]);
-        $table->addColumn('student_id', 'integer', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('ficha_id', 'integer', [
             'default' => null,
             'null' => true,

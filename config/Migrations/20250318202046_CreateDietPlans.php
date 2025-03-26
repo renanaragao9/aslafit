@@ -20,10 +20,6 @@ class CreateDietPlans extends AbstractMigration
             'default' => null,
             'null' => true,
         ]);
-        $table->addColumn('student_id', 'integer', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('meal_type_id', 'integer', [
             'default' => null,
             'null' => false,
@@ -47,10 +43,6 @@ class CreateDietPlans extends AbstractMigration
         $table->addColumn('modified', 'datetime', [
             'default' => null,
             'null' => false,
-        ]);
-        $table->addForeignKey('student_id', 'students', 'id', [
-            'delete' => 'CASCADE',
-            'update' => 'NO_ACTION',
         ]);
         $table->addForeignKey('meal_type_id', 'meal_types', 'id', [
             'delete' => 'CASCADE',

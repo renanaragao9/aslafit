@@ -45,14 +45,8 @@ class FichasController extends AppController
             $conditions = [
                 'OR' => [
                     'CAST(Fichas.id AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.start_date AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.end_date AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.description AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.notes AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.student_id AS CHAR) LIKE' => '%' . $search . '%',
+                    'Students.name LIKE' => '%' . $search . '%',
                     'CAST(Fichas.active AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.created AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Fichas.modified AS CHAR) LIKE' => '%' . $search . '%',
                 ],
             ];
         }

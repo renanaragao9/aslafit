@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -23,7 +24,6 @@ use Cake\ORM\Entity;
  * @property string|null $hip
  * @property string|null $thigh
  * @property string|null $calf
- * @property int $student_id
  * @property int|null $ficha_id
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created
@@ -58,12 +58,10 @@ class Assessment extends Entity
         'hip' => true,
         'thigh' => true,
         'calf' => true,
-        'student_id' => true,
         'ficha_id' => true,
         'active' => true,
         'created' => true,
         'modified' => true,
-        'student' => true,
         'ficha' => true,
     ];
 }

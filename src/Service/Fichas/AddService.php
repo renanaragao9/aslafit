@@ -17,6 +17,19 @@ class AddService
 
     public function run(array $data): array
     {
+        if ($data['active'] == true) {
+            $existingActiveFicha = $this->fichas->find()
+                ->where(['student_id' => $data['student_id'], 'active' => true])
+                ->first();
+
+            if ($existingActiveFicha) {
+                return [
+                    'success' => false,
+                    'message' => 'Já existe uma ficha ativa para este estudante.'
+                ];
+            }
+        }
+
         $ficha = $this->fichas->newEntity($data);
 
         if ($this->fichas->save($ficha)) {

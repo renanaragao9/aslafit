@@ -11,72 +11,87 @@
             </div>
             <div class="modal-body">
                 <?= $this->Form->create($dietPlan, ['url' => ['action' => 'edit', $dietPlan->id], 'id' => 'editForm-' . $dietPlan->id]) ?>
-                    <div class="row">
-                                                                                    <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('description', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('student_id', 
-                                                    [
-                                                        'options' => $students, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('meal_type_id', 
-                                                    [
-                                                        'options' => $mealTypes, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('food_id', 
-                                                    [
-                                                        'options' => $foods, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('ficha_id', 
-                                                    [
-                                                        'options' => $fichas, 
-                                                        'empty' => true, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('active', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                                            </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
-                        <?= $this->Form->button(
-                            __('Editar'),
-                            [
-                                'class' => 'btn modalEdit',
-                                'id' => 'editSaveButton' . $dietPlan->id,
-                            ]) 
-                        ?>
+                <div class="row">
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'ficha_id',
+                                [
+                                    'label' => __('Ficha'),
+                                    'options' => $fichas,
+                                    'empty' => __('Selecione uma opção'),
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
                     </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'meal_type_id',
+                                [
+                                    'label' => __('Tipo de Refeição'),
+                                    'options' => $mealTypes,
+                                    'empty' => __('Selecione uma opção'),
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'food_id',
+                                [
+                                    'label' => __('Alimento'),
+                                    'options' => $foods,
+                                    'empty' => __('Selecione uma opção'),
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'description',
+                                [
+                                    'label' => __('Descrição'),
+                                    'type' => 'textarea',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'active',
+                                [
+                                    'label' => __('Ativo'),
+                                    'type' => 'checkbox',
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
+                    <?= $this->Form->button(
+                        __('Editar'),
+                        [
+                            'class' => 'btn modalEdit',
+                            'id' => 'editSaveButton' . $dietPlan->id,
+                        ]
+                    )
+                    ?>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

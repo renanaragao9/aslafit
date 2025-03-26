@@ -83,6 +83,14 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/fichas', ['controller' => 'Fichas', 'action' => 'index']);
         $routes->connect('/ficha/visualizar/:id', ['controller' => 'Fichas', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # assessments routes
+        $routes->connect('/avaliacoes', ['controller' => 'Assessments', 'action' => 'index']);
+        $routes->connect('/avaliacao/visualizar/:id', ['controller' => 'Assessments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # dietPlans routes
+        $routes->connect('/planos-alimentares', ['controller' => 'DietPlans', 'action' => 'index']);
+        $routes->connect('/plano-alimentar/visualizar/:id', ['controller' => 'DietPlans', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -214,5 +222,19 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/ficha-adicionar', ['controller' => 'Fichas', 'action' => 'addFichas', 'method' => 'POST']);
         $routes->connect('/ficha-editar/:id', ['controller' => 'Fichas', 'action' => 'editFichas', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/ficha-excluir/:id', ['controller' => 'Fichas', 'action' => 'deleteFichas', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Assessments routes API
+        $routes->connect('/avaliacoes', ['controller' => 'Assessments', 'action' => 'fetchAssessments', 'method' => 'GET']);
+        $routes->connect('/avaliacao/:id', ['controller' => 'Assessments', 'action' => 'fetchassessment', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/avaliacao-adicionar', ['controller' => 'Assessments', 'action' => 'addAssessments', 'method' => 'POST']);
+        $routes->connect('/avaliacao-editar/:id', ['controller' => 'Assessments', 'action' => 'editAssessments', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/avaliacao-excluir/:id', ['controller' => 'Assessments', 'action' => 'deleteAssessments', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # DietPlans routes API
+        $routes->connect('/planos-alimentares', ['controller' => 'DietPlans', 'action' => 'fetchDietPlans', 'method' => 'GET']);
+        $routes->connect('/plano-alimentar/:id', ['controller' => 'DietPlans', 'action' => 'fetchdietPlan', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/plano-alimentar-adicionar', ['controller' => 'DietPlans', 'action' => 'addDietPlans', 'method' => 'POST']);
+        $routes->connect('/plano-alimentar-editar/:id', ['controller' => 'DietPlans', 'action' => 'editDietPlans', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/plano-alimentar-excluir/:id', ['controller' => 'DietPlans', 'action' => 'deleteDietPlans', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

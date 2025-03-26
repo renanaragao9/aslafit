@@ -12,71 +12,88 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('description', 
+                            <?= $this->Form->control(
+                                'ficha_id',
                                 [
+                                    'label' => __('Ficha'),
+                                    'options' => $fichas,
+                                    'empty' => __('Selecione uma opção'),
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('student_id', 
+                            <?= $this->Form->control(
+                                'meal_type_id',
                                 [
-                                    'options' => $students, 
+                                    'label' => __('Tipo de Refeição'),
+                                    'options' => $mealTypes,
+                                    'empty' => __('Selecione uma opção'),
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('meal_type_id', 
+                            <?= $this->Form->control(
+                                'food_id',
                                 [
-                                    'options' => $mealTypes, 
+                                    'label' => __('Alimento'),
+                                    'options' => $foods,
+                                    'empty' => __('Selecione uma opção'),
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('food_id', 
+                            <?= $this->Form->control(
+                                'description',
                                 [
-                                    'options' => $foods, 
+                                    'label' => __('Descrição'),
+                                    'type' => 'textarea',
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('ficha_id', 
+                            <?= $this->Form->control(
+                                'active',
                                 [
-                                    'options' => $fichas, 
-                                    'empty' => true, 
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => __('Ativo'),
+                                    'type' => 'checkbox',
+                                    'checked' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('active', 
-                                [
-                                    'class' => 'form-control'
-                                ]) 
-                            ?>
-                        </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>

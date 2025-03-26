@@ -11,160 +11,182 @@
             </div>
             <div class="modal-body">
                 <?= $this->Form->create($assessment, ['url' => ['action' => 'edit', $assessment->id], 'id' => 'editForm-' . $assessment->id]) ?>
-                    <div class="row">
-                                                                                    <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('goal', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('observation', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('term', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('height', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('weight', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('arm', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('forearm', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('breastplate', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('back', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('waist', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('glute', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('hip', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('thigh', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('calf', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('student_id', 
-                                                    [
-                                                        'options' => $students, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('ficha_id', 
-                                                    [
-                                                        'options' => $fichas, 
-                                                        'empty' => true, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('active', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                                            </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
-                        <?= $this->Form->button(
-                            __('Editar'),
-                            [
-                                'class' => 'btn modalEdit',
-                                'id' => 'editSaveButton' . $assessment->id,
-                            ]) 
-                        ?>
+                <div class="row">
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('ficha_id', [
+                                'label' => __('Ficha'),
+                                'options' => $fichas,
+                                'empty' => __('Selecione uma opção'),
+                                'class' => 'form-control',
+                                'required' => true
+                            ]) ?>
+                        </div>
                     </div>
-                <?= $this->Form->end() ?>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('goal', [
+                                'label' => __('Objetivo'),
+                                'class' => 'form-control',
+                                'type' => 'text'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('term', [
+                                'label' => __('Prazo'),
+                                'options' => [
+                                    '1 mes' => __('1 mês'),
+                                    '2 meses' => __('2 meses'),
+                                    '3 meses' => __('3 meses')
+                                ],
+                                'empty' => __('Selecione um prazo'),
+                                'class' => 'form-control'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('height', [
+                                'label' => __('Altura'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('weight', [
+                                'label' => __('Peso'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('arm', [
+                                'label' => __('Braço'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('forearm', [
+                                'label' => __('Antebraço'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('breastplate', [
+                                'label' => __('Peitoral'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('back', [
+                                'label' => __('Costas'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('waist', [
+                                'label' => __('Cintura'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('glute', [
+                                'label' => __('Glúteo'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('hip', [
+                                'label' => __('Quadril'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('thigh', [
+                                'label' => __('Coxa'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('calf', [
+                                'label' => __('Panturrilha'),
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control('observation', [
+                                'label' => __('Observação'),
+                                'class' => 'form-control',
+                                'type' => 'textarea'
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group form-check">
+                            <?= $this->Form->control('active', [
+                                'label' => __('Ativo'),
+                                'class' => 'form-check-input',
+                                'type' => 'checkbox'
+                            ]) ?>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
+                    <?= __('Cancelar') ?>
+                </button>
+                <?= $this->Form->button(__('Salvar'), [
+                    'class' => 'btn modalEdit',
+                    'id' => 'editSaveButton-' . $assessment->id,
+                    'escape' => false
+                ]) ?>
+            </div>
+            <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
