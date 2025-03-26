@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -72,9 +73,9 @@ class ExerciseTrainingDivisionTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('order')
-            ->requirePresence('order', 'create')
-            ->notEmptyString('order');
+            ->integer('sort_order')
+            ->requirePresence('sort_order', 'create')
+            ->notEmptyString('sort_order');
 
         $validator
             ->integer('series')

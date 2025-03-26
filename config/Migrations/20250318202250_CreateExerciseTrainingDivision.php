@@ -16,7 +16,7 @@ class CreateExerciseTrainingDivision extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('exercise_training_division');
-        $table->addColumn('order', 'integer', [
+        $table->addColumn('sort_order', 'integer', [
             'default' => null,
             'null' => false,
         ]);

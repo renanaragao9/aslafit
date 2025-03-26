@@ -91,6 +91,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/planos-alimentares', ['controller' => 'DietPlans', 'action' => 'index']);
         $routes->connect('/plano-alimentar/visualizar/:id', ['controller' => 'DietPlans', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # exerciseTrainingDivision routes
+        $routes->connect('/ficha-exercicios', ['controller' => 'ExerciseTrainingDivision', 'action' => 'index']);
+        $routes->connect('/ficha-exercicio/visualizar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -236,5 +240,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/plano-alimentar-adicionar', ['controller' => 'DietPlans', 'action' => 'addDietPlans', 'method' => 'POST']);
         $routes->connect('/plano-alimentar-editar/:id', ['controller' => 'DietPlans', 'action' => 'editDietPlans', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/plano-alimentar-excluir/:id', ['controller' => 'DietPlans', 'action' => 'deleteDietPlans', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # ExerciseTrainingDivision routes API
+        $routes->connect('/ficha-exercicios', ['controller' => 'ExerciseTrainingDivision', 'action' => 'fetchExerciseTrainingDivisions', 'method' => 'GET']);
+        $routes->connect('/ficha-exercicio/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'fetchexerciseTrainingDivision', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-exercicio-adicionar', ['controller' => 'ExerciseTrainingDivision', 'action' => 'addExerciseTrainingDivision', 'method' => 'POST']);
+        $routes->connect('/ficha-exercicio-editar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'editExerciseTrainingDivision', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-exercicio-excluir/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'deleteExerciseTrainingDivision', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

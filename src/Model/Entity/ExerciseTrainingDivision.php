@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -38,7 +39,7 @@ class ExerciseTrainingDivision extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'order' => true,
+        'sort_order' => true,
         'series' => true,
         'repetitions' => true,
         'weight' => true,
