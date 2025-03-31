@@ -130,7 +130,11 @@ class ExerciseTrainingDivisionController extends AppController
         $service = new CreateService($this->ExerciseTrainingDivision);
 
         if ($this->request->is('post')) {
-            $result = $service->run($this->request->getData());
+            $data = $this->request->getData();
+            $exercises = json_decode($data['exercises'], true) ?? [];
+            dd($exercises);
+
+            $result = $service->run(['exercises' => $exercises]);
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
             return $this->redirect(['action' => 'index']);

@@ -17,14 +17,18 @@ class CreateService
 
     public function run(array $data): array
     {
-        if (!isset($data['exercises']) || !is_array($data['exercises'])) {
+        if (empty($data['exercises']) || !is_array($data['exercises'])) {
             return ['success' => false, 'message' => 'Nenhum exercício enviado.'];
         }
 
         $entities = $this->exerciseTrainingDivision->newEntities($data['exercises']);
 
         $errors = [];
+        $sortIndex = 1;
+
         foreach ($entities as $entity) {
+            $entity->sort_order = $sortIndex++;
+
             if (!$this->exerciseTrainingDivision->save($entity)) {
                 $errors[] = $entity->getErrors();
             }
@@ -36,6 +40,7 @@ class CreateService
 
         return ['success' => false, 'message' => 'Alguns exercícios não puderam ser salvos.', 'errors' => $errors];
     }
+
 
     public function getNewEntity()
     {
