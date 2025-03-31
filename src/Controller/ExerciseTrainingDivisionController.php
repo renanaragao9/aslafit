@@ -124,24 +124,16 @@ class ExerciseTrainingDivisionController extends AppController
     public function create(?int $fichaId = null): ?Response
     {
         if (!$this->checkPermission('ExerciseTrainingDivision/add')) {
-            return $this->response->withType('application/json')
-                ->withStringBody(json_encode(['success' => false, 'message' => 'Permissão negada.']));
+            return $this->redirect(['action' => 'index']);
         }
 
         $service = new CreateService($this->ExerciseTrainingDivision);
 
         if ($this->request->is('post')) {
-            $data = $this->request->input('json_decode', true); // <- pega JSON do body
+            $result = $service->run($this->request->getData());
 
-            if (empty($data['divisions'])) {
-                return $this->response->withType('application/json')
-                    ->withStringBody(json_encode(['success' => false, 'message' => 'Nenhum dado enviado.']));
-            }
-
-            $result = $service->run($data['divisions'], $fichaId); // passe o ID da ficha se necessário
-
-            return $this->response->withType('application/json')
-                ->withStringBody(json_encode($result));
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
         }
 
         $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
@@ -149,6 +141,7 @@ class ExerciseTrainingDivisionController extends AppController
         ]);
 
         $this->set('ficha', $ficha);
+
         $this->set($service->getViewData());
 
         return null;
