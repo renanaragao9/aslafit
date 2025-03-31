@@ -18,7 +18,7 @@ class ViewService
     public function run(int $id)
     {
         return $this->students->get($id, [
-            'contain' => ['Users', 'Assessments', 'Calleds', 'DietPlans', 'EventRegistrations', 'Fichas', 'MonthlyPlans']
+            'contain' => ['Users', 'Calleds', 'EventRegistrations', 'Fichas', 'MonthlyPlans']
         ]);
     }
 }

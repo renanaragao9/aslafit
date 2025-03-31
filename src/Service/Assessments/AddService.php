@@ -15,8 +15,13 @@ class AddService
         $this->assessments = $assessments;
     }
 
-    public function run(array $data): array
+    public function run(?int $id, array $data): array
     {
+
+        if (isset($data['ficha_id']) && $id !== null) {
+            $data['ficha_id'] = $id;
+        }
+
         $existingActiveAssessment = $this->assessments->find()
             ->where(['ficha_id' => $data['ficha_id'], 'active' => true])
             ->first();
@@ -31,7 +36,11 @@ class AddService
         $assessment = $this->assessments->newEntity($data);
 
         if ($this->assessments->save($assessment)) {
-            return ['success' => true, 'message' => 'Avaliação salva com sucesso.'];
+            return [
+                'success' => true,
+                'message' => 'Avaliação salva com sucesso.',
+                'id' => $assessment->id
+            ];
         }
 
         return ['success' => false, 'message' => 'Erro ao salvar a avaliação.'];

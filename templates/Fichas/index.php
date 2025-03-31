@@ -52,7 +52,7 @@ $this->assign('title', 'Fichas');
                         </div>
                         <div class="col-12 col-md-6 text-md-right">
                             <?php if (AccessChecker::hasPermission($loggedUserId, 'fichas/add')): ?>
-                                <button type="button" class="btn btn-add btn-sm mb-2 mb-md-0 col-12 col-md-auto" data-toggle="modal" data-target="#addNewItemModal">
+                                <button type="button" class="btn btn-add btn-sm mb-2 mb-md-0 col-12 col-md-auto" data-toggle="modal" data-target="#addNewItemModalFicha">
                                     Adicionar
                                 </button>
                             <?php endif; ?>

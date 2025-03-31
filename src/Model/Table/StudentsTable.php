@@ -13,9 +13,7 @@ use Cake\Validation\Validator;
  * Students Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\AssessmentsTable&\Cake\ORM\Association\HasMany $Assessments
  * @property \App\Model\Table\CalledsTable&\Cake\ORM\Association\HasMany $Calleds
- * @property \App\Model\Table\DietPlansTable&\Cake\ORM\Association\HasMany $DietPlans
  * @property \App\Model\Table\EventRegistrationsTable&\Cake\ORM\Association\HasMany $EventRegistrations
  * @property \App\Model\Table\FichasTable&\Cake\ORM\Association\HasMany $Fichas
  * @property \App\Model\Table\MonthlyPlansTable&\Cake\ORM\Association\HasMany $MonthlyPlans
@@ -58,9 +56,6 @@ class StudentsTable extends Table
             'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Calleds', [
-            'foreignKey' => 'student_id',
-        ]);
-        $this->hasMany('DietPlans', [
             'foreignKey' => 'student_id',
         ]);
         $this->hasMany('EventRegistrations', [

@@ -48,23 +48,23 @@ class StudentsController extends AppController
                     'CAST(Students.name AS CHAR) LIKE' => '%' . $search . '%',
                     'CAST(Students.birth_date AS CHAR) LIKE' => '%' . $search . '%',
                     'CAST(Students.entry_date AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.gender AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.weight AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.height AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.color AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.img AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.active AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.user_id AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.created AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Students.modified AS CHAR) LIKE' => '%' . $search . '%',
                 ],
             ];
         }
 
         $query = $this->Students->find('all', [
             'conditions' => $conditions,
-            'contain' => ['Users', 'Assessments', 'Calleds', 'DietPlans', 'EventRegistrations', 'Fichas', 'MonthlyPlans'],
+            'contain' => [
+                'Users',
+                'Calleds',
+                'EventRegistrations',
+                'MonthlyPlans',
+                'Fichas' => function ($q) {
+                    return $q->where(['Fichas.active' => true]);
+                },
+            ],
         ]);
+
 
         $students = $this->paginate($query);
 

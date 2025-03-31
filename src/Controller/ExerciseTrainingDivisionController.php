@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\ExerciseTrainingDivision\AddService;
+use App\Service\ExerciseTrainingDivision\CreateService;
 use App\Service\ExerciseTrainingDivision\ViewService;
 use App\Service\ExerciseTrainingDivision\EditService;
 use App\Service\ExerciseTrainingDivision\DeleteService;
@@ -119,6 +120,40 @@ class ExerciseTrainingDivisionController extends AppController
         $this->set('exerciseTrainingDivision', $service->getNewEntity());
         return null;
     }
+
+    public function create(?int $fichaId = null): ?Response
+    {
+        if (!$this->checkPermission('ExerciseTrainingDivision/add')) {
+            return $this->response->withType('application/json')
+                ->withStringBody(json_encode(['success' => false, 'message' => 'Permissão negada.']));
+        }
+
+        $service = new CreateService($this->ExerciseTrainingDivision);
+
+        if ($this->request->is('post')) {
+            $data = $this->request->input('json_decode', true); // <- pega JSON do body
+
+            if (empty($data['divisions'])) {
+                return $this->response->withType('application/json')
+                    ->withStringBody(json_encode(['success' => false, 'message' => 'Nenhum dado enviado.']));
+            }
+
+            $result = $service->run($data['divisions'], $fichaId); // passe o ID da ficha se necessário
+
+            return $this->response->withType('application/json')
+                ->withStringBody(json_encode($result));
+        }
+
+        $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
+            'contain' => ['Students']
+        ]);
+
+        $this->set('ficha', $ficha);
+        $this->set($service->getViewData());
+
+        return null;
+    }
+
 
     public function edit(?int $id = null): ?Response
     {

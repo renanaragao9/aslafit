@@ -89,6 +89,11 @@ class FichasController extends AppController
             $result = $service->run($this->request->getData());
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+
+            if ($result['success']) {
+                return $this->redirect(['action' => 'view', $result['id']]);
+            }
+
             return $this->redirect(['action' => 'index']);
         }
 

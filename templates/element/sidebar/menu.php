@@ -120,11 +120,10 @@ $menuSections = [
 
 <li class="nav-item">
   <a href="/alunos" class="nav-link <?= $this->request->getPath() === '/students' ? 'active' : '' ?>">
-    <i class="nav-icon fas fa-users"></i>
+    <i class="fa-regular fa-users"></i>
     <p>Alunos</p>
   </a>
 </li>
-
 
 <?php
 foreach ($menuSections as $section) {

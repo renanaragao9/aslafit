@@ -89,7 +89,7 @@ class AssessmentsController extends AppController
         $this->set(compact('assessment'));
     }
 
-    public function add(): ?Response
+    public function add(?int $id = null): ?Response
     {
         if (!$this->checkPermission('Assessments/add')) {
             return $this->redirect(['action' => 'index']);
@@ -98,10 +98,15 @@ class AssessmentsController extends AppController
         $service = new AddService($this->Assessments);
 
         if ($this->request->is('post')) {
-            $result = $service->run($this->request->getData());
+            $result = $service->run($id, $this->request->getData());
 
-            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
-            return $this->redirect(['action' => 'index']);
+            if ($result['success']) {
+                $this->Flash->success($result['message']);
+                return $this->redirect(['action' => 'view', $result['id']]);
+            } else {
+                $this->Flash->error($result['message']);
+                return $this->redirect($this->referer());
+            }
         }
 
         $this->set('assessment', $service->getNewEntity());

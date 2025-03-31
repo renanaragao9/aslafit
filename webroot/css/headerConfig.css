@@ -32,6 +32,9 @@ body {
     --color-text-gray-dark: #333333;
     --color-text-white: #ffffff;
 
+    --color-text-card-view: #6c757d;
+    --color-bg-card-view: #6c757d;
+
     --color-bg-success: #28a745;
     --color-bg-warning: #ffc107;
     --color-bg-error: #dc3545;
@@ -379,6 +382,34 @@ hr {
     border-radius: 10px;
 }
 
+.card-secondary.card-outline {
+    border-top: 3px solid var(--color-bg-card-view);
+    border-bottom: 1px solid var(--color-bg-card-view);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-bg-gray-light);
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-secondary.card-outline:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-success.card-outline {
+    border-top: 3px solid var(--color-bg-card-view);
+    border-bottom: 1px solid var(--color-bg-card-view);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-bg-gray-light);
+    padding: 1rem;
+}
+
+.card-success.card-outline:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
 .modal-actions {
     display: flex;
     gap: 10px;
@@ -388,6 +419,15 @@ hr {
 .table-buttons {
     display: flex;
     gap: 8px;
+}
+
+.btn-outline-success {
+    color: var(--color-bg-orange-3e) !important;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--color-bg-orange-3e) !important;
+    color: var(--color-text-white) !important;
 }
 
 .form-control {

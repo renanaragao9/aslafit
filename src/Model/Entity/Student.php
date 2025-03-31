@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -23,7 +24,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Assessment[] $assessments
  * @property \App\Model\Entity\Called[] $calleds
  * @property \App\Model\Entity\DietPlan[] $diet_plans
  * @property \App\Model\Entity\EventRegistration[] $event_registrations
@@ -55,9 +55,7 @@ class Student extends Entity
         'created' => true,
         'modified' => true,
         'user' => true,
-        'assessments' => true,
         'calleds' => true,
-        'diet_plans' => true,
         'event_registrations' => true,
         'fichas' => true,
         'monthly_plans' => true,

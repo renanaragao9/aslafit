@@ -111,6 +111,17 @@ $this->assign('title', 'Alunos');
                                             <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $student->id ?>">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+                                            <?php if (!empty($student->fichas)): ?>
+                                                <?php foreach ($student->fichas as $ficha): ?>
+                                                    <a href="<?= $this->Url->build(['controller' => 'Fichas', 'action' => 'view', $ficha->id]) ?>" class="btn btn-view btn-sm">
+                                                        <i class="fa-regular fa-clipboard-list"></i>
+                                                    </a>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#addNewItemModalFicha" onclick="setStudentId(<?= $student->id ?>)">
+                                                    <i class="fa-regular fa-clipboard"></i>
+                                                </a>
+                                            <?php endif; ?>
                                             <?php if (AccessChecker::hasPermission($loggedUserId, 'students/edit')): ?>
                                                 <a href="#" class="btn btn-edit btn-sm" data-toggle="modal" data-target="#editModal-<?= $student->id ?>">
                                                     <i class="fas fa-edit"></i>
@@ -128,6 +139,7 @@ $this->assign('title', 'Alunos');
                                     include __DIR__ . '/edit.php';
                                     include __DIR__ . '/delete.php';
                                     include __DIR__ . '/view_index.php';
+                                    include __DIR__ . '/add_ficha.php';
                                     ?>
 
                                 <?php endforeach; ?>
@@ -156,5 +168,3 @@ $this->assign('title', 'Alunos');
 <?php
 include __DIR__ . '/add.php';
 ?>
-
-</div>

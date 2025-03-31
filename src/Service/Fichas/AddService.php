@@ -33,7 +33,11 @@ class AddService
         $ficha = $this->fichas->newEntity($data);
 
         if ($this->fichas->save($ficha)) {
-            return ['success' => true, 'message' => 'Ficha salva com sucesso.'];
+            return [
+                'success' => true,
+                'message' => 'Ficha salva com sucesso.',
+                'id' => $ficha->id
+            ];
         }
 
         return ['success' => false, 'message' => 'Erro ao salvar a ficha.'];

@@ -18,7 +18,15 @@ class ViewService
     public function run(int $id)
     {
         return $this->fichas->get($id, [
-            'contain' => ['Students', 'Assessments', 'DietPlans', 'ExerciseTrainingDivision']
+            'contain' => [
+                'Students',
+                'Assessments',
+                'DietPlans' => [
+                    'MealTypes',
+                    'Foods'
+                ],
+                'ExerciseTrainingDivision'
+            ]
         ]);
     }
 }
