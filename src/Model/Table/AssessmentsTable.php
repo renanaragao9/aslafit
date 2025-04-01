@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -77,12 +78,6 @@ class AssessmentsTable extends Table
             ->allowEmptyString('observation');
 
         $validator
-            ->scalar('term')
-            ->maxLength('term', 255)
-            ->requirePresence('term', 'create')
-            ->notEmptyString('term');
-
-        $validator
             ->decimal('height')
             ->requirePresence('height', 'create')
             ->notEmptyString('height');
@@ -135,10 +130,6 @@ class AssessmentsTable extends Table
         $validator
             ->integer('ficha_id')
             ->allowEmptyString('ficha_id');
-
-        $validator
-            ->boolean('active')
-            ->notEmptyString('active');
 
         return $validator;
     }

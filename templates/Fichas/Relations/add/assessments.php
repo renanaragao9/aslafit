@@ -12,30 +12,17 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['controller' => 'Assessments', 'action' => 'add', $ficha->id]]) ?>
                 <div class="row">
-                    <?= $this->Form->hidden('ficha_id', ['id' => 'assessmentFichaId']) ?>
+                    <?= $this->Form->control('ficha_id', [
+                        'type' => 'hidden',
+                        'value' => $ficha->id
+                    ]) ?>
 
-                    <div class="col-lg-6 col-s12">
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control('goal', [
                                 'label' => __('Objetivo'),
                                 'class' => 'form-control',
                                 'type' => 'text',
-                                'required' => true
-                            ]) ?>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('term', [
-                                'label' => __('Prazo'),
-                                'options' => [
-                                    '1 mes' => __('1 mês'),
-                                    '2 meses' => __('2 meses'),
-                                    '3 meses' => __('3 meses')
-                                ],
-                                'empty' => __('Selecione um prazo'),
-                                'class' => 'form-control',
                                 'required' => true
                             ]) ?>
                         </div>
@@ -168,17 +155,6 @@
                                 'label' => __('Observação'),
                                 'class' => 'form-control',
                                 'type' => 'textarea'
-                            ]) ?>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12 col-s12">
-                        <div class="form-group form-check">
-                            <?= $this->Form->control('active', [
-                                'label' => __('Ativo'),
-                                'class' => 'form-check-input',
-                                'type' => 'checkbox',
-                                'checked' => true
                             ]) ?>
                         </div>
                     </div>

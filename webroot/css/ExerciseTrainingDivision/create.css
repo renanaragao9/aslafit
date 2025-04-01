@@ -47,3 +47,20 @@
     width: 100%;
     height: 100%;
 }
+
+.btn-move-up,
+.btn-move-down {
+    margin: 0 2px;
+}
+
+.btn-move-up:hover,
+.btn-move-down:hover {
+    background: var(--color-bg-orange-3e);
+    color: white;
+}
+
+.btn-move-up:disabled,
+.btn-move-down:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -26,11 +26,6 @@ class CreateAssessments extends AbstractMigration
             'limit' => 255,
             'null' => true,
         ]);
-        $table->addColumn('term', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
         $table->addColumn('height', 'decimal', [
             'default' => null,
             'precision' => 5,
@@ -100,10 +95,6 @@ class CreateAssessments extends AbstractMigration
         $table->addColumn('ficha_id', 'integer', [
             'default' => null,
             'null' => true,
-        ]);
-        $table->addColumn('active', 'boolean', [
-            'default' => true,
-            'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,

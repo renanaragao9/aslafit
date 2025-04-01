@@ -32,10 +32,6 @@
                                     <span> <?= h($assessment->observation) ?> </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Prazo:</strong>
-                                    <span> <?= h($assessment->term) ?> </span>
-                                </li>
-                                <li class="list-group-item">
                                     <strong>Altura:</strong>
                                     <span> <?= $this->Number->format($assessment->height) ?> </span>
                                 </li>
@@ -83,10 +79,6 @@
                                 <li class="list-group-item">
                                     <strong>Panturrilha:</strong>
                                     <span> <?= $assessment->calf === null ? '-' : $this->Number->format($assessment->calf) ?> </span>
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Ativo:</strong>
-                                    <span><?= $assessment->active ? 'Sim' : 'Não' ?> </span>
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Criado:</strong>

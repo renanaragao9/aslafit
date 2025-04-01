@@ -20,7 +20,7 @@ class EditService
         $assessment = $this->assessments->get($id);
 
         $existingActiveAssessment = $this->assessments->find()
-            ->where(['ficha_id' => $data['ficha_id'], 'active' => true, 'id !=' => $id])
+            ->where(['ficha_id' => $data['ficha_id'], 'id !=' => $id])
             ->first();
 
         if ($existingActiveAssessment) {

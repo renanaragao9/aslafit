@@ -93,9 +93,6 @@ $this->assign('title', 'Avaliações');
                                     <th>
                                         <?= $this->Paginator->sort('weight', 'Peso') ?>
                                     </th>
-                                    <th>
-                                        <?= $this->Paginator->sort('active', 'Ativo') ?>
-                                    </th>
                                     <th class="actions">
                                         <?= __('Ações') ?>
                                     </th>
@@ -121,13 +118,6 @@ $this->assign('title', 'Avaliações');
                                         </td>
                                         <td>
                                             <?= $this->Number->format($assessment->weight) ?>
-                                        </td>
-                                        <td>
-                                            <?php if ($assessment->active): ?>
-                                                <span class="badge badge-success"><?= __('Sim') ?></span>
-                                            <?php else: ?>
-                                                <span class="badge badge-danger"><?= __('Não') ?></span>
-                                            <?php endif; ?>
                                         </td>
                                         <td class="actions">
                                             <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $assessment->id ?>">

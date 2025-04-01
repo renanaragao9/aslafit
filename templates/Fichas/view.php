@@ -1,5 +1,6 @@
 <?php
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
+$this->Html->css('Fichas/view.css', ['block' => true]);
 $this->assign('title', 'Visualizar ficha');
 ?>
 <section class="content mt-4">

@@ -46,7 +46,6 @@ class Assessment extends Entity
     protected $_accessible = [
         'goal' => true,
         'observation' => true,
-        'term' => true,
         'height' => true,
         'weight' => true,
         'arm' => true,
@@ -59,7 +58,6 @@ class Assessment extends Entity
         'thigh' => true,
         'calf' => true,
         'ficha_id' => true,
-        'active' => true,
         'created' => true,
         'modified' => true,
         'ficha' => true,

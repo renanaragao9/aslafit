@@ -10,6 +10,9 @@ $this->assign('title', 'Visualizar avaliação');
                     <div class="row align-items-center">
                         <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                             <h3 class="card-title">
+                                <a href="javascript:history.back()" class="mr-2">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </a>
                                 <?= __('Visualizar avaliação') ?>
                             </h3>
                         </div>
@@ -35,89 +38,159 @@ $this->assign('title', 'Visualizar avaliação');
                     <hr />
                 </div>
             </div>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <h5 class="mb-1"><?= __('Objetivo') ?></h5>
+                        <p class="mb-0 text-muted"><?= h($assessment->goal) ?></p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h5 class="mb-1"><?= __('Observação') ?></h5>
+                        <p class="mb-0 text-muted"><?= h($assessment->observation) ?></p>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Id'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $this->Number->format($assessment->id) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Ficha'); ?></label>
-                            <div class="col-sm-8 control-label">
-                                <?= $assessment->has('ficha') ? $this->Html->link($assessment->ficha->student->name, ['controller' => 'Fichas', 'action' => 'view', $assessment->ficha->id]) : '' ?>
-                            </div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Objetivo'); ?></label>
-                            <div class="col-sm-8 control-label"><?= h($assessment->goal) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Observação'); ?></label>
-                            <div class="col-sm-8 control-label"><?= h($assessment->observation) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Prazo'); ?></label>
-                            <div class="col-sm-8 control-label"><?= h($assessment->term) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Altura'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $this->Number->format($assessment->height) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Peso'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $this->Number->format($assessment->weight) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Braço'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->arm === null ? '' : $this->Number->format($assessment->arm) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Antebraço'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->forearm === null ? '' : $this->Number->format($assessment->forearm) ?></div>
-                        </div>
+                    <div class="col-12 col-md-6">
+                        <ol class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/fita-metrica.png') ?>"
+                                        alt="<?= __('Altura') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Altura') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->height) ?> m</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/balanca-corporal.png') ?>"
+                                        alt="<?= __('Peso') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Peso') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->weight) ?> kg</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/braco-masc.png') ?>"
+                                        alt="<?= __('Braço') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Braço') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->arm) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/antebraco-masc.png') ?>"
+                                        alt="<?= __('Antebraço') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Antebraço') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->forearm) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/peito-masc.png') ?>"
+                                        alt="<?= __('Peitoral') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Peitoral') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->breastplate) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/costas-masc.png') ?>"
+                                        alt="<?= __('Costas') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Costas') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->back) ?> cm</p>
+                                </div>
+                            </li>
+                        </ol>
                     </div>
-                    <div class="col-md-6">
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Peitoral'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->breastplate === null ? '' : $this->Number->format($assessment->breastplate) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Costas'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->back === null ? '' : $this->Number->format($assessment->back) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Cintura'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->waist === null ? '' : $this->Number->format($assessment->waist) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Glúteo'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->glute === null ? '' : $this->Number->format($assessment->glute) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Quadril'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->hip === null ? '' : $this->Number->format($assessment->hip) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Coxa'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->thigh === null ? '' : $this->Number->format($assessment->thigh) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Panturrilha'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->calf === null ? '' : $this->Number->format($assessment->calf) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Ativo'); ?></label>
-                            <div class="col-sm-8 control-label"><?= $assessment->active ? __('Sim') : __('Não'); ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Criado'); ?></label>
-                            <div class="col-sm-8 control-label"><?= h($assessment->created) ?></div>
-                        </div>
-                        <div class="row item-row">
-                            <label class="col-sm-4 control-label"><?= __('Modificado'); ?></label>
-                            <div class="col-sm-8 control-label"><?= h($assessment->modified) ?></div>
-                        </div>
+                    <div class="col-12 col-md-6">
+                        <ol class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/cintura.png') ?>"
+                                        alt="<?= __('Cintura') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Cintura') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->waist) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/gluteo-fem.png') ?>"
+                                        alt="<?= __('Glúteo') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Glúteo') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->glute) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/quadril-fem.png') ?>"
+                                        alt="<?= __('Quadril') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Quadril') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->hip) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/coxa-masc.png') ?>"
+                                        alt="<?= __('Coxa') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Coxa') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->thigh) ?> cm</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-3">
+                                <div class="mr-3">
+                                    <img src="<?= $this->Url->build('/img/assessments/panturrilha-masc.png') ?>"
+                                        alt="<?= __('Panturrilha') ?>"
+                                        class="img-thumbnail rounded"
+                                        id="assessment-image">
+                                </div>
+                                <div class="flex-fill">
+                                    <h5 class="mb-1"><?= __('Panturrilha') ?></h5>
+                                    <p class="mb-0 text-muted"><?= h($assessment->calf) ?> cm</p>
+                                </div>
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </div>

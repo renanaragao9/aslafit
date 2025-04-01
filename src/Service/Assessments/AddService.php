@@ -23,13 +23,13 @@ class AddService
         }
 
         $existingActiveAssessment = $this->assessments->find()
-            ->where(['ficha_id' => $data['ficha_id'], 'active' => true])
+            ->where(['ficha_id' => $data['ficha_id']])
             ->first();
 
         if ($existingActiveAssessment) {
             return [
                 'success' => false,
-                'message' => 'Já existe uma avaliação ativa para esta ficha.'
+                'message' => 'Já existe uma avaliação para esta ficha.'
             ];
         }
 

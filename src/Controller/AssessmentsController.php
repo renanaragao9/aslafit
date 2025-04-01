@@ -102,7 +102,7 @@ class AssessmentsController extends AppController
 
             if ($result['success']) {
                 $this->Flash->success($result['message']);
-                return $this->redirect(['action' => 'view', $result['id']]);
+                return $this->redirect($this->referer());
             } else {
                 $this->Flash->error($result['message']);
                 return $this->redirect($this->referer());
@@ -125,7 +125,7 @@ class AssessmentsController extends AppController
             $result = $service->run($id, $this->request->getData());
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect($this->referer());
         }
 
         $this->set($service->getEditData($id));

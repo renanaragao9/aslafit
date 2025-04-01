@@ -35,26 +35,12 @@
                     </div>
                     <div class="col-lg-4 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('term', [
-                                'label' => __('Prazo'),
-                                'options' => [
-                                    '1 mes' => __('1 mês'),
-                                    '2 meses' => __('2 meses'),
-                                    '3 meses' => __('3 meses')
-                                ],
-                                'empty' => __('Selecione um prazo'),
-                                'class' => 'form-control',
-                                'required' => true
-                            ]) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-s12">
-                        <div class="form-group">
                             <?= $this->Form->control('height', [
                                 'label' => __('Altura'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -64,7 +50,8 @@
                                 'label' => __('Peso'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -74,7 +61,8 @@
                                 'label' => __('Braço'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -84,7 +72,8 @@
                                 'label' => __('Antebraço'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -94,7 +83,8 @@
                                 'label' => __('Peitoral'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -104,7 +94,8 @@
                                 'label' => __('Costas'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -114,7 +105,8 @@
                                 'label' => __('Cintura'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -124,7 +116,8 @@
                                 'label' => __('Glúteo'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -134,7 +127,8 @@
                                 'label' => __('Quadril'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -144,7 +138,8 @@
                                 'label' => __('Coxa'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -154,7 +149,8 @@
                                 'label' => __('Panturrilha'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01'
+                                'step' => '0.01',
+                                'min' => '1'
                             ]) ?>
                         </div>
                     </div>
@@ -164,16 +160,6 @@
                                 'label' => __('Observação'),
                                 'class' => 'form-control',
                                 'type' => 'textarea'
-                            ]) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-s12">
-                        <div class="form-group form-check">
-                            <?= $this->Form->control('active', [
-                                'label' => __('Ativo'),
-                                'class' => 'form-check-input',
-                                'type' => 'checkbox',
-                                'checked' => true
                             ]) ?>
                         </div>
                     </div>

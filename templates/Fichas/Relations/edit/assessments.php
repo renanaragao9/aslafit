@@ -10,20 +10,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create($assessment, ['url' => ['action' => 'edit', $assessment->id], 'id' => 'editForm-' . $assessment->id]) ?>
+                <?= $this->Form->create($assessment, ['url' => ['controller' => 'Assessments', 'action' => 'edit', $assessment->id], 'id' => 'editForm-' . $assessment->id]) ?>
                 <div class="row">
-                    <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('ficha_id', [
-                                'label' => __('Ficha'),
-                                'options' => $fichas,
-                                'empty' => __('Selecione uma opção'),
-                                'class' => 'form-control',
-                                'required' => true
-                            ]) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-s12">
+                    <?= $this->Form->control('ficha_id', [
+                        'type' => 'hidden',
+                        'value' => $ficha->id
+                    ]) ?>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control('goal', [
                                 'label' => __('Objetivo'),
@@ -38,8 +31,7 @@
                                 'label' => __('Altura'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -49,8 +41,7 @@
                                 'label' => __('Peso'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -60,8 +51,7 @@
                                 'label' => __('Braço'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -71,8 +61,7 @@
                                 'label' => __('Antebraço'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -82,8 +71,7 @@
                                 'label' => __('Peitoral'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -93,8 +81,7 @@
                                 'label' => __('Costas'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -104,8 +91,7 @@
                                 'label' => __('Cintura'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -115,8 +101,7 @@
                                 'label' => __('Glúteo'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -126,8 +111,7 @@
                                 'label' => __('Quadril'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -137,8 +121,7 @@
                                 'label' => __('Coxa'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>
@@ -148,8 +131,7 @@
                                 'label' => __('Panturrilha'),
                                 'class' => 'form-control',
                                 'type' => 'number',
-                                'step' => '0.01',
-                                'min' => '1'
+                                'step' => '0.01'
                             ]) ?>
                         </div>
                     </div>

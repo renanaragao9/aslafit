@@ -132,9 +132,11 @@ class ExerciseTrainingDivisionController extends AppController
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $exercises = json_decode($data['exercises'], true) ?? [];
-            dd($exercises);
 
-            $result = $service->run(['exercises' => $exercises]);
+            $result = $service->run([
+                'ficha_id' => $fichaId,
+                'exercises' => $exercises,
+            ]);
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
             return $this->redirect(['action' => 'index']);
@@ -150,7 +152,6 @@ class ExerciseTrainingDivisionController extends AppController
 
         return null;
     }
-
 
     public function edit(?int $id = null): ?Response
     {

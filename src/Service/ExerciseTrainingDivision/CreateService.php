@@ -21,16 +21,32 @@ class CreateService
             return ['success' => false, 'message' => 'Nenhum exercício enviado.'];
         }
 
-        $entities = $this->exerciseTrainingDivision->newEntities($data['exercises']);
+        $groupedExercises = [];
+        foreach ($data['exercises'] as $exercise) {
+            $divisionId = $exercise['exercise_data[training_division_id]'] ?? null;
+            if ($divisionId) {
+                $groupedExercises[$divisionId][] = [
+                    'training_division_id' => $exercise['exercise_data[training_division_id]'],
+                    'series' => $exercise['exercise_data[series]'],
+                    'repetitions' => $exercise['exercise_data[repetitions]'],
+                    'weight' => $exercise['exercise_data[weight]'] ?? null,
+                    'rest' => $exercise['exercise_data[rest]'] ?? null,
+                    'description' => $exercise['exercise_data[description]'] ?? null,
+                    'ficha_id' => $data['ficha_id'],
+                    'exercise_id' => $exercise['exercise_id'],
+                ];
+            }
+        }
 
         $errors = [];
-        $sortIndex = 1;
+        foreach ($groupedExercises as $divisionId => $exercises) {
+            foreach ($exercises as $index => $exerciseData) {
+                $exerciseData['sort_order'] = $index + 1;
+                $entity = $this->exerciseTrainingDivision->newEntity($exerciseData);
 
-        foreach ($entities as $entity) {
-            $entity->sort_order = $sortIndex++;
-
-            if (!$this->exerciseTrainingDivision->save($entity)) {
-                $errors[] = $entity->getErrors();
+                if (!$this->exerciseTrainingDivision->save($entity)) {
+                    $errors[] = $entity->getErrors();
+                }
             }
         }
 
@@ -40,7 +56,6 @@ class CreateService
 
         return ['success' => false, 'message' => 'Alguns exercícios não puderam ser salvos.', 'errors' => $errors];
     }
-
 
     public function getNewEntity()
     {
@@ -61,7 +76,6 @@ class CreateService
             ->contain(['Students'])
             ->toArray();
 
-        // Controller - dentro do create() ou getViewData() no service
         $exercises = $this->exerciseTrainingDivision->Exercises
             ->find()
             ->contain(['Equipments', 'MuscleGroups'])
