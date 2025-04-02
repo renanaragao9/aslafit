@@ -57,10 +57,18 @@ $this->assign('title', 'Titulo');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
+                        <?= __('Tipo de alimento'); ?>
+                    </label>
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
+                        <?= $food->food_type ? h($food->food_type->name) : '-' ?>
+                    </div>
+                </div>
+                <div class="row item-row">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
                         <?= __('Link'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                        <?= h($food->link) ?>
+                        <?= $food->link ? h($food->link) : '-' ?>
                     </div>
                 </div>
                 <div class="row item-row">

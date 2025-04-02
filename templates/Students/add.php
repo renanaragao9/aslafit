@@ -117,7 +117,8 @@
                                 [
                                     'label' => 'Ativo',
                                     'type' => 'checkbox',
-                                    'class' => 'form-check-input'
+                                    'class' => 'form-check-input',
+                                    'checked' => true,
                                 ]
                             )
                             ?>

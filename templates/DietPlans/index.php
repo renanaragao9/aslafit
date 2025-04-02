@@ -87,9 +87,6 @@ $this->assign('title', 'Planos Alimentares');
                                     <th>
                                         <?= $this->Paginator->sort('food_id', 'Alimento') ?>
                                     </th>
-                                    <th>
-                                        <?= $this->Paginator->sort('active', 'Ativo') ?>
-                                    </th>
                                     <th class="actions">
                                         <?= __('Ações') ?>
                                     </th>
@@ -110,14 +107,7 @@ $this->assign('title', 'Planos Alimentares');
                                         <td>
                                             <?= $dietPlan->food ? h($dietPlan->food->name) : '-' ?>
                                         </td>
-                                        <td>
-                                            <?php if ($dietPlan->active): ?>
-                                                <span class="badge badge-success"><?= __('Sim') ?></span>
-                                            <?php else: ?>
-                                                <span class="badge badge-danger"><?= __('Não') ?></span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
+
                                         <td class="actions">
                                             <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $dietPlan->id ?>">
                                                 <i class="fas fa-eye"></i>

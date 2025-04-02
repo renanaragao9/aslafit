@@ -19,15 +19,17 @@
                                     <strong>Id:</strong>
                                     <span> <?= h($food->id) ?> </span>
                                 </li>
-
                                 <li class="list-group-item">
                                     <strong>Nome:</strong>
                                     <span> <?= h($food->name) ?> </span>
                                 </li>
-
+                                <li class="list-group-item">
+                                    <strong>Tipo de alimento:</strong>
+                                    <span> <?= h($food->food_type->name ?? '-') ?> </span>
+                                </li>
                                 <li class="list-group-item">
                                     <strong>Link:</strong>
-                                    <span> <?= h($food->link) ?> </span>
+                                    <span> <?= !empty($food->link) ? h($food->link) : '-' ?> </span>
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Ativo:</strong>
@@ -37,13 +39,11 @@
                                     <strong>Criado:</strong>
                                     <span><?= h($food->created) ?> </span>
                                 </li>
-
                                 <li class="list-group-item">
                                     <strong>Modificado:</strong>
                                     <span><?= h($food->modified) ?> </span>
                                 </li>
                             </ul>
-                            <hr />
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,6 @@ $this->assign('title', 'Alimentos');
                                     </nav>
                                 </div>
                             </div>
-                            <hr />
                         </div>
                     </div>
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
@@ -78,6 +77,9 @@ $this->assign('title', 'Alimentos');
                                         <?= $this->Paginator->sort('name', 'Nome') ?>
                                     </th>
                                     <th>
+                                        <?= $this->Paginator->sort('food_type_id', 'Tipo de alimento') ?>
+                                    </th>
+                                    <th>
                                         <?= $this->Paginator->sort('active', 'Ativo') ?>
                                     </th>
                                     <th>
@@ -99,6 +101,9 @@ $this->assign('title', 'Alimentos');
                                         </td>
                                         <td>
                                             <?= h($food->name) ?>
+                                        </td>
+                                        <td>
+                                            <?= $food->food_type ? h($food->food_type->name) : '-' ?>
                                         </td>
                                         <td>
                                             <?php if ($food->active): ?>

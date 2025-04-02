@@ -111,10 +111,10 @@ $this->assign('title', 'Visualizar ficha');
         <?php include __DIR__ . '/Relations/assessments.php'; ?>
     </div>
     <div class="col-12 col-md-6">
-        <?php include __DIR__ . '/Relations/exerciseTraining.php'; ?>
+        <?php include __DIR__ . '/Relations/dietPlans.php'; ?>
     </div>
     <div class="col-12 col-md-6">
-        <?php include __DIR__ . '/Relations/dietPlans.php'; ?>
+        <?php include __DIR__ . '/Relations/exerciseTraining.php'; ?>
     </div>
 </div>
 

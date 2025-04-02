@@ -46,22 +46,24 @@ class FoodsController extends AppController
                 'OR' => [
                     'CAST(Foods.id AS CHAR) LIKE' => '%' . $search . '%',
                     'CAST(Foods.name AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Foods.link AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Foods.active AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Foods.created AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(Foods.modified AS CHAR) LIKE' => '%' . $search . '%',
+                    'CAST(FoodTypes.name AS CHAR) LIKE' => '%' . $search . '%',
                 ],
             ];
         }
 
         $query = $this->Foods->find('all', [
             'conditions' => $conditions,
-            'contain' => ['DietPlans'],
+            'contain' => ['DietPlans', 'FoodTypes'],
         ]);
 
         $foods = $this->paginate($query);
 
-        $this->set(compact('foods'));
+        $foodTypes = $this->Foods->FoodTypes->find('list', [
+            'limit' => 200,
+            'order' => ['name' => 'ASC']
+        ])->all();
+
+        $this->set(compact('foods', 'foodTypes'));
     }
 
     public function view($id = null)

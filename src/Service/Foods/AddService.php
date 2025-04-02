@@ -17,6 +17,16 @@ class AddService
 
     public function run(array $data): array
     {
+        if (!empty($data['image']) && $data['image']->getError() === UPLOAD_ERR_OK) {
+            $ext = pathinfo($data['image']->getClientFilename(), PATHINFO_EXTENSION);
+            $filename = uniqid() . '.' . $ext;
+            $imagePath = WWW_ROOT . 'img' . DS . 'Foods' . DS . $filename;
+            $data['image']->moveTo($imagePath);
+            $data['image'] = $filename;
+        } else {
+            unset($data['image']);
+        }
+
         $food = $this->foods->newEntity($data);
 
         if ($this->foods->save($food)) {

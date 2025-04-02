@@ -125,9 +125,9 @@ $this->assign('title', 'Cargos');
                                     </tr>
 
                                     <?php
+                                    include __DIR__ . '/detail.php';
                                     include __DIR__ . '/edit.php';
                                     include __DIR__ . '/delete.php';
-                                    include __DIR__ . '/view_index.php';
                                     ?>
                                 <?php endforeach; ?>
                             </tbody>

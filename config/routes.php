@@ -32,6 +32,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'index']);
         $routes->connect('/grupo-muscular/visualizar/:id', ['controller' => 'MuscleGroups', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # foodTypes routes
+        $routes->connect('/tipo-alimentos', ['controller' => 'FoodTypes', 'action' => 'index']);
+        $routes->connect('/tipo-alimento/visualizar/:id', ['controller' => 'FoodTypes', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # foods routes
         $routes->connect('/alimentos', ['controller' => 'Foods', 'action' => 'index']);
         $routes->connect('/alimento/visualizar/:id', ['controller' => 'Foods', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
@@ -135,6 +139,13 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/grupo-muscular-adicionar', ['controller' => 'MuscleGroups', 'action' => 'addMuscleGroups', 'method' => 'POST']);
         $routes->connect('/grupo-muscular-editar/:id', ['controller' => 'MuscleGroups', 'action' => 'editMuscleGroups', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/grupo-muscular-excluir/:id', ['controller' => 'MuscleGroups', 'action' => 'deleteMuscleGroups', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # FoodTypes routes API
+        $routes->connect('/tipo-alimentos', ['controller' => 'FoodTypes', 'action' => 'fetchFoodTypes', 'method' => 'GET']);
+        $routes->connect('/tipo-alimento/:id', ['controller' => 'FoodTypes', 'action' => 'fetchfoodType', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-alimento-adicionar', ['controller' => 'FoodTypes', 'action' => 'addFoodTypes', 'method' => 'POST']);
+        $routes->connect('/tipo-alimento-editar/:id', ['controller' => 'FoodTypes', 'action' => 'editFoodTypes', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/tipo-alimento-excluir/:id', ['controller' => 'FoodTypes', 'action' => 'deleteFoodTypes', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
 
         # Foods routes API
         $routes->connect('/alimentos', ['controller' => 'Foods', 'action' => 'fetchFoods', 'method' => 'GET']);

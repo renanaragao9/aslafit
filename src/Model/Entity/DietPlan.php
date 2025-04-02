@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -12,7 +13,6 @@ class DietPlan extends Entity
         'meal_type_id' => true,
         'food_id' => true,
         'ficha_id' => true,
-        'active' => true,
         'created' => true,
         'modified' => true,
         'meal_type' => true,

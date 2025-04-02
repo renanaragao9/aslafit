@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\DietPlans\AddService;
+use App\Service\DietPlans\CreateService;
 use App\Service\DietPlans\ViewService;
 use App\Service\DietPlans\EditService;
 use App\Service\DietPlans\DeleteService;
@@ -118,6 +119,32 @@ class DietPlansController extends AppController
         }
 
         $this->set('dietPlan', $service->getNewEntity());
+        return null;
+    }
+
+    public function create(?int $fichaId = null): ?Response
+    {
+        if (!$this->checkPermission('DietPlans/add')) {
+            return $this->redirect(['action' => 'add']);
+        }
+
+        $service = new CreateService($this->DietPlans);
+
+        if ($this->request->is('post')) {
+            $result = $service->run($this->request->getData());
+
+            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $ficha = $this->DietPlans->Fichas->get($fichaId, [
+            'contain' => ['Students']
+        ]);
+
+        $this->set('ficha', $ficha);
+        $this->set('dietPlan', $service->getNewEntity());
+
+        $this->set($service->getViewData());
         return null;
     }
 

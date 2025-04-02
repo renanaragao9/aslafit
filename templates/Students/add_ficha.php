@@ -46,6 +46,7 @@
                             <?= $this->Form->control(
                                 'description',
                                 [
+                                    'type' => 'textarea',
                                     'class' => 'form-control',
                                     'label' => 'Descrição',
                                     'required' => true
@@ -59,7 +60,8 @@
                                 'active',
                                 [
                                     'type' => 'checkbox',
-                                    'label' => 'Ativo'
+                                    'label' => 'Ativo',
+                                    'checked' => true,
                                 ]
                             ) ?>
                         </div>

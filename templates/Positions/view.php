@@ -68,7 +68,7 @@ $this->assign('title', 'Visualizar cargos');
                         <?= __('Descrição'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                        <?= h($position->description) ?>
+                        <?= !empty($position->description) ? h($position->description) : '-' ?>
                     </div>
                 </div>
                 <div class="row item-row">

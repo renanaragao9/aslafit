@@ -27,7 +27,6 @@ class AddService
             unset($data['image']);
         }
 
-        // Lida com o upload de GIF
         if (!empty($data['gif']) && $data['gif']->getError() === UPLOAD_ERR_OK) {
             $ext = pathinfo($data['gif']->getClientFilename(), PATHINFO_EXTENSION);
             $filename = uniqid() . '.' . $ext;

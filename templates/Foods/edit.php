@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create($food, ['url' => ['action' => 'edit', $food->id], 'id' => 'editForm-' . $food->id]) ?>
+                <?= $this->Form->create($food, ['url' => ['action' => 'edit', $food->id], 'type' => 'file', 'id' => 'editForm-' . $food->id]) ?>
                 <div class="row">
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">
@@ -19,6 +19,21 @@
                                 [
                                     'class' => 'form-control',
                                     'label' => __('Nome'),
+                                    'required' => true
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'food_type_id',
+                                [
+                                    'label' => __('Tipo de alimento'),
+                                    'options' => $foodTypes,
+                                    'empty' => __('Selecione um alimento'),
+                                    'class' => 'form-control',
                                     'required' => true
                                 ]
                             )
@@ -40,11 +55,25 @@
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(
+                                'image',
+                                [
+                                    'label' => __('Imagem'),
+                                    'type' => 'file',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
                                 'active',
                                 [
                                     'type' => 'checkbox',
                                     'label' => __('Ativo'),
-                                    'class' => 'form-check-input'
+                                    'class' => 'form-check-input',
+                                    'checked' => true
                                 ]
                             )
                             ?>

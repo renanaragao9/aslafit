@@ -7,8 +7,11 @@ $this->Html->css('ExerciseTrainingDivision/create.css', ['block' => true]);
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-outline card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Montar ficha de treino</h3>
+                    <div class="card-header d-flex align-items-center">
+                        <a href="javascript:history.back()" class="mr-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <h3 class="card-title mb-0">Montar ficha de treino</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-row mb-3">

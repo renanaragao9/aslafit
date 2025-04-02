@@ -41,10 +41,6 @@
                                     <span> <?= h($dietPlan->description) ?> </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Ativo:</strong>
-                                    <span><?= $dietPlan->active ? 'Sim' : 'Não' ?> </span>
-                                </li>
-                                <li class="list-group-item">
                                     <strong>Criado em:</strong>
                                     <span><?= h($dietPlan->created) ?> </span>
                                 </li>

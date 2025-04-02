@@ -53,10 +53,6 @@ class DietPlansTable extends Table
             ->integer('ficha_id')
             ->allowEmptyString('ficha_id');
 
-        $validator
-            ->boolean('active')
-            ->notEmptyString('active');
-
         return $validator;
     }
 

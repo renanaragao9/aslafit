@@ -6,13 +6,6 @@ use Migrations\AbstractMigration;
 
 class CreateDietPlans extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
-     * @return void
-     */
     public function change(): void
     {
         $table = $this->table('diet_plans');
@@ -31,10 +24,6 @@ class CreateDietPlans extends AbstractMigration
         $table->addColumn('ficha_id', 'integer', [
             'default' => null,
             'null' => true,
-        ]);
-        $table->addColumn('active', 'boolean', [
-            'default' => true,
-            'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,

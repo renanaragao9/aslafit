@@ -19,15 +19,13 @@
                                     <strong>Id:</strong>
                                     <span> <?= h($position->id) ?> </span>
                                 </li>
-
                                 <li class="list-group-item">
                                     <strong>Nome:</strong>
                                     <span> <?= h($position->name) ?> </span>
                                 </li>
-
                                 <li class="list-group-item">
                                     <strong>Descrição:</strong>
-                                    <span> <?= h($position->description) ?> </span>
+                                    <span> <?= !empty($position->description) ? h($position->description) : '-' ?> </span>
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Salário Base:</strong>

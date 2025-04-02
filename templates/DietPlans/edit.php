@@ -67,18 +67,6 @@
                             ?>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control(
-                                'active',
-                                [
-                                    'label' => __('Ativo'),
-                                    'type' => 'checkbox',
-                                ]
-                            )
-                            ?>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="modal-footer justify-content-between">

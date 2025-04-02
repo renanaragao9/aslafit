@@ -7,7 +7,7 @@
                         <div class="row align-items-center">
                             <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                                 <h3 class="card-title">
-                                    <?= __('Relacionado Diet Plans') ?>
+                                    <?= __('Plano alimentar') ?>
                                 </h3>
                             </div>
                             <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
@@ -89,11 +89,11 @@
 <?php else : ?>
     <section class="content">
         <div class="container-fluid">
-            <a href="#" data-toggle="modal" class="card card-outline card-secondary text-decoration-none">
+            <a href="<?= $this->Url->build(['controller' => 'DietPlans', 'action' => 'create', $ficha->id]) ?>" class="card card-outline card-secondary text-decoration-none">
                 <div class="card-body text-center p-4">
                     <i class="fas fa-file-alt fa-3x text-secondary mb-3"></i>
-                    <p class="card-text text-secondary"><?= __('Nenhuma avaliação encontrada') ?></p>
-                    <span class="btn btn-link text-secondary p-0" title="<?= __('Nova Avaliação') ?>">
+                    <p class="card-text text-secondary"><?= __('Nenhum plano alimentar encontrado') ?></p>
+                    <span class="btn btn-link text-secondary p-0" title="<?= __('Novo Plano Alimentar') ?>">
                         <i class="fas fa-plus"></i>
                     </span>
                 </div>

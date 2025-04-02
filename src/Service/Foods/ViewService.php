@@ -17,6 +17,6 @@ class ViewService
 
     public function run(int $id)
     {
-        return $this->foods->get($id, ['contain' => ['DietPlans']]);
+        return $this->foods->get($id, ['contain' => ['DietPlans', 'FoodTypes']]);
     }
 }
