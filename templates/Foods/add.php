@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create(null, ['url' => ['action' => 'add', 'type' => 'file']]) ?>
+                <?= $this->Form->create(null, ['url' => ['action' => 'add'], 'type' => 'file']) ?>
                 <div class="row">
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">

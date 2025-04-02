@@ -20,8 +20,8 @@ class DeleteService
         $food = $this->foods->get($id);
 
         if ($this->foods->delete($food)) {
-            if (!empty($food->image) && file_exists(WWW_ROOT . 'img' . DS . 'foods' . DS . 'img' . DS . $food->image)) {
-                unlink(WWW_ROOT . 'img' . DS . 'foods' . DS . 'img' . DS . $food->image);
+            if (!empty($food->image) && file_exists(WWW_ROOT . 'img' . DS . 'Foods' . DS . $food->image)) {
+                unlink(WWW_ROOT . 'img' . DS . 'Foods' . DS . $food->image);
             }
 
             return ['success' => true, 'message' => 'Alimento deletado com sucesso.'];
