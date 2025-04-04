@@ -10,6 +10,8 @@ use App\Service\DietPlans\ViewService;
 use App\Service\DietPlans\EditService;
 use App\Service\DietPlans\DeleteService;
 use App\Service\DietPlans\ExportService;
+use App\Service\DietPlans\UpdateService;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 
@@ -131,10 +133,22 @@ class DietPlansController extends AppController
         $service = new CreateService($this->DietPlans);
 
         if ($this->request->is('post')) {
-            $result = $service->run($this->request->getData());
+            $mealsData = json_decode($this->request->getData('meals'), true);
 
-            $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
-            return $this->redirect(['action' => 'index']);
+            if (empty($mealsData)) {
+                $this->Flash->error('Nenhum alimento selecionado para salvar.');
+                return $this->redirect($this->referer());
+            }
+
+            $result = $service->run($mealsData, $fichaId);
+
+            if ($result['success']) {
+                $this->Flash->success($result['message']);
+                return $this->redirect(['controller' => 'Fichas', 'action' => 'view', $result['fichaId']]);
+            } else {
+                $this->Flash->error($result['message']);
+                return $this->redirect($this->referer());
+            }
         }
 
         $ficha = $this->DietPlans->Fichas->get($fichaId, [
@@ -164,6 +178,58 @@ class DietPlansController extends AppController
         }
 
         $this->set($service->getEditData($id));
+        return null;
+    }
+
+    public function update(?int $fichaId = null): ?Response
+    {
+        if (!$this->checkPermission('DietPlans/edit')) {
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $service = new UpdateService($this->DietPlans);
+
+        if ($this->request->is(['post', 'put'])) {
+            $mealsData = json_decode($this->request->getData('meals'), true);
+
+            if (empty($mealsData)) {
+                $this->Flash->error('Nenhum alimento selecionado para atualizar.');
+                return $this->redirect($this->referer());
+            }
+
+            $result = $service->run($mealsData, $fichaId);
+
+            if ($result['success']) {
+                $this->Flash->success($result['message']);
+                return $this->redirect(['controller' => 'Fichas', 'action' => 'view', $result['fichaId']]);
+            } else {
+                $this->Flash->error($result['message']);
+                return $this->redirect($this->referer());
+            }
+        }
+
+        try {
+            $ficha = $this->DietPlans->Fichas->get($fichaId, [
+                'contain' => ['Students', 'DietPlans' => ['Foods', 'MealTypes']]
+            ]);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Ficha não encontrada.');
+            return $this->redirect(['controller' => 'Fichas', 'action' => 'index']);
+        }
+
+        $existingMeals = [];
+        foreach ($ficha->diet_plans as $dp) {
+            $existingMeals[] = [
+                'id' => $dp->food_id,
+                'name' => $dp->food->name,
+                'food_data[meal_type_id]' => $dp->meal_type_id,
+                'food_data[description]' => $dp->description,
+            ];
+        }
+
+        $this->set(compact('ficha', 'existingMeals'));
+        $this->set($service->getViewData());
+
         return null;
     }
 

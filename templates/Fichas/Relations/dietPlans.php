@@ -1,96 +1,70 @@
 <?php if (!empty($ficha->diet_plans)) : ?>
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-outline card-primary">
+            <div class="card card-outline card-primary shadow-sm fixed-height-card">
                 <div class="card-header">
-                    <div class="container-fluid">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
-                                <h3 class="card-title">
-                                    <?= __('Plano alimentar') ?>
-                                </h3>
-                            </div>
-                            <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" id="icon-dropdown" data-card-widget="collapse">
-                                        <i class="fas fa-minus" data-collapsed-icon="fa-plus" data-expanded-icon="fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-9">
+                            <h3 class="card-title"><?= __('Plano Alimentar') ?></h3>
                         </div>
-                        <hr />
+                        <div class="col-3 text-right">
+                            <a href="<?= $this->Url->build(['controller' => 'DietPlans', 'action' => 'update', $ficha->id]) ?>" class="btn btn-add btn-sm" title="Editar Plano Alimentar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <?php if (!empty($ficha->diet_plans)) : ?>
-                    <div class="card-body table-responsive p-0" style="max-height: 400px; overflow-y: auto">
-                        <div class="col-12 col-md-6 mb-2 mb-md-2 mt-2">
-                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>">
-                                <div class="input-group">
-                                    <input id="Diet PlansSearchInput" class="form-control col-12" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="search" value="<?= $this->request->getQuery('search') ?>" />
-                                </div>
-                            </form>
-                        </div>
-                        <table id="Diet PlansTable" class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th><?= __('ID') ?></th>
-                                    <th><?= __('Tipo de Refeição') ?></th>
-                                    <th><?= __('Alimento') ?></th>
-                                    <th><?= __('Ficha') ?></th>
-                                    <th><?= __('Desscrição') ?></th>
-                                    <th class="actions"><?= __('Ações') ?></th>
-                                </tr>
-                            </thead>
-                            <tbody id="DietPlansTableBody">
-                                <?php foreach ($ficha->diet_plans as $dietPlan) : ?>
-                                    <tr>
-                                        <td>
-                                            <?= h($dietPlan->id) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($dietPlan->meal_type->name) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($dietPlan->food_id) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($dietPlan->ficha_id) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($dietPlan->description) ?>
-                                        </td>
-                                        <td class="actions">
-                                            <?= $this->Html->link(
-                                                '<i class="fas fa-eye"></i>',
-                                                [
-                                                    'controller' => 'Diet Plans',
-                                                    'action' => 'view',
-                                                    $ficha->id
-                                                ],
-                                                [
-                                                    'class' => 'btn btn-view btn-sm',
-                                                    'escape' => false
-                                                ]
-                                            )
-                                            ?>
-                                        </td>
-                                    </tr>
+                <?php
+                $groupedDietPlans = [];
+                foreach ($ficha->diet_plans as $dietPlan) {
+                    $groupedDietPlans[$dietPlan->meal_type->name][] = $dietPlan;
+                }
+                ?>
+                <div class="card-body">
+                    <?php foreach ($groupedDietPlans as $mealTypeName => $dietPlans) : ?>
+                        <div class="mb-4">
+                            <div class="card-header">
+                                <h6 class="text-primary mb-0"><?= __('Tipo de Refeição: ') . h($mealTypeName) ?></h6>
+                            </div>
+                            <div class="row">
+                                <?php
+                                $chunks = array_chunk($dietPlans, ceil(count($dietPlans) / 2));
+                                foreach ($chunks as $columnDietPlans) :
+                                ?>
+                                    <div class="col-12 col-md-6">
+                                        <ol class="list-group list-group-flush">
+                                            <?php foreach ($columnDietPlans as $dietPlan) : ?>
+                                                <li class="list-group-item d-flex align-items-center py-3">
+                                                    <div class="diet-image-container mr-3">
+                                                        <img src="<?= $this->Url->build('/img/Foods/' . ($dietPlan->food->image ?: 'default.png')) ?>"
+                                                            alt="<?= h($dietPlan->food->name) ?>"
+                                                            class="img-thumbnail rounded diet-plan-image">
+                                                    </div>
+                                                    <div class="flex-fill diet-plan-info">
+                                                        <h5 class="diet-plan-food-name mb-1 text-truncate" title="<?= h($dietPlan->food->name) ?>">
+                                                            <?= h($dietPlan->food->name) ?>
+                                                        </h5>
+                                                        <p class="diet-plan-description mb-0 text-muted text-truncate" title="<?= h($dietPlan->description) ?>">
+                                                            <?= h($dietPlan->description) ?>
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ol>
+                                    </div>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <div id="Diet PlansNoResultsMessage" style="display: none; text-align: center; padding: 10px">
-                            <?= __('Nenhum resultado encontrado.') ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </section>
 <?php else : ?>
     <section class="content">
         <div class="container-fluid">
-            <a href="<?= $this->Url->build(['controller' => 'DietPlans', 'action' => 'create', $ficha->id]) ?>" class="card card-outline card-secondary text-decoration-none">
-                <div class="card-body text-center p-4">
+            <a href="<?= $this->Url->build(['controller' => 'DietPlans', 'action' => 'create', $ficha->id]) ?>" class="card card-outline card-secondary text-decoration-none shadow-sm">
+                <div class="card-body text-center p-5">
                     <i class="fas fa-file-alt fa-3x text-secondary mb-3"></i>
                     <p class="card-text text-secondary"><?= __('Nenhum plano alimentar encontrado') ?></p>
                     <span class="btn btn-link text-secondary p-0" title="<?= __('Novo Plano Alimentar') ?>">

@@ -23,9 +23,12 @@ class ViewService
                 'Assessments',
                 'DietPlans' => [
                     'MealTypes',
-                    'Foods'
+                    'Foods.FoodTypes'
                 ],
-                'ExerciseTrainingDivision'
+                'ExerciseTrainingDivision' => [
+                    'Exercises',
+                    'TrainingDivisions'
+                ]
             ]
         ]);
     }

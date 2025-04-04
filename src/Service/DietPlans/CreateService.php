@@ -15,16 +15,32 @@ class CreateService
         $this->dietPlans = $dietPlans;
     }
 
-    public function run(array $data): array
+    public function run(array $mealsData, int $fichaId): array
     {
-        $dietPlan = $this->dietPlans->newEntity($data);
+        $entities = [];
 
-        if ($this->dietPlans->save($dietPlan)) {
-            return ['success' => true, 'message' => 'Plano alimentar salvo com sucesso.'];
+        foreach ($mealsData as $mealData) {
+            $entityData = [
+                'ficha_id' => $fichaId,
+                'food_id' => $mealData['id'],
+                'meal_type_id' => $mealData['food_data[meal_type_id]'],
+                'description' => $mealData['food_data[description]'] ?? null,
+            ];
+
+            $entities[] = $this->dietPlans->newEntity($entityData);
         }
 
-        return ['success' => false, 'message' => 'Erro ao salvar o plano alimentar.'];
+        return $this->dietPlans->getConnection()->transactional(function () use ($entities, $fichaId) {
+            foreach ($entities as $entity) {
+                if (!$this->dietPlans->save($entity)) {
+                    return ['success' => false, 'message' => 'Erro ao salvar um dos itens do plano alimentar.'];
+                }
+            }
+
+            return ['success' => true, 'message' => 'Plano alimentar salvo com sucesso.', 'fichaId' => $fichaId];
+        });
     }
+
 
     public function getNewEntity()
     {
@@ -35,8 +51,20 @@ class CreateService
     {
         $dietPlan = $this->getNewEntity();
 
-        $mealTypes = $this->dietPlans->MealTypes->find('list', ['limit' => 200])->all();
-        $foods = $this->dietPlans->Foods->find('list', ['limit' => 200])->all();
+        $mealTypes = $this->dietPlans->MealTypes->find('list', ['keyField' => 'id', 'valueField' => 'name'])
+            ->where(['active' => true])
+            ->toArray();
+
+        $foods = $this->dietPlans->Foods->find()
+            ->contain(['FoodTypes'])
+            ->where(['Foods.active' => true])
+            ->all();
+
+        $groupedFoods = [];
+        foreach ($foods as $food) {
+            $type = $food->food_type->name ?? 'Outros';
+            $groupedFoods[$type][] = $food;
+        }
 
         $fichas = $this->dietPlans->Fichas->find('list', [
             'keyField' => 'id',
@@ -48,8 +76,6 @@ class CreateService
             ->contain(['Students'])
             ->toArray();
 
-
-
-        return compact('dietPlan', 'mealTypes', 'foods', 'fichas');
+        return compact('dietPlan', 'mealTypes', 'foods', 'fichas', 'groupedFoods');
     }
 }

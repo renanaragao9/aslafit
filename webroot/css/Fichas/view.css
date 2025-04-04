@@ -1,7 +1,83 @@
+.card.fixed-height-card {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card.fixed-height-card .card-body {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.card.fixed-height-card .list-group-item {
+    flex-shrink: 0;
+}
+
+.card.fixed-height-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.card.fixed-height-card .card-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.card.fixed-height-card .card-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card.fixed-height-card .card-body::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 10px;
+}
+
+.text-primary {
+    font-size: 19px;
+    color: #212529 !important;
+}
+
+#exerciseZoomImage {
+    max-height: 80vh;
+    object-fit: contain;
+}
+
 /* Assesment */
 #assessment-image {
     width: 60px;
     height: 60px;
     border-radius: 0.25rem;
     border: 1px solid #dee2e6;
+}
+
+/* Diet Plan */
+.diet-plan-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.diet-image-container {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.diet-plan-info {
+    min-width: 0;
+}
+
+.diet-plan-food-name,
+.diet-plan-description {
+    white-space: normal;
+}
+
+@media (min-width: 768px) {
+    .diet-plan-food-name,
+    .diet-plan-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }

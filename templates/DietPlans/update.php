@@ -10,7 +10,7 @@
                             <a href="javascript:history.back()" class="mr-2">
                                 <i class="fa-solid fa-arrow-left"></i>
                             </a>
-                            <h3 class="card-title mb-0">Montar plano alimentar</h3>
+                            <h3 class="card-title mb-0">Editar plano alimentar</h3>
                         </div>
                         <div class="form-row mt-3">
                             <div class="col-md-6">
@@ -26,19 +26,18 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card-body" style="max-height: 500px; overflow-y: auto;">
                         <div id="duplicate-message" class="alert alert-warning d-none">Este alimento já foi adicionado nesta refeição.</div>
-
                         <div id="food-list">
                             <?php foreach ($groupedFoods as $type => $foods): ?>
-                                <div class="food-group" data-type="<?= h($type) ?>">
+                                <div class="food-group mb-4" data-type="<?= h($type) ?>">
                                     <h5 class="mb-3 border-bottom pb-1"><?= h($type) ?></h5>
                                     <div class="row">
                                         <?php foreach ($foods as $food): ?>
                                             <div class="col-md-6 food-card mb-3" data-name="<?= strtolower(h($food->name)) ?>">
                                                 <div class="card card-outline card-primary p-2 d-flex flex-row align-items-center">
-                                                    <img src="<?= $this->Url->build('/img/Foods/' . ($food->image ?: 'default.png')) ?>"
-                                                        class="rounded mr-2" style="width:50px;height:50px;object-fit:cover;">
+                                                    <img src="<?= $this->Url->build('/img/Foods/' . ($food->image ?: 'default.png')) ?>" class="rounded mr-2" style="width:50px;height:50px;object-fit:cover;">
                                                     <div class="flex-fill">
                                                         <strong><?= h($food->name) ?></strong><br>
                                                         <small class="text-muted"><?= h($type) ?></small>
@@ -59,9 +58,8 @@
                 </div>
             </div>
 
-            <!-- Selecionados -->
             <div class="col-md-4">
-                <?= $this->Form->create(null, ['url' => ['action' => 'create', $ficha->id], 'id' => 'final-meal-form']) ?>
+                <?= $this->Form->create(null, ['url' => ['action' => 'update', $ficha->id], 'id' => 'final-meal-form']) ?>
                 <div class="card card-outline card-success position-sticky" style="top:10px;">
                     <div class="card-header">
                         <h5>Plano alimentar selecionado</h5>
@@ -71,7 +69,7 @@
                     </div>
                     <?= $this->Form->control('meals', ['type' => 'hidden', 'id' => 'final-meal-data']) ?>
                     <div class="card-footer text-right">
-                        <button type="submit" class="btn modalAdd" disabled id="save-meal-btn">Salvar Plano</button>
+                        <button type="submit" class="btn modalAdd" disabled id="save-meal-btn">Atualizar Plano</button>
                     </div>
                 </div>
                 <?= $this->Form->end() ?>
@@ -101,7 +99,8 @@
                                 'options' => $mealTypes,
                                 'empty' => 'Selecione...',
                                 'class' => 'form-control',
-                                'required' => true
+                                'required' => true,
+                                'id' => 'food-data-meal-type-id'
                             ]) ?>
                         </div>
                     </div>
@@ -111,7 +110,8 @@
                             <?= $this->Form->control('food_data[description]', [
                                 'label' => 'Descrição (opcional)',
                                 'class' => 'form-control',
-                                'type' => 'textarea'
+                                'type' => 'textarea',
+                                'id' => 'food-data-description'
                             ]) ?>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
 
 <script>
     const mealTypes = <?= json_encode($mealTypes) ?>;
-    const selectedFoods = [];
+    const selectedFoods = <?= json_encode($existingMeals ?? []) ?>;
     let currentFood = {};
 
     function renderSelectedFoods() {
@@ -150,19 +150,29 @@
 
         Object.entries(grouped).forEach(([type, foods]) => {
             const card = $(`
-        <div class="card card-outline card-success mb-2">
-            <div class="card-header py-2"><strong>${type}</strong></div>
-            <div class="card-body p-2"></div>
-        </div>`);
+                <div class="card card-outline card-success mb-2">
+                    <div class="card-header py-2"><strong>${type}</strong></div>
+                    <div class="card-body p-2"></div>
+                </div>
+            `);
 
             foods.forEach(food => {
                 card.find('.card-body').append(`
-            <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-1">
-                <div>${food.name}<br><small>${food['food_data[description]'] || ''}</small></div>
-                <button class="btn btn-sm btn-outline-danger btn-remove" data-id="${food.id}" title="Remover">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>`);
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-1">
+                        <div>
+                            <strong>${food.name}</strong><br>
+                            <small>${food['food_data[description]'] || 'Sem descrição'}</small>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-outline-success btn-update" data-id="${food.id}" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-remove" data-id="${food.id}" title="Remover">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `);
             });
 
             container.append(card);
@@ -173,6 +183,19 @@
             selectedFoods.splice(selectedFoods.findIndex(f => f.id == id), 1);
             renderSelectedFoods();
         });
+
+        $('.btn-update').click(function() {
+            const id = $(this).data('id');
+            const food = selectedFoods.find(f => f.id == id);
+            if (!food) return;
+
+            currentFood = food;
+            $('#modal-food-id').val(food.id);
+            $('#food-data-meal-type-id').val(food['food_data[meal_type_id]']);
+            $('#food-data-description').val(food['food_data[description]'] || '');
+            $('#foodModalLabel').text('Editar Alimento');
+            $('#foodModal').modal('show');
+        });
     }
 
     $(document).on('click', '.btn-open-food-modal', function() {
@@ -181,42 +204,51 @@
             name: $(this).data('name')
         };
         $('#modal-food-id').val(currentFood.id);
+        $('#food-form')[0].reset();
+        $('#foodModalLabel').text('Adicionar Alimento');
         $('#foodModal').modal('show');
     });
 
     $('#food-form').submit(function(e) {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(this));
 
-        if (selectedFoods.some(f => f.id == currentFood.id && f['food_data[meal_type_id]'] == data['food_data[meal_type_id]'])) {
-            $('#duplicate-message').removeClass('d-none');
-            setTimeout(() => $('#duplicate-message').addClass('d-none'), 3000);
-            $('#foodModal').modal('hide');
-            return;
+        const foodId = $('#modal-food-id').val();
+        const mealTypeId = $('#food-data-meal-type-id').val();
+        const description = $('#food-data-description').val();
+        if (!mealTypeId) return;
+
+        const index = selectedFoods.findIndex(f => f.id == foodId);
+        if (index !== -1) {
+            selectedFoods[index]['food_data[meal_type_id]'] = mealTypeId;
+            selectedFoods[index]['food_data[description]'] = description;
+        } else {
+            selectedFoods.push({
+                id: foodId,
+                name: currentFood.name,
+                'food_data[meal_type_id]': mealTypeId,
+                'food_data[description]': description
+            });
         }
-
-        selectedFoods.push({
-            ...currentFood,
-            ...data
-        });
 
         $('#foodModal').modal('hide');
         renderSelectedFoods();
-        this.reset();
     });
 
     $('#type-filter').change(function() {
-        $('.food-group').hide().filter(`[data-type="${this.value}"], [data-type="all"]`).show();
+        const value = $(this).val();
+        $('.food-group').toggle(value === 'all').filter(`[data-type="${value}"]`).show();
     });
 
     $('#food-search').on('input', function() {
         const val = this.value.toLowerCase();
-        if (val === '') {
-            $('.food-card').show();
-        } else {
-            $('.food-card').hide().filter(`[data-name*="${val}"]`).show();
-        }
+        $('.food-card').hide().filter(function() {
+            return $(this).data('name').includes(val);
+        }).show();
     });
 
-    $('#final-meal-form').submit(() => $('#final-meal-data').val(JSON.stringify(selectedFoods)));
+    $('#final-meal-form').submit(() => {
+        $('#final-meal-data').val(JSON.stringify(selectedFoods));
+    });
+
+    renderSelectedFoods();
 </script>

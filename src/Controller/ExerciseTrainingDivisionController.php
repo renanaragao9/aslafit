@@ -12,6 +12,7 @@ use App\Service\ExerciseTrainingDivision\DeleteService;
 use App\Service\ExerciseTrainingDivision\ExportService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 class ExerciseTrainingDivisionController extends AppController
 {
@@ -169,6 +170,66 @@ class ExerciseTrainingDivisionController extends AppController
         }
 
         $this->set($service->getEditData($id));
+        return null;
+    }
+
+    public function update(?int $fichaId = null): ?Response
+    {
+        if (!$this->checkPermission('ExerciseTrainingDivision/edit')) {
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $service = new \App\Service\ExerciseTrainingDivision\UpdateService($this->ExerciseTrainingDivision);
+
+        if ($this->request->is(['post', 'put'])) {
+            $exerciseData = json_decode($this->request->getData('exercises'), true);
+
+            if (empty($exerciseData)) {
+                $this->Flash->error('Nenhum exercício selecionado para atualizar.');
+                return $this->redirect($this->referer());
+            }
+
+            $result = $service->run($exerciseData, $fichaId);
+
+            if ($result['success']) {
+                $this->Flash->success($result['message']);
+                return $this->redirect(['controller' => 'Fichas', 'action' => 'view', $fichaId]);
+            } else {
+                $this->Flash->error($result['message']);
+                return $this->redirect($this->referer());
+            }
+        }
+
+        try {
+            $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
+                'contain' => [
+                    'Students',
+                    'ExerciseTrainingDivision' => ['Exercises', 'TrainingDivisions']
+                ]
+            ]);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Ficha não encontrada.');
+            return $this->redirect(['controller' => 'Fichas', 'action' => 'index']);
+        }
+
+        $existingExercises = [];
+        foreach ($ficha->exercise_training_division as $etd) {
+            $existingExercises[] = [
+                'id' => $etd->exercise_id,
+                'name' => $etd->exercise->name,
+                'img' => $etd->exercise->image ?? 'default.jpg',
+                'exercise_data[training_division_id]' => $etd->training_division_id,
+                'exercise_data[series]' => $etd->series,
+                'exercise_data[repetitions]' => $etd->repetitions,
+                'exercise_data[weight]' => $etd->weight,
+                'exercise_data[rest]' => $etd->rest,
+                'exercise_data[description]' => $etd->description,
+            ];
+        }
+
+        $this->set(compact('ficha', 'existingExercises'));
+        $this->set($service->getViewData());
+
         return null;
     }
 

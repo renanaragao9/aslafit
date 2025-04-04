@@ -2,7 +2,7 @@
     <?php $assessment = $ficha->assessments[0]; ?>
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-outline card-primary shadow-sm">
+            <div class="card card-outline card-primary shadow-sm fixed-height-card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-9">
@@ -10,7 +10,7 @@
                         </div>
                         <?php if (!empty($assessment)) : ?>
                             <div class="col-3 text-right">
-                                <a href="#" class="btn btn-edit btn-sm" data-toggle="modal" data-target="#editModal-<?= $assessment->id ?>">
+                                <a href="#" class="btn btn-add btn-sm" data-toggle="modal" data-target="#editModal-<?= $assessment->id ?>">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </div>
