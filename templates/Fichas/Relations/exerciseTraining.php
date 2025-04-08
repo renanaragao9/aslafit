@@ -32,7 +32,6 @@
                 ?>
 
                 <div class="card-body">
-                    <!-- Filtro por divisão -->
                     <div class="form-group mb-4">
                         <label for="divisionFilter" class="font-weight-bold">
                             <?= __('Filtrar por divisão') ?>:
@@ -45,7 +44,6 @@
                         </select>
                     </div>
 
-                    <!-- Exercícios por divisão -->
                     <?php foreach ($groupedDivisions as $divisionName => $divisionExercises) : ?>
                         <div class="exercise-group mb-4" data-group="<?= h($divisionName) ?>">
                             <h5 class="mb-3 mt-4 border-bottom pb-1 text-primary">Divisão: <?= h($divisionName) ?></h5>
@@ -83,7 +81,6 @@
         </div>
     </section>
 
-    <!-- Modal para zoom da imagem -->
     <div class="modal fade" id="exerciseZoomModal" tabindex="-1" role="dialog" aria-labelledby="zoomModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content bg-transparent border-0">
@@ -94,9 +91,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
-        // Filtro por divisão
         document.getElementById('divisionFilter').addEventListener('change', function() {
             const selected = this.value;
             document.querySelectorAll('.exercise-group').forEach(group => {
@@ -109,7 +104,6 @@
             });
         });
 
-        // Zoom da imagem
         document.querySelectorAll('.exercise-zoom-trigger').forEach(img => {
             img.addEventListener('click', function() {
                 const src = this.getAttribute('data-img');

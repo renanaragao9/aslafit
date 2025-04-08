@@ -10,6 +10,7 @@ use App\Service\ExerciseTrainingDivision\ViewService;
 use App\Service\ExerciseTrainingDivision\EditService;
 use App\Service\ExerciseTrainingDivision\DeleteService;
 use App\Service\ExerciseTrainingDivision\ExportService;
+use App\Service\ExerciseTrainingDivision\UpdateService;
 use App\Utility\AccessChecker;
 use Cake\Http\Response;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -179,7 +180,7 @@ class ExerciseTrainingDivisionController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $service = new \App\Service\ExerciseTrainingDivision\UpdateService($this->ExerciseTrainingDivision);
+        $service = new UpdateService($this->ExerciseTrainingDivision);
 
         if ($this->request->is(['post', 'put'])) {
             $exerciseData = json_decode($this->request->getData('exercises'), true);
@@ -200,32 +201,14 @@ class ExerciseTrainingDivisionController extends AppController
             }
         }
 
-        try {
-            $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
-                'contain' => [
-                    'Students',
-                    'ExerciseTrainingDivision' => ['Exercises', 'TrainingDivisions']
-                ]
-            ]);
-        } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Ficha não encontrada.');
-            return $this->redirect(['controller' => 'Fichas', 'action' => 'index']);
-        }
+        $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
+            'contain' => [
+                'Students',
+                'ExerciseTrainingDivision' => ['Exercises', 'TrainingDivisions']
+            ]
+        ]);
 
-        $existingExercises = [];
-        foreach ($ficha->exercise_training_division as $etd) {
-            $existingExercises[] = [
-                'id' => $etd->exercise_id,
-                'name' => $etd->exercise->name,
-                'img' => $etd->exercise->image ?? 'default.jpg',
-                'exercise_data[training_division_id]' => $etd->training_division_id,
-                'exercise_data[series]' => $etd->series,
-                'exercise_data[repetitions]' => $etd->repetitions,
-                'exercise_data[weight]' => $etd->weight,
-                'exercise_data[rest]' => $etd->rest,
-                'exercise_data[description]' => $etd->description,
-            ];
-        }
+        $existingExercises = $service->getExistingExercises($fichaId);
 
         $this->set(compact('ficha', 'existingExercises'));
         $this->set($service->getViewData());

@@ -1,21 +1,19 @@
-<?= $this->Html->css('ExerciseTrainingDivision/create.css', ['block' => true]); ?>
+<?=
+$this->Html->css('ExerciseTrainingDivision/create.css', ['block' => true]);
+?>
 
 <div class="content mt-4">
     <div class="container-fluid">
         <div class="row">
-            <!-- Lista de Exercícios -->
             <div class="col-md-8">
                 <div class="card card-outline card-primary">
                     <div class="card-header d-flex align-items-center">
                         <a href="javascript:history.back()" class="mr-2">
                             <i class="fa-solid fa-arrow-left"></i>
                         </a>
-                        <h3 class="card-title mb-0">
-                            <?= isset($existingExercises) ? 'Editar ficha de treino' : 'Montar ficha de treino' ?>
-                        </h3>
+                        <h3 class="card-title mb-0">Editar ficha de treino</h3>
                     </div>
                     <div class="card-body">
-                        <!-- Informações da ficha -->
                         <div class="form-row mb-3">
                             <div class="col-12">
                                 <div class="row">
@@ -34,8 +32,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Filtros -->
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-4">
                                 <input type="text" id="exercise-search" class="form-control" placeholder="Pesquisar exercícios...">
@@ -58,58 +54,61 @@
                             </div>
                         </div>
 
-                        <!-- Lista -->
-                        <div id="message-area">
-                            <div id="duplicate-message" class="alert alert-warning d-none" role="alert">
-                                Este exercício já foi adicionado à ficha.
+                        <div id="ficha-container">
+                            <div id="message-area">
+                                <div id="duplicate-message" class="alert alert-warning d-none" role="alert">
+                                    Este exercício já foi adicionado à ficha.
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div id="exercise-list">
-                                    <?php
-                                    $grouped = [];
-                                    foreach ($exercises as $exercise) {
-                                        $group = $exercise->muscle_group->name ?? 'Outro';
-                                        $grouped[$group][] = $exercise;
-                                    }
-                                    ksort($grouped);
-                                    foreach ($grouped as $groupName => $groupExercises):
-                                    ?>
-                                        <div class="exercise-group" data-group="<?= h($groupName) ?>">
-                                            <h5 class="mb-3 mt-4 border-bottom pb-1">Grupo Muscular: <?= h($groupName) ?></h5>
-                                            <div class="row">
-                                                <?php foreach ($groupExercises as $exercise): ?>
-                                                    <div class="col-md-6 exercise-card">
-                                                        <div class="card card-outline card-primary d-flex flex-row align-items-center p-2 mb-3" id="card-outline-exercise">
-                                                            <div class="mr-3" id="exercise-card-image">
-                                                                <img src="<?= $this->Url->build('/img/exercises/img/' . ($exercise->image ?: 'default.jpg')) ?>"
-                                                                    alt="<?= h($exercise->name) ?>"
-                                                                    class="img-fluid rounded"
-                                                                    id="exercise-image">
-                                                            </div>
-                                                            <div class="flex-fill">
-                                                                <h5 class="mb-1"><?= h($exercise->name) ?></h5>
-                                                                <p class="mb-1 text-muted" id="text-card-image">
-                                                                    Equipamento: <?= h($exercise->equipment->name ?? 'N/A') ?><br>
-                                                                    Grupo Muscular: <?= h($exercise->muscle_group->name ?? 'N/A') ?>
-                                                                </p>
-                                                            </div>
-                                                            <div class="text-right pr-2">
-                                                                <button class="btn btn-outline-success btn-sm btn-open-modal"
-                                                                    data-id="<?= h($exercise->id) ?>"
-                                                                    data-name="<?= h($exercise->name) ?>"
-                                                                    data-img="<?= $this->Url->build('/img/exercises/img/' . ($exercise->image ?: 'default.jpg')) ?>">
-                                                                    <i class="fas fa-plus"></i>
-                                                                </button>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="exercise-list">
+                                        <?php
+                                        $grouped = [];
+                                        foreach ($exercises as $exercise) {
+                                            $group = $exercise->muscle_group->name ?? 'Outro';
+                                            $grouped[$group][] = $exercise;
+                                        }
+
+                                        ksort($grouped);
+
+                                        foreach ($grouped as $groupName => $groupExercises):
+                                        ?>
+                                            <div class="exercise-group" data-group="<?= h($groupName) ?>">
+                                                <h5 class="mb-3 mt-4 border-bottom pb-1">Grupo Muscular: <?= h($groupName) ?></h5>
+                                                <div class="row">
+                                                    <?php foreach ($groupExercises as $exercise): ?>
+                                                        <div class="col-md-6 exercise-card">
+                                                            <div class="card card-outline card-primary d-flex flex-row align-items-center p-2 mb-3" id="card-outline-exercise">
+                                                                <div class="mr-3" id="exercise-card-image">
+                                                                    <img src="<?= $this->Url->build('/img/exercises/img/' . ($exercise->image ?: 'default.jpg')) ?>"
+                                                                        alt="<?= h($exercise->name) ?>"
+                                                                        class="img-fluid rounded"
+                                                                        id="exercise-image">
+                                                                </div>
+                                                                <div class="flex-fill">
+                                                                    <h5 class="mb-1"><?= h($exercise->name) ?></h5>
+                                                                    <p class="mb-1 text-muted" id="text-card-image">
+                                                                        Equipamento: <?= h($exercise->equipment->name ?? 'N/A') ?><br>
+                                                                        Grupo Muscular: <?= h($exercise->muscle_group->name ?? 'N/A') ?>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="text-right pr-2">
+                                                                    <button class="btn btn-outline-success btn-sm btn-open-modal"
+                                                                        data-id="<?= h($exercise->id) ?>"
+                                                                        data-name="<?= h($exercise->name) ?>"
+                                                                        data-img="<?= $this->Url->build('/img/exercises/img/' . ($exercise->image ?: 'default.jpg')) ?>">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                <?php endforeach; ?>
+                                                    <?php endforeach; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,17 +116,12 @@
                 </div>
             </div>
 
-            <!-- Exercícios Selecionados -->
+            <!-- ✅ Alterado para apontar para update -->
             <div class="col-md-4">
-                <?= $this->Form->create(null, [
-                    'url' => ['action' => isset($existingExercises) ? 'update' : 'create', $ficha->id],
-                    'id' => 'final-form'
-                ]) ?>
+                <?= $this->Form->create(null, ['url' => ['action' => 'update', $ficha->id], 'id' => 'final-form']) ?>
                 <div class="card card-outline card-primary position-sticky" id="card-exercise-selected">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">
-                            <?= isset($existingExercises) ? 'Exercícios da ficha' : 'Exercícios Selecionados' ?>
-                        </h5>
+                        <h5 class="card-title mb-0">Exercícios Selecionados</h5>
                     </div>
                     <div class="card-body p-2" id="selected-exercises">
                         <p class="text-muted">Nenhum exercício selecionado.</p>
@@ -141,9 +135,7 @@
                     ]) ?>
 
                     <div class="card-footer text-right">
-                        <button type="submit" class="btn modalAdd" disabled id="save-btn">
-                            <?= isset($existingExercises) ? 'Atualizar Ficha' : 'Salvar Ficha' ?>
-                        </button>
+                        <button type="submit" class="btn modalAdd" disabled id="save-btn">Salvar Ficha</button>
                     </div>
                 </div>
                 <?= $this->Form->end() ?>
@@ -152,7 +144,7 @@
     </div>
 </div>
 
-<!-- Modal de Exercício -->
+<!-- ✅ Modal incluso aqui mesmo (copiado do original) -->
 <div class="modal fade" id="exerciseModal" tabindex="-1" role="dialog" aria-labelledby="exerciseModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <?= $this->Form->create(null, ['id' => 'exercise-form']) ?>
@@ -167,7 +159,7 @@
             <div class="modal-body" id="modal-body">
                 <input type="hidden" id="modal-exercise-id" name="exercise_id" />
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group">
                             <?= $this->Form->control('training_division_id', [
                                 'label' => 'Divisão de Treino',
@@ -180,12 +172,70 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-6"><?= $this->Form->control('series', ['label' => 'Séries', 'class' => 'form-control', 'type' => 'number', 'min' => '1', 'name' => 'exercise_data[series]']) ?></div>
-                    <div class="col-md-3 col-6"><?= $this->Form->control('repetitions', ['label' => 'Repetições', 'class' => 'form-control', 'type' => 'number', 'min' => '1', 'name' => 'exercise_data[repetitions]']) ?></div>
-                    <div class="col-md-3 col-6"><?= $this->Form->control('weight', ['label' => 'Peso (kg)', 'class' => 'form-control', 'type' => 'number', 'min' => '0', 'step' => '0.01', 'name' => 'exercise_data[weight]']) ?></div>
-                    <div class="col-md-3 col-6"><?= $this->Form->control('rest', ['label' => 'Descanso (s)', 'class' => 'form-control', 'type' => 'number', 'min' => '0', 'name' => 'exercise_data[rest]']) ?></div>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group">
+                            <?= $this->Form->control('series', [
+                                'label' => 'Séries',
+                                'class' => 'form-control',
+                                'required' => true,
+                                'type' => 'number',
+                                'step' => '1',
+                                'min' => '1',
+                                'name' => 'exercise_data[series]'
+                            ]) ?>
+                        </div>
+                    </div>
 
-                    <div class="col-12"><?= $this->Form->control('description', ['label' => 'Descrição', 'class' => 'form-control', 'type' => 'textarea', 'name' => 'exercise_data[description]']) ?></div>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group">
+                            <?= $this->Form->control('repetitions', [
+                                'label' => 'Repetições',
+                                'class' => 'form-control',
+                                'required' => true,
+                                'type' => 'number',
+                                'step' => '1',
+                                'min' => '1',
+                                'name' => 'exercise_data[repetitions]'
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <div class="form-group">
+                            <?= $this->Form->control('weight', [
+                                'label' => 'Peso (kg)',
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '0.01',
+                                'min' => '1',
+                                'name' => 'exercise_data[weight]'
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6">
+                        <div class="form-group">
+                            <?= $this->Form->control('rest', [
+                                'label' => 'Descanso (s)',
+                                'class' => 'form-control',
+                                'type' => 'number',
+                                'step' => '1',
+                                'min' => '1',
+                                'name' => 'exercise_data[rest]'
+                            ]) ?>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('description', [
+                                'label' => 'Descrição',
+                                'class' => 'form-control',
+                                'type' => 'textarea',
+                                'name' => 'exercise_data[description]'
+                            ]) ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -198,17 +248,17 @@
     </div>
 </div>
 
-<!-- Script principal -->
 <script>
     const trainingDivisions = <?= json_encode($trainingDivisions) ?>;
     const fichaId = <?= (int)$ficha->id ?>;
     const selectedList = document.getElementById("selected-exercises");
     const saveBtn = document.getElementById("save-btn");
-    const selectedExercises = [];
+    const selectedExercises = <?= json_encode($existingExercises) ?>;
     let currentExercise = {};
 
     function renderSelected() {
         selectedList.innerHTML = "";
+
         if (selectedExercises.length === 0) {
             selectedList.innerHTML = '<p class="text-muted">Nenhum exercício selecionado.</p>';
             saveBtn.disabled = true;
@@ -220,7 +270,7 @@
         const divisions = new Map();
 
         selectedExercises.forEach((data) => {
-            const divisionId = data["exercise_data[training_division_id]"];
+            const divisionId = String(data["exercise_data[training_division_id]"]);
             const divisionName = trainingDivisions[divisionId] || "Outros";
 
             if (!divisions.has(divisionId)) {
@@ -239,82 +289,197 @@
 
             const header = document.createElement("div");
             header.className = "card-header py-2";
-            header.innerHTML = `<strong>${division.name}</strong>`;
-            card.appendChild(header);
+            header.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>${division.name}</strong>
+                    <button type="button" class="btn btn-sm btn-outline-secondary btn-toggle-group" title="Minimizar grupo">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            `;
 
             const body = document.createElement("div");
             body.className = "card-body p-2";
+            body.setAttribute("data-division-id", divisionId);
+
+            const toggleBtn = header.querySelector(".btn-toggle-group");
+            toggleBtn.addEventListener("click", () => {
+                const isVisible = body.style.display !== "none";
+                body.style.display = isVisible ? "none" : "block";
+                toggleBtn.innerHTML = `<i class="fas fa-${isVisible ? 'plus' : 'minus'}"></i>`;
+            });
 
             division.exercises.forEach((data, index) => {
                 const item = document.createElement("div");
                 item.className = "mb-2 border rounded p-2 d-flex align-items-center bg-light";
+                item.setAttribute("data-id", data.id);
+
                 item.innerHTML = `
-                    <div class="mr-2"><img src="${data.img}" class="img-fluid rounded" style="width: 50px;"></div>
+                    <div class="mr-2" id="script-image-card">
+                        <img src="${data.img}" alt="${data.name}" class="img-fluid rounded" id="script-image">
+                    </div>
                     <div class="flex-fill">
                         <strong>${data.name}</strong><br>
-                        <small>Ord: ${index + 1} | Séries: ${data["exercise_data[series]"]} | Rep: ${data["exercise_data[repetitions]"]} | Peso: ${data["exercise_data[weight]"]}kg | Desc: ${data["exercise_data[rest]"]}s</small>
+                        <small>
+                            Ordem: <strong>${index + 1}</strong> | Séries: <strong>${data["exercise_data[series]"]}</strong> 
+                            | Rep: <strong>${data["exercise_data[repetitions]"]}</strong> 
+                            | Peso: <strong>${data["exercise_data[weight]"]}kg</strong> 
+                            | Descanso: <strong>${data["exercise_data[rest]"]}s</strong>
+                        </small>
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-sm btn-outline-danger btn-remove" data-id="${data.id}">
+                        <button class="btn btn-sm btn-outline-success btn-move-up" ${index === 0 ? 'disabled' : ''} title="Mover para cima">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-success btn-move-down" ${index === division.exercises.length - 1 ? 'disabled' : ''} title="Mover para baixo">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-success btn-update" data-id="${data.id}" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger btn-remove" data-id="${data.id}" title="Remover">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
                 `;
-                body.appendChild(item);
 
-                item.querySelector(".btn-remove").addEventListener("click", () => {
-                    const index = selectedExercises.findIndex(e => e.id === data.id);
-                    if (index !== -1) {
-                        selectedExercises.splice(index, 1);
+                item.querySelector(".btn-move-up").addEventListener("click", () => {
+                    if (index > 0) {
+                        const moved = division.exercises.splice(index, 1)[0];
+                        division.exercises.splice(index - 1, 0, moved);
+                        updateSelectedExercises(divisions);
                         renderSelected();
                     }
                 });
+
+                item.querySelector(".btn-move-down").addEventListener("click", () => {
+                    if (index < division.exercises.length - 1) {
+                        const moved = division.exercises.splice(index, 1)[0];
+                        division.exercises.splice(index + 1, 0, moved);
+                        updateSelectedExercises(divisions);
+                        renderSelected();
+                    }
+                });
+
+                item.querySelector(".btn-remove").addEventListener("click", () => {
+                    const id = data.id;
+                    const indexToRemove = division.exercises.findIndex((exercise) => exercise.id === id);
+                    if (indexToRemove !== -1) {
+                        division.exercises.splice(indexToRemove, 1);
+                    }
+                    updateSelectedExercises(divisions);
+                    renderSelected();
+                });
+
+                item.querySelector(".btn-update").addEventListener("click", () => {
+                    currentExercise = {
+                        ...data
+                    };
+
+                    document.getElementById("modal-exercise-id").value = data.id;
+                    document.querySelector("[name='exercise_data[training_division_id]']").value = data["exercise_data[training_division_id]"] || "";
+                    document.querySelector("[name='exercise_data[series]']").value = data["exercise_data[series]"] || "";
+                    document.querySelector("[name='exercise_data[repetitions]']").value = data["exercise_data[repetitions]"] || "";
+                    document.querySelector("[name='exercise_data[weight]']").value = data["exercise_data[weight]"] || "";
+                    document.querySelector("[name='exercise_data[rest]']").value = data["exercise_data[rest]"] || "";
+                    document.querySelector("[name='exercise_data[description]']").value = data["exercise_data[description]"] || "";
+
+                    currentExercise._editing = true;
+                    $("#exerciseModal").modal("show");
+                });
+
+                body.appendChild(item);
             });
 
+            card.appendChild(header);
             card.appendChild(body);
             selectedList.appendChild(card);
+        });
+    }
+
+    function updateSelectedExercises(divisions) {
+        selectedExercises.length = 0;
+        divisions.forEach((division) => {
+            division.exercises.forEach((exercise) => {
+                selectedExercises.push(exercise);
+            });
         });
     }
 
     document.addEventListener("click", function(e) {
         if (e.target.closest(".btn-open-modal")) {
             const btn = e.target.closest(".btn-open-modal");
-            const id = btn.dataset.id;
+            const exerciseId = btn.getAttribute("data-id");
 
-            if (selectedExercises.some(ex => ex.id === id)) {
+            const alreadyExists = selectedExercises.some((exercise) => exercise.id === exerciseId);
+            if (alreadyExists) {
                 const msg = document.getElementById("duplicate-message");
                 msg.classList.remove("d-none");
-                setTimeout(() => msg.classList.add("d-none"), 3000);
+                msg.classList.add("show");
+
+                setTimeout(() => {
+                    msg.classList.add("d-none");
+                    msg.classList.remove("show");
+                }, 3000);
                 return;
             }
 
             currentExercise = {
-                id,
-                name: btn.dataset.name,
-                img: btn.dataset.img,
+                id: exerciseId,
+                name: btn.getAttribute("data-name"),
+                img: btn.getAttribute("data-img"),
+                _editing: false
             };
 
-            document.getElementById("modal-exercise-id").value = id;
+            document.getElementById("modal-exercise-id").value = exerciseId;
+            document.getElementById("exercise-form").reset();
             $("#exerciseModal").modal("show");
         }
     });
 
     document.getElementById("exercise-form").addEventListener("submit", function(e) {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(this).entries());
-        selectedExercises.push({
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        const newExercise = {
             ...currentExercise,
-            ...data
-        });
+            ...data,
+        };
+
+        if (currentExercise._editing) {
+            const index = selectedExercises.findIndex(ex => ex.id === currentExercise.id);
+            if (index !== -1) {
+                selectedExercises[index] = newExercise;
+            }
+        } else {
+            const divisionId = String(newExercise["exercise_data[training_division_id]"]);
+            let inserted = false;
+
+            for (let i = selectedExercises.length - 1; i >= 0; i--) {
+                if (String(selectedExercises[i]["exercise_data[training_division_id]"]) === divisionId) {
+                    selectedExercises.splice(i + 1, 0, newExercise);
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if (!inserted) {
+                selectedExercises.push(newExercise);
+            }
+        }
+
+        currentExercise = {};
         $("#exerciseModal").modal("hide");
-        this.reset();
         renderSelected();
+        e.target.reset();
     });
 
     document.getElementById("group-filter").addEventListener("change", function() {
         const value = this.value;
         document.querySelectorAll(".exercise-group").forEach((group) => {
-            group.style.display = value === "all" || group.dataset.group === value ? "block" : "none";
+            const name = group.getAttribute("data-group");
+            group.style.display = value === "all" || name === value ? "block" : "none";
         });
     });
 
@@ -328,17 +493,18 @@
 
     document.getElementById("final-form").addEventListener("submit", function(e) {
         e.preventDefault();
-        const payload = selectedExercises.map(data => ({
+
+        const exercisesArray = selectedExercises.map((data, index) => ({
             ficha_id: fichaId,
-            ...data
+            sort_order: index + 1,
+            ...data,
         }));
-        document.getElementById("final-exercise-data").value = JSON.stringify(payload);
+
+        document.getElementById("final-exercise-data").value = JSON.stringify(exercisesArray);
         this.submit();
     });
 
-    <?php if (isset($existingExercises)): ?>
-        const preload = <?= json_encode($existingExercises) ?>;
-        preload.forEach(ex => selectedExercises.push(ex));
+    document.addEventListener("DOMContentLoaded", () => {
         renderSelected();
-    <?php endif; ?>
+    });
 </script>
