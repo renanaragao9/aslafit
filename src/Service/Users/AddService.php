@@ -6,6 +6,7 @@ namespace App\Service\Users;
 
 use Cake\ORM\Table;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\ORM\TableRegistry;
 
 class AddService
 {
@@ -18,6 +19,14 @@ class AddService
 
     public function run(array $data): array
     {
+        $existing = $this->users->find()
+            ->where(['email' => $data['email']])
+            ->first();
+
+        if ($existing) {
+            return ['success' => false, 'message' => 'Este e-mail já está sendo utilizado por outro usuário.'];
+        }
+
         if (!empty($data['password'])) {
             $data['password'] = (new DefaultPasswordHasher())->hash($data['password']);
         }

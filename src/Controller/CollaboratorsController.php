@@ -66,6 +66,7 @@ class CollaboratorsController extends AppController
         $collaborators = $this->paginate($query);
 
         $positions = $this->Collaborators->Positions->find('list', ['limit' => 200])->all();
+        $roles = $this->Collaborators->Users->Roles->find('list', ['limit' => 200])->all();
         $users = $this->Collaborators->Users->find('list', ['limit' => 200])->all();
         $roles = $this->Roles->find('list', ['limit' => 200])->all();
 

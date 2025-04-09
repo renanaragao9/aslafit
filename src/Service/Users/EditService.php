@@ -20,6 +20,19 @@ class EditService
     {
         $user = $this->users->get($id);
 
+        if (!empty($data['email'])) {
+            $existing = $this->users->find()
+                ->where([
+                    'email' => $data['email'],
+                    'id !=' => $id
+                ])
+                ->first();
+
+            if ($existing) {
+                return ['success' => false, 'message' => 'Este e-mail já está sendo utilizado por outro usuário.'];
+            }
+        }
+
         if (!empty($data['password'])) {
             $data['password'] = (new DefaultPasswordHasher())->hash($data['password']);
         } else {

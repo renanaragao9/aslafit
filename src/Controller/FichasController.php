@@ -142,4 +142,21 @@ class FichasController extends AppController
         $service = new ExportService($this->Fichas);
         return $service->run();
     }
+
+    public function finishTraining($id = null)
+    {
+        $this->request->allowMethod(['post', 'put']);
+
+        $ficha = $this->Fichas->get($id);
+        $ficha->active = false;
+        $ficha->end_date = date('Y-m-d');
+
+        if ($this->Fichas->save($ficha)) {
+            $this->Flash->success(__('Finha de treino finalizado com sucesso.'));
+        } else {
+            $this->Flash->error(__('Não foi possível finalizar o treino. Tente novamente.'));
+        }
+
+        return $this->redirect(['action' => 'view', $id]);
+    }
 }

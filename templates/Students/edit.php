@@ -28,15 +28,15 @@
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(
-                                'user_id',
+                                'user_email',
                                 [
-                                    'label' => 'Usuário',
-                                    'options' => $users,
-                                    'empty' => true,
+                                    'label' => 'Email do usuário',
+                                    'type' => 'email',
+                                    'required' => true,
+                                    'value' => h($student->user->email ?? ''),
                                     'class' => 'form-control'
                                 ]
-                            )
-                            ?>
+                            ) ?>
                         </div>
                     </div>
                     <div class="col-lg-6 col-s12">
@@ -52,6 +52,7 @@
                             ?>
                         </div>
                     </div>
+
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(

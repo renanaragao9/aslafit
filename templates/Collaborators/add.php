@@ -28,6 +28,20 @@
                     <div class="col-lg-6 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(
+                                'user_email',
+                                [
+                                    'label' => 'Email do colaborador',
+                                    'type' => 'email',
+                                    'required' => true,
+                                    'class' => 'form-control',
+                                    'placeholder' => 'colaborador@empresa.com'
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
                                 'position_id',
                                 [
                                     'options' => $positions,
@@ -38,6 +52,20 @@
                                 ]
                             )
                             ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'role_id',
+                                [
+                                    'label' => 'Perfil de acesso',
+                                    'options' => $roles,
+                                    'empty' => 'Selecione um perfil',
+                                    'required' => true,
+                                    'class' => 'form-control'
+                                ]
+                            ) ?>
                         </div>
                     </div>
                     <div class="col-lg-6 col-s12">

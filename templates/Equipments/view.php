@@ -1,7 +1,4 @@
 <?php
-
-use App\Utility\AccessChecker;
-
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
 $this->assign('title', 'Visualizar equipamento');
 ?>
