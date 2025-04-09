@@ -65,6 +65,14 @@ $this->assign('title', 'Visualizar tipo de item');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
+                        <?= __('Ativo'); ?>
+                    </label>
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
+                        <?= $itemType->active ? __('Sim') : __('Não'); ?>
+                    </div>
+                </div>
+                <div class="row item-row">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
                         <?= __('Criado'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
@@ -77,14 +85,6 @@ $this->assign('title', 'Visualizar tipo de item');
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($itemType->modified) ?>
-                    </div>
-                </div>
-                <div class="row item-row">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Ativo'); ?>
-                    </label>
-                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
-                        <?= $itemType->active ? __('Sim') : __('Não'); ?>
                     </div>
                 </div>
             </div>

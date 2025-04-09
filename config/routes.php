@@ -20,13 +20,16 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/usuarios', ['controller' => 'Users', 'action' => 'index']);
         $routes->connect('/usuario/visualizar/:id', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        $routes->connect('/perfis', ['controller' => 'Roles', 'action' => 'index']);
+        $routes->connect('/perfil/visualizar/:id', ['controller' => 'Roles', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rotas de equipamentos
         $routes->connect('/equipamentos', ['controller' => 'Equipments', 'action' => 'index']);
         $routes->connect('/equipamentos/visualizar/:id', ['controller' => 'Equipments', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
         # trainingDivisions
-        $routes->connect('/TrainingDivisions', ['controller' => 'TrainingDivisions', 'action' => 'index']);
-        $routes->connect('/TrainingDivisions/visualizar/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/divisao-de-treinamento', ['controller' => 'TrainingDivisions', 'action' => 'index']);
+        $routes->connect('/divisao-de-treinamento/visualizar/:id', ['controller' => 'TrainingDivisions', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
         # muscleGroups
         $routes->connect('/grupo-muscular', ['controller' => 'MuscleGroups', 'action' => 'index']);

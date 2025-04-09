@@ -80,8 +80,11 @@ $this->assign('title', 'Visualizar');
 </section>
 
 <?php
-include __DIR__ . '/Relations/permissions.php';
 include __DIR__ . '/Relations/users.php';
-?>
 
-<?php $this->Html->script('Roles/view.js', ['block' => true]); ?>
+if (($user = $this->request->getAttribute('identity')) && $user->role_id == 1) {
+    include __DIR__ . '/Relations/permissions.php';
+}
+
+$this->Html->script('Roles/view.js', ['block' => true]);
+?>

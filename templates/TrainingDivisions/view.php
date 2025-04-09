@@ -48,7 +48,7 @@ $this->assign('title', 'Visualizar divisão de treino');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Name'); ?>
+                        <?= __('Nome'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($trainingDivision->name) ?>
@@ -56,7 +56,7 @@ $this->assign('title', 'Visualizar divisão de treino');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Created'); ?>
+                        <?= __('Criado'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($trainingDivision->created) ?>
@@ -64,7 +64,7 @@ $this->assign('title', 'Visualizar divisão de treino');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Modified'); ?>
+                        <?= __('Modificado'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= h($trainingDivision->modified) ?>
@@ -72,7 +72,7 @@ $this->assign('title', 'Visualizar divisão de treino');
                 </div>
                 <div class="row item-row">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label">
-                        <?= __('Active'); ?>
+                        <?= __('Ativo'); ?>
                     </label>
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 control-label">
                         <?= $trainingDivision->active ? __('Sim') : __('Não'); ?>

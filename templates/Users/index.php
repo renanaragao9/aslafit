@@ -88,10 +88,10 @@ $this->assign('title', 'Usuários');
                                         <?= $this->Paginator->sort('last_login', 'Último Login') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('active', 'Ativo') ?>
+                                        <?= $this->Paginator->sort('role_id', 'Função') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('role_id', 'Função') ?>
+                                        <?= $this->Paginator->sort('active', 'Ativo') ?>
                                     </th>
                                     <th class="actions">
                                         <?= __('Ações') ?>
@@ -114,10 +114,14 @@ $this->assign('title', 'Usuários');
                                             <?= h($user->last_login) ? h($user->last_login) : '-' ?>
                                         </td>
                                         <td>
-                                            <?= h($user->active) ? 'Sim' : 'Não' ?>
+                                            <?= $user->role ? h($user->role->name) : '-' ?>
                                         </td>
                                         <td>
-                                            <?= $user->role ? h($user->role->name) : '-' ?>
+                                            <?php if ($user->active): ?>
+                                                <span class="badge badge-success"><?= __('Sim') ?></span>
+                                            <?php else: ?>
+                                                <span class="badge badge-danger"><?= __('Não') ?></span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="actions">
                                             <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $user->id ?>">
@@ -137,9 +141,9 @@ $this->assign('title', 'Usuários');
                                     </tr>
 
                                     <?php
+                                    include __DIR__ . '/detail.php';
                                     include __DIR__ . '/edit.php';
                                     include __DIR__ . '/delete.php';
-                                    include __DIR__ . '/view_index.php';
                                     ?>
 
                                 <?php endforeach; ?>

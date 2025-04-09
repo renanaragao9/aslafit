@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                    <div class="col-lg-6 col-s12">
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(
                                 'name',
@@ -25,13 +25,14 @@
                             ?>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-s12">
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
                             <?= $this->Form->control(
                                 'description',
                                 [
                                     'class' => 'form-control',
-                                    'label' => __('Descrição')
+                                    'label' => __('Descrição'),
+                                    'type' => 'textarea',
                                 ]
                             )
                             ?>
@@ -43,7 +44,9 @@
                                 'active',
                                 [
                                     'type' => 'checkbox',
-                                    'label' => __('Ativo')
+                                    'label' => __('Ativo'),
+                                    'class' => 'form-check-input',
+                                    'checked' => true,
                                 ]
                             )
                             ?>

@@ -44,16 +44,8 @@ class WorkLogsController extends AppController
         if ($search) {
             $conditions = [
                 'OR' => [
-                    'CAST(WorkLogs.id AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.collaborator_id AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.log_date AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.log_type AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.log_time AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.log_address AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.latitude AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.longitude AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.created AS CHAR) LIKE' => '%' . $search . '%',
-                    'CAST(WorkLogs.modified AS CHAR) LIKE' => '%' . $search . '%',
+                    'WorkLogs.created LIKE' => '%' . $search . '%',
+                    'Collaborators.name LIKE' => '%' . $search . '%',
                 ],
             ];
         }

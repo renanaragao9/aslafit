@@ -32,12 +32,12 @@
                                     <span><?= $storageLocation->active ? 'Sim' : 'Não' ?> </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Criado em:</strong>
+                                    <strong>Criado:</strong>
                                     <span><?= h($storageLocation->created) ?> </span>
                                 </li>
 
                                 <li class="list-group-item">
-                                    <strong>Modificado em:</strong>
+                                    <strong>Modificado:</strong>
                                     <span><?= h($storageLocation->modified) ?> </span>
                                 </li>
                             </ul>

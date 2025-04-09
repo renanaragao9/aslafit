@@ -34,10 +34,10 @@ class EditService
                 }
             }
 
-            return ['success' => true, 'message' => __('O perfil foi editado com sucesso.')];
+            return ['success' => true, 'message' => __('Perfil editado com sucesso.')];
         }
 
-        return ['success' => false, 'message' => __('O perfil não pode ser salvo. Por favor, tente novamente.')];
+        return ['success' => false, 'message' => __('Perfil não salvo. Por favor, tente novamente.')];
     }
 
     public function getEditData(int $id): array

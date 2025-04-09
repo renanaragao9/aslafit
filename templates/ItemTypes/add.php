@@ -43,7 +43,9 @@
                                 'active',
                                 [
                                     'type' => 'checkbox',
-                                    'label' => __('Ativo')
+                                    'label' => __('Ativo'),
+                                    'class' => 'form-check-input',
+                                    'checked' => true,
                                 ]
                             )
                             ?>

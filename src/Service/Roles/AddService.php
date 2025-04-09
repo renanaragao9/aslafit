@@ -30,10 +30,10 @@ class AddService
                 }
             }
 
-            return ['success' => true, 'message' => __('O perfil foi salvo com sucesso.')];
+            return ['success' => true, 'message' => __('Perfil salvo com sucesso.')];
         }
 
-        return ['success' => false, 'message' => __('O perfil não pode ser salvo. Por favor, tente novamente.')];
+        return ['success' => false, 'message' => __('Perfil não salvo. Por favor, tente novamente.')];
     }
 
     public function getNewEntity()

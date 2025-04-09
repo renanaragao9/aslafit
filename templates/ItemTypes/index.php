@@ -137,7 +137,7 @@ $this->assign('title', 'Tipos de item');
                                     </tr>
 
                                     <?php
-                                    include __DIR__ . '/view_index.php';
+                                    include __DIR__ . '/detail.php';
                                     include __DIR__ . '/edit.php';
                                     include __DIR__ . '/delete.php';
                                     ?>
