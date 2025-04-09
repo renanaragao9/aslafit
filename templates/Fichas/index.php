@@ -75,18 +75,17 @@ $this->assign('title', 'Fichas');
                                         <?= $this->Paginator->sort('id', 'ID') ?>
                                     </th>
                                     <th>
+                                        <?= $this->Paginator->sort('student_id', 'Aluno') ?>
+                                    </th>
+                                    <th>
                                         <?= $this->Paginator->sort('start_date', 'Data de Início') ?>
                                     </th>
                                     <th>
                                         <?= $this->Paginator->sort('end_date', 'Data de Término') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('student_id', 'Aluno') ?>
-                                    </th>
-                                    <th>
                                         <?= $this->Paginator->sort('active', 'Ativo') ?>
                                     </th>
-
                                     <th class="actions">
                                         <?= __('Ações') ?>
                                     </th>
@@ -99,13 +98,13 @@ $this->assign('title', 'Fichas');
                                             <?= $this->Number->format($ficha->id) ?>
                                         </td>
                                         <td>
+                                            <?= $ficha->student ? h($ficha->student->name) : '-' ?>
+                                        </td>
+                                        <td>
                                             <?= h($ficha->start_date) ?>
                                         </td>
                                         <td>
                                             <?= h($ficha->end_date) ?>
-                                        </td>
-                                        <td>
-                                            <?= $ficha->student ? h($ficha->student->name) : '-' ?>
                                         </td>
                                         <td>
                                             <?php if ($ficha->active): ?>
@@ -132,9 +131,9 @@ $this->assign('title', 'Fichas');
                                     </tr>
 
                                     <?php
+                                    include __DIR__ . '/detail.php';
                                     include __DIR__ . '/edit.php';
                                     include __DIR__ . '/delete.php';
-                                    include __DIR__ . '/view_index.php';
                                     ?>
                                 <?php endforeach; ?>
                             </tbody>

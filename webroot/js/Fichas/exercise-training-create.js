@@ -257,3 +257,35 @@ document.addEventListener("DOMContentLoaded", function () {
             this.submit();
         });
 });
+
+const trainingDivisionStorageKey = "selectedTrainingDivisionId";
+const restoreTrainingDivision = function () {
+    const saved = localStorage.getItem(trainingDivisionStorageKey);
+    const $select = $("select[name='exercise_data[training_division_id]']");
+
+    if (saved && $select.length) {
+        $select.val(saved);
+    }
+};
+
+const saveTrainingDivision = function () {
+    const $select = $("select[name='exercise_data[training_division_id]']");
+    const value = $select.val();
+    if (value) {
+        localStorage.setItem(trainingDivisionStorageKey, value);
+    }
+};
+
+restoreTrainingDivision();
+
+$(document).on(
+    "change",
+    "select[name='exercise_data[training_division_id]']",
+    function () {
+        saveTrainingDivision();
+    }
+);
+
+$("#exerciseModal").on("shown.bs.modal", function () {
+    restoreTrainingDivision();
+});

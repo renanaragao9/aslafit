@@ -72,6 +72,7 @@ $menuSections = [
       ['controller' => 'FoodTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de alimento', 'permission' => 'FoodTypes/index'],
       ['controller' => 'Foods', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Alimentos', 'permission' => 'Foods/index'],
       ['controller' => 'MealTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de Refeição', 'permission' => 'MealTypes/index'],
+      ['controller' => 'Fichas', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Fichas', 'permission' => 'Fichas/index'],
     ],
   ],
   [
@@ -113,18 +114,19 @@ $menuSections = [
 </li>
 
 <li class="nav-item">
-  <a href="/colaboradores" class="nav-link <?= $this->request->getPath() === '/collaborators' ? 'active' : '' ?>">
+  <a href="/colaboradores" class="nav-link <?= $this->request->getPath() === '/colaboradores' ? 'active' : '' ?>">
     <i class="nav-icon fas fa-users"></i>
     <p>Colaboradores</p>
   </a>
 </li>
 
 <li class="nav-item">
-  <a href="/alunos" class="nav-link <?= $this->request->getPath() === '/students' ? 'active' : '' ?>">
+  <a href="/alunos" class="nav-link <?= $this->request->getPath() === '/alunos' ? 'active' : '' ?>">
     <i class="fa-regular fa-users"></i>
     <p>Alunos</p>
   </a>
 </li>
+
 
 <?php
 foreach ($menuSections as $section) {

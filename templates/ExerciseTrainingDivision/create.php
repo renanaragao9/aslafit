@@ -1,5 +1,6 @@
 <?=
 $this->Html->css('ExerciseTrainingDivision/create.css', ['block' => true]);
+$this->assign('title', 'Criar ficha de treino');
 ?>
 
 <div class="content mt-4">

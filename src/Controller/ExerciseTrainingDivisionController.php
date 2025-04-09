@@ -141,8 +141,10 @@ class ExerciseTrainingDivisionController extends AppController
             ]);
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
-            return $this->redirect(['action' => 'index']);
+
+            return $this->redirect(['controller' => 'Fichas', 'action' => 'view', $fichaId]);
         }
+
 
         $ficha = $this->ExerciseTrainingDivision->Fichas->get($fichaId, [
             'contain' => ['Students']
@@ -167,7 +169,7 @@ class ExerciseTrainingDivisionController extends AppController
             $result = $service->run($id, $this->request->getData());
 
             $this->Flash->{$result['success'] ? 'success' : 'error'}($result['message']);
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller' => 'Fichas', 'action' => 'view', $fichaId]);
         }
 
         $this->set($service->getEditData($id));

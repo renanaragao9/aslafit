@@ -97,10 +97,14 @@ return function (RouteBuilder $routes): void {
         # dietPlans routes
         $routes->connect('/planos-alimentares', ['controller' => 'DietPlans', 'action' => 'index']);
         $routes->connect('/plano-alimentar/visualizar/:id', ['controller' => 'DietPlans', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/plano-alimentar/criar/:id', ['controller' => 'DietPlans', 'action' => 'create'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/plano-alimentar/editar/:id', ['controller' => 'DietPlans', 'action' => 'update'], ['pass' => ['id'], 'id' => '\d+']);
 
         # exerciseTrainingDivision routes
         $routes->connect('/ficha-exercicios', ['controller' => 'ExerciseTrainingDivision', 'action' => 'index']);
         $routes->connect('/ficha-exercicio/visualizar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-exercicio/criar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'create'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/ficha-exercicio/editar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'update'], ['pass' => ['id'], 'id' => '\d+']);
 
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);

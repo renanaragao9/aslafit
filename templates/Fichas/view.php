@@ -19,15 +19,6 @@ $this->assign('title', 'Visualizar ficha');
                                         </a>
                                         <?= __('Visualizar ficha') ?>
                                     </h3>
-
-                                    <?php if ($ficha->active): ?>
-                                        <div class="mb-3">
-                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmFinishModal">
-                                                <i class="fa-solid fa-circle-check"></i> Finalizar Treino
-                                            </button>
-                                        </div>
-                                    <?php endif; ?>
-
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
                                     <nav aria-label="breadcrumb">
@@ -49,6 +40,19 @@ $this->assign('title', 'Visualizar ficha');
                                 </div>
                             </div>
                             <hr />
+                            <?php if ($ficha->active): ?>
+                                <div class="mb-3 mt-2">
+                                    <button class="btn btn-add btn-sm" data-toggle="modal" data-target="#confirmFinishModal">
+                                        <i class="fa-solid fa-circle-check"></i> Finalizar Treino
+                                    </button>
+                                </div>
+                            <?php else: ?>
+                                <div class="mb-3 mt-2">
+                                    <span class="badge badge-success">
+                                        <i class="fa-solid fa-check"></i> Treino Finalizado
+                                    </span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="card-body">
@@ -147,15 +151,14 @@ $this->assign('title', 'Visualizar ficha');
                     </div>
                 </div>
             </div>
-
+            <div class="col-12 col-md-6">
+                <?php include __DIR__ . '/Relations/exerciseTraining.php'; ?>
+            </div>
             <div class="col-12 col-md-6">
                 <?php include __DIR__ . '/Relations/assessments.php'; ?>
             </div>
             <div class="col-12 col-md-6">
                 <?php include __DIR__ . '/Relations/dietPlans.php'; ?>
-            </div>
-            <div class="col-12 col-md-6">
-                <?php include __DIR__ . '/Relations/exerciseTraining.php'; ?>
             </div>
         </div>
     </div>
