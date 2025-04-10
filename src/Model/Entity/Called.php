@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -13,7 +14,6 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $subject
  * @property string $status
- * @property bool $active
  * @property int|null $collaborator_id
  * @property int|null $student_id
  * @property \Cake\I18n\FrozenTime $created
@@ -38,7 +38,7 @@ class Called extends Entity
         'title' => true,
         'subject' => true,
         'status' => true,
-        'active' => true,
+        'notes' => true,
         'collaborator_id' => true,
         'student_id' => true,
         'created' => true,

@@ -9,17 +9,40 @@ function hasPermission($userId, $permission)
   return AccessChecker::hasPermission($userId, $permission);
 }
 
-function generateNavItem($controller, $action, $iconClass, $label, $request, $htmlHelper)
+function generateNavItem($controller, $action, $iconClass, $label, $request, $htmlHelper, $url = null)
 {
+  $currentController = $request->getParam('controller');
+  $path = $request->getPath();
+  $isActive = ($url && $path === $url) || (!$url && $currentController === $controller);
+
   return $htmlHelper->link(
     "<i class=\"$iconClass nav-icon\"></i><p>$label</p>",
-    ['controller' => $controller, 'action' => $action],
-    ['class' => 'nav-link ' . ($request->getParam('controller') === $controller ? 'active' : ''), 'escape' => false]
+    $url ?: ['controller' => $controller, 'action' => $action],
+    ['class' => 'nav-link ' . ($isActive ? 'active' : ''), 'escape' => false]
   );
 }
 
 function generateMenuSection($section, $loggedUserId, $request, $htmlHelper)
 {
+  // Menu sem subitens
+  if (!isset($section['items'])) {
+    if (!isset($section['permission']) || hasPermission($loggedUserId, $section['permission'])) {
+      return '<li class="nav-item">' .
+        generateNavItem(
+          $section['controller'] ?? null,
+          $section['action'] ?? null,
+          $section['icon'],
+          $section['label'],
+          $request,
+          $htmlHelper,
+          $section['url'] ?? null
+        ) .
+        '</li>';
+    }
+    return '';
+  }
+
+  // Menu com subitens
   $hasPermission = false;
   $menuItems = '';
 
@@ -62,6 +85,22 @@ HTML;
 
 $menuSections = [
   [
+    'label' => 'Dashboard',
+    'icon' => 'fas fa-tachometer-alt',
+    'url' => '/',
+  ],
+  [
+    'label' => 'Colaboradores',
+    'icon' => 'fas fa-users',
+    'url' => '/colaboradores',
+  ],
+  [
+    'label' => 'Alunos',
+    'icon' => 'fa-regular fa-users',
+    'url' => '/alunos',
+  ],
+
+  [
     'label' => 'Plano de treino',
     'icon' => 'fa-regular fa-dumbbell',
     'items' => [
@@ -102,31 +141,15 @@ $menuSections = [
       ['controller' => 'PlanTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de planos', 'permission' => 'PlanTypes/index'],
     ],
   ],
+  [
+    'label' => 'Chamados',
+    'icon' => 'fa-regular fa-headset',
+    'url' => '/chamados',
+    'permission' => 'Calleds/index',
+  ],
 ];
 
 ?>
-
-<li class="nav-item">
-  <a href="/" class="nav-link <?= $this->request->getPath() === '/' ? 'active' : '' ?>">
-    <i class="nav-icon fas fa-tachometer-alt"></i>
-    <p>Dashboard</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="/colaboradores" class="nav-link <?= $this->request->getPath() === '/colaboradores' ? 'active' : '' ?>">
-    <i class="nav-icon fas fa-users"></i>
-    <p>Colaboradores</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="/alunos" class="nav-link <?= $this->request->getPath() === '/alunos' ? 'active' : '' ?>">
-    <i class="fa-regular fa-users"></i>
-    <p>Alunos</p>
-  </a>
-</li>
-
 
 <?php
 foreach ($menuSections as $section) {

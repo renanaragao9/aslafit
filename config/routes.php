@@ -106,6 +106,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/ficha-exercicio/criar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'create'], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/ficha-exercicio/editar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'update'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # calleds routes
+        $routes->connect('/chamados', ['controller' => 'Calleds', 'action' => 'index']);
+        $routes->connect('/chamado/visualizar/:id', ['controller' => 'Calleds', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -265,5 +269,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/ficha-exercicio-adicionar', ['controller' => 'ExerciseTrainingDivision', 'action' => 'addExerciseTrainingDivision', 'method' => 'POST']);
         $routes->connect('/ficha-exercicio-editar/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'editExerciseTrainingDivision', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/ficha-exercicio-excluir/:id', ['controller' => 'ExerciseTrainingDivision', 'action' => 'deleteExerciseTrainingDivision', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Calleds routes API
+        $routes->connect('/chamados', ['controller' => 'Calleds', 'action' => 'fetchCalleds', 'method' => 'GET']);
+        $routes->connect('/chamdo/:id', ['controller' => 'Calleds', 'action' => 'fetchcalled', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/chamado-adicionar', ['controller' => 'Calleds', 'action' => 'addCalleds', 'method' => 'POST']);
+        $routes->connect('/chamado-editar/:id', ['controller' => 'Calleds', 'action' => 'editCalleds', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/chamado-excluir/:id', ['controller' => 'Calleds', 'action' => 'deleteCalleds', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

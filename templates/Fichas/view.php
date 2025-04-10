@@ -11,7 +11,7 @@ $this->assign('title', 'Visualizar ficha');
                 <div class="card card-outline card-primary fixed-height-card">
                     <div class="content-header">
                         <div class="container-fluid">
-                            <div class="row align-items-center">
+                            <div class="row align-items-center m-0">
                                 <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                                     <h3 class="card-title mb-2">
                                         <a href="javascript:history.back()" class="mr-2">

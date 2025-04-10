@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -82,13 +83,12 @@ class CalledsTable extends Table
             ->notEmptyString('subject');
 
         $validator
+            ->allowEmptyString('notes');
+
+        $validator
             ->scalar('status')
             ->maxLength('status', 50)
             ->notEmptyString('status');
-
-        $validator
-            ->boolean('active')
-            ->notEmptyString('active');
 
         $validator
             ->integer('collaborator_id')

@@ -12,78 +12,119 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('urgency', 
+                            <?= $this->Form->control(
+                                'collaborator_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Colaborador',
+                                    'options' => $collaborators,
+                                    'empty' => 'Selecione um colaborador',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('title', 
+                            <?= $this->Form->control(
+                                'student_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Estudante',
+                                    'options' => $students,
+                                    'empty' => 'Selecione um estudante',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('subject', 
+                            <?= $this->Form->control(
+                                'urgency',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Urgência',
+                                    'type' => 'select',
+                                    'options' => [
+                                        'baixa' => 'Baixa',
+                                        'media' => 'Média',
+                                        'alta' => 'Alta'
+                                    ],
+                                    'empty' => 'Selecione a urgência',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('status', 
+                            <?= $this->Form->control(
+                                'status',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Status',
+                                    'type' => 'select',
+                                    'options' => [
+                                        'aberto' => 'Aberto',
+                                        'em_andamento' => 'Em andamento',
+                                        'pausa' => 'Pausa',
+                                        'concluido' => 'Concluído'
+                                    ],
+                                    'empty' => 'Selecione o status',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('active', 
+                            <?= $this->Form->control(
+                                'title',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Título',
+                                    'type' => 'textarea',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('collaborator_id', 
+                            <?= $this->Form->control(
+                                'subject',
                                 [
-                                    'options' => $collaborators, 
-                                    'empty' => true, 
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Assunto',
+                                    'type' => 'textarea',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
-                        <div class="form-group">
-                            <?= $this->Form->control('student_id', 
-                                [
-                                    'options' => $students, 
-                                    'empty' => true, 
-                                    'class' => 'form-control'
-                                ]) 
-                            ?>
-                        </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>
