@@ -10,77 +10,117 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create($media, ['url' => ['action' => 'edit', $media->id], 'id' => 'editForm-' . $media->id]) ?>
-                    <div class="row">
-                                                                                    <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('title', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('type', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('img', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('link', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('description', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                <div class="col-lg-6 col-s12">
-                                            <div class="form-group">
-                                                <?= $this->Form->control('collaborator_id', 
-                                                    [
-                                                        'options' => $collaborators, 
-                                                        'class' => 'form-control'
-                                                    ]) 
-                                                ?>
-                                            </div>
-                                        </div>                                                            <div class="col-lg-6 col-s12">
-                                        <div class="form-group">
-                                            <?= $this->Form->control('active', 
-                                                [
-                                                    'class' => 'form-control'
-                                                ]) 
-                                            ?>
-                                        </div>
-                                    </div>                                                                                            </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
-                        <?= $this->Form->button(
-                            __('Editar'),
-                            [
-                                'class' => 'btn modalEdit',
-                                'id' => 'editSaveButton' . $media->id,
-                            ]) 
-                        ?>
+                <?= $this->Form->create($media, ['url' => ['action' => 'edit', $media->id], 'type' => 'file', 'id' => 'editForm-' . $media->id]) ?>
+                <div class="row">
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'collaborator_id',
+                                [
+                                    'label' => 'Colaborador',
+                                    'options' => $collaborators,
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
                     </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'title',
+                                [
+                                    'label' => 'Título',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'type',
+                                [
+                                    'label' => 'Tipo',
+                                    'type' => 'select',
+                                    'options' => [
+                                        'post' => 'Post',
+                                        'banner' => 'Banner',
+                                        'story' => 'Story'
+                                    ],
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'img',
+                                [
+                                    'label' => 'Imagem',
+                                    'type' => 'file',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'link',
+                                [
+                                    'label' => 'Link',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'description',
+                                [
+                                    'label' => 'Descrição',
+                                    'type' => 'textarea',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-s12">
+                        <div class="form-group">
+                            <?= $this->Form->control(
+                                'active',
+                                [
+                                    'label' => 'Ativo',
+                                    'type' => 'checkbox',
+                                    'class' => 'form-check-input',
+                                ]
+                            )
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">Cancelar</button>
+                    <?= $this->Form->button(
+                        __('Editar'),
+                        [
+                            'class' => 'btn modalEdit',
+                            'id' => 'editSaveButton' . $media->id,
+                        ]
+                    )
+                    ?>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

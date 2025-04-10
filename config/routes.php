@@ -110,6 +110,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/chamados', ['controller' => 'Calleds', 'action' => 'index']);
         $routes->connect('/chamado/visualizar/:id', ['controller' => 'Calleds', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # medias routes
+        $routes->connect('/midias', ['controller' => 'Medias', 'action' => 'index']);
+        $routes->connect('/midia/visualizar/:id', ['controller' => 'Medias', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -276,5 +280,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/chamado-adicionar', ['controller' => 'Calleds', 'action' => 'addCalleds', 'method' => 'POST']);
         $routes->connect('/chamado-editar/:id', ['controller' => 'Calleds', 'action' => 'editCalleds', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/chamado-excluir/:id', ['controller' => 'Calleds', 'action' => 'deleteCalleds', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # Medias routes API
+        $routes->connect('/midias', ['controller' => 'Medias', 'action' => 'fetchMedias', 'method' => 'GET']);
+        $routes->connect('/midia/:id', ['controller' => 'Medias', 'action' => 'fetchmedia', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/midia-adicionar', ['controller' => 'Medias', 'action' => 'addMedias', 'method' => 'POST']);
+        $routes->connect('/midia-editar/:id', ['controller' => 'Medias', 'action' => 'editMedias', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('/midia-excluir/:id', ['controller' => 'Medias', 'action' => 'deleteMedias', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

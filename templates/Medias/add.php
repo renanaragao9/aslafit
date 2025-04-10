@@ -10,77 +10,119 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
+                <?= $this->Form->create(null, ['url' => ['action' => 'add'], 'type' => 'file']) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('title', 
+                            <?= $this->Form->control(
+                                'collaborator_id',
                                 [
+                                    'label' => 'Colaborador',
+                                    'options' => $collaborators,
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('type', 
+                            <?= $this->Form->control(
+                                'title',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Título',
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('img', 
+                            <?= $this->Form->control(
+                                'type',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Tipo',
+                                    'type' => 'select',
+                                    'options' => [
+                                        'post' => 'Post',
+                                        'banner' => 'Banner',
+                                        'story' => 'Story'
+                                    ],
+                                    'class' => 'form-control',
+                                    'required' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('link', 
+                            <?= $this->Form->control(
+                                'img',
                                 [
+                                    'label' => 'Imagem',
+                                    'type' => 'file',
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('description', 
+                            <?= $this->Form->control(
+                                'link',
                                 [
+                                    'label' => 'Link',
                                     'class' => 'form-control'
-                                ]) 
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('collaborator_id', 
+                            <?= $this->Form->control(
+                                'description',
                                 [
-                                    'options' => $collaborators, 
+                                    'label' => 'Descrição',
+                                    'type' => 'textarea',
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-12 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('active', 
+                            <?= $this->Form->control(
+                                'active',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Ativo',
+                                    'type' => 'checkbox',
+                                    'class' => 'form-check-input',
+                                    'checked' => true
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>
