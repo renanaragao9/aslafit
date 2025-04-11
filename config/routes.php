@@ -114,6 +114,10 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/midias', ['controller' => 'Medias', 'action' => 'index']);
         $routes->connect('/midia/visualizar/:id', ['controller' => 'Medias', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
 
+        # monthlyPlans routes
+        $routes->connect('/mensalidades', ['controller' => 'MonthlyPlans', 'action' => 'index']);
+        $routes->connect('/mensalidade/visualizar/:id', ['controller' => 'MonthlyPlans', 'action' => 'view'], ['pass' => ['id'], 'id' => '\d+']);
+
         # Rota de fallback
         $routes->fallbacks(DashedRoute::class);
     });
@@ -287,5 +291,12 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/midia-adicionar', ['controller' => 'Medias', 'action' => 'addMedias', 'method' => 'POST']);
         $routes->connect('/midia-editar/:id', ['controller' => 'Medias', 'action' => 'editMedias', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
         $routes->connect('/midia-excluir/:id', ['controller' => 'Medias', 'action' => 'deleteMedias', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
+
+        # MonthlyPlans routes API
+        $routes->connect('/mensalidades', ['controller' => 'MonthlyPlans', 'action' => 'fetchMonthlyPlans', 'method' => 'GET']);
+        $routes->connect('mensalidade/:id', ['controller' => 'MonthlyPlans', 'action' => 'fetchmonthlyPlan', 'method' => 'GET'], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('mensalidade-adicionar', ['controller' => 'MonthlyPlans', 'action' => 'addMonthlyPlans', 'method' => 'POST']);
+        $routes->connect('mensalidade-editar/:id', ['controller' => 'MonthlyPlans', 'action' => 'editMonthlyPlans', 'method' => ['PUT', 'PATCH']], ['pass' => ['id'], 'id' => '\d+']);
+        $routes->connect('mensalidade-excluir/:id', ['controller' => 'MonthlyPlans', 'action' => 'deleteMonthlyPlans', 'method' => 'DELETE'], ['pass' => ['id'], 'id' => '\d+']);
     });
 };

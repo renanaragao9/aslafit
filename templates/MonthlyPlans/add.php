@@ -12,86 +12,135 @@
             <div class="modal-body">
                 <?= $this->Form->create(null, ['url' => ['action' => 'add']]) ?>
                 <div class="row">
-                                         <div class="col-lg-6 col-s12">
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('date_payment', 
+                            <?= $this->Form->control(
+                                'student_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Aluno',
+                                    'options' => $students,
+                                    'empty' => 'Selecione uma opção',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('date_venciment', 
+                            <?= $this->Form->control(
+                                'collaborator_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Colaborador',
+                                    'options' => $collaborators,
+                                    'empty' => 'Selecione uma opção',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('value', 
+                            <?= $this->Form->control(
+                                'plan_type_id',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Tipo de Plano',
+                                    'options' => $planTypes,
+                                    'empty' => 'Selecione uma opção',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('observation', 
+                            <?= $this->Form->control(
+                                'value',
                                 [
-                                    'class' => 'form-control'
-                                ]) 
+                                    'label' => 'Valor',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                    'placeholder' => '0.00',
+                                    'data-format' => 'currency'
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('payment_id', 
+                            <?= $this->Form->control(
+                                'payment_id',
                                 [
-                                    'options' => $formPayments, 
-                                    'class' => 'form-control'
-                                ])
+                                    'label' => 'Forma de Pagamento',
+                                    'options' => $formPayments,
+                                    'empty' => 'Selecione uma opção',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('plan_type_id', 
+                            <?= $this->Form->control(
+                                'date_payment',
                                 [
-                                    'options' => $planTypes, 
-                                    'class' => 'form-control'
-                                ])
+                                    'label' => 'Data de Pagamento',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                    'type' => 'date',
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('student_id', 
+                            <?= $this->Form->control(
+                                'date_venciment',
                                 [
-                                    'options' => $students, 
-                                    'class' => 'form-control'
-                                ])
+                                    'label' => 'Data de Vencimento',
+                                    'class' => 'form-control',
+                                    'required' => true,
+                                    'type' => 'date',
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                     <div class="col-lg-6 col-s12">
+                    </div>
+                    <div class="col-lg-6 col-s12">
                         <div class="form-group">
-                            <?= $this->Form->control('collaborator_id', 
+                            <?= $this->Form->control(
+                                'observation',
                                 [
-                                    'options' => $collaborators, 
+                                    'label' => 'Observação',
                                     'class' => 'form-control'
-                                ])
+                                ]
+                            )
                             ?>
                         </div>
-                    </div>                   </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
                     Cancelar
                 </button>
-                <?= $this->Form->button(__('Salvar'), 
+                <?= $this->Form->button(
+                    __('Salvar'),
                     [
-                        'class' => 'btn modalAdd', 
-                        'id' => 'saveButton', 
+                        'class' => 'btn modalAdd',
+                        'id' => 'saveButton',
                         'escape' => false
-                    ]) 
+                    ]
+                )
                 ?>
             </div>
             <?= $this->Form->end() ?>

@@ -3,7 +3,7 @@
 use App\Utility\AccessChecker;
 
 $loggedUserId = $this->request->getSession()->read('Auth.User.id');
-$this->assign('title', 'Titulo');
+$this->assign('title', 'Mensalidades');
 ?>
 
 <div class="content mt-4">
@@ -16,21 +16,20 @@ $this->assign('title', 'Titulo');
                             <div class="row align-items-center">
                                 <div class="col-12 col-md-6 order-2 order-md-1 mt-4">
                                     <h3 class="card-title">
-                                        <?= __('Gerenciar monthlyPlans') ?>
+                                        <?= __('Gerenciar mensalidades') ?>
                                     </h3>
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right order-1 order-md-2">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb justify-content-md-end">
                                             <li class="breadcrumb-item">
-                                                <a class="bread-crumb-home"
-                                                    href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>"><i
+                                                <a class="bread-crumb-home" href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>"><i
                                                         class="fa-regular fa-house"></i>
                                                     Início
                                                 </a>
                                             </li>
                                             <li class="breadcrumb-item active" aria-current="page">
-                                                <?= __('monthlyPlans') ?>
+                                                <?= __('Mensalidades') ?>
                                             </li>
                                         </ol>
                                     </nav>
@@ -41,9 +40,12 @@ $this->assign('title', 'Titulo');
                     </div>
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>" onsubmit="return false;">
+                            <form class="form-inline w-100" method="get" action="<?= $this->Url->build() ?>">
                                 <div class="input-group">
                                     <input id="searchInput" class="form-control col-12" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="search" value="<?= $this->request->getQuery('search') ?>" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><?= __('Pesquisar') ?></button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -73,37 +75,28 @@ $this->assign('title', 'Titulo');
                             <thead>
                                 <tr>
                                     <th>
-                                        <?= $this->Paginator->sort('id') ?>
+                                        <?= $this->Paginator->sort('id', 'Id') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('date_payment') ?>
+                                        <?= $this->Paginator->sort('student_id', 'Aluno') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('date_venciment') ?>
+                                        <?= $this->Paginator->sort('plan_type_id', 'Tipo de Plano') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('value') ?>
+                                        <?= $this->Paginator->sort('value', 'Valor') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('observation') ?>
+                                        <?= $this->Paginator->sort('payment_id', 'Forma de Pagamento') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('payment_id') ?>
+                                        <?= $this->Paginator->sort('date_payment', 'Data de Pagamento') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('plan_type_id') ?>
+                                        <?= $this->Paginator->sort('date_venciment', 'Data de Vencimento') ?>
                                     </th>
                                     <th>
-                                        <?= $this->Paginator->sort('student_id') ?>
-                                    </th>
-                                    <th>
-                                        <?= $this->Paginator->sort('collaborator_id') ?>
-                                    </th>
-                                    <th>
-                                        <?= $this->Paginator->sort('created') ?>
-                                    </th>
-                                    <th>
-                                        <?= $this->Paginator->sort('modified') ?>
+                                        <?= $this->Paginator->sort('collaborator_id', 'Colaborador') ?>
                                     </th>
                                     <th class="actions">
                                         <?= __('Ações') ?>
@@ -117,34 +110,25 @@ $this->assign('title', 'Titulo');
                                             <?= $this->Number->format($monthlyPlan->id) ?>
                                         </td>
                                         <td>
+                                            <?= $monthlyPlan->student ? h($monthlyPlan->student->name) : '-' ?>
+                                        </td>
+                                        <td>
+                                            <?= $monthlyPlan->plan_type ? h($monthlyPlan->plan_type->name) : '-' ?>
+                                        </td>
+                                        <td>
+                                            R$ <?= number_format($monthlyPlan->value, 2, ',', '.') ?>
+                                        </td>
+                                        <td>
+                                            <?= $monthlyPlan->form_payment ? h($monthlyPlan->form_payment->name) : '-' ?>
+                                        </td>
+                                        <td>
                                             <?= h($monthlyPlan->date_payment) ?>
                                         </td>
                                         <td>
                                             <?= h($monthlyPlan->date_venciment) ?>
                                         </td>
                                         <td>
-                                            <?= $this->Number->format($monthlyPlan->value) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($monthlyPlan->observation) ?>
-                                        </td>
-                                        <td>
-                                            <?= $monthlyPlan->form_payment ? h($monthlyPlan->form_payment->name) : '-' ?>
-                                        </td>
-                                        <td>
-                                            <?= $monthlyPlan->plan_type ? h($monthlyPlan->plan_type->name) : '-' ?>
-                                        </td>
-                                        <td>
-                                            <?= $monthlyPlan->student ? h($monthlyPlan->student->name) : '-' ?>
-                                        </td>
-                                        <td>
                                             <?= $monthlyPlan->collaborator ? h($monthlyPlan->collaborator->name) : '-' ?>
-                                        </td>
-                                        <td>
-                                            <?= h($monthlyPlan->created) ?>
-                                        </td>
-                                        <td>
-                                            <?= h($monthlyPlan->modified) ?>
                                         </td>
                                         <td class="actions">
                                             <a href="#" class="btn btn-view btn-sm" data-toggle="modal" data-target="#detailsModal-<?= $monthlyPlan->id ?>">
@@ -163,149 +147,11 @@ $this->assign('title', 'Titulo');
                                         </td>
                                     </tr>
 
-                                    <!-- Incluir os modais de edição, visualização e exclusão -->
                                     <?php
+                                    include __DIR__ . '/detail.php';
                                     include __DIR__ . '/edit.php';
+                                    include __DIR__ . '/delete.php';
                                     ?>
-
-                                    <!-- Modal de Delete -->
-                                    <div class="modal fade" id="deleteModal-<?= $monthlyPlan->id ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-<?= $monthlyPlan->id ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel-<?= $monthlyPlan->id ?>">
-                                                        <?= __('Confirmar Exclusão') ?>
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        <?= __('Você tem certeza que deseja excluir {0}?', $monthlyPlan->name) ?>
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer justify-content-between">
-                                                    <button type="button" class="btn modalCancel" data-dismiss="modal">
-                                                        Cancelar
-                                                    </button>
-                                                    <?= $this->Form->postLink(
-                                                        __('Excluir'),
-                                                        [
-                                                            'action' => 'delete',
-                                                            $monthlyPlan->id
-                                                        ],
-                                                        [
-                                                            'class' => 'btn modalDelete',
-                                                            'id' => 'deleteButton-' . $monthlyPlan->id,
-                                                            'data-id' => $monthlyPlan->id
-                                                        ]
-                                                    )
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal de Detalhes -->
-                                    <div class="modal fade" id="detailsModal-<?= $monthlyPlan->id ?>" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel-<?= $monthlyPlan->id ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="detailsModalLabel-<?= $monthlyPlan->id ?>">
-                                                        Visualizar
-                                                        <?= h($monthlyPlan->name) ?>
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col-12 col-md-6">
-                                                                <ul class="list-group list-group-flush">
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Id:</strong>
-                                                                        <span> <?= h($monthlyPlan->id) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Date Payment:</strong>
-                                                                        <span> <?= h($monthlyPlan->date_payment) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Date Venciment:</strong>
-                                                                        <span> <?= h($monthlyPlan->date_venciment) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Value:</strong>
-                                                                        <span> <?= h($monthlyPlan->value) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Observation:</strong>
-                                                                        <span> <?= h($monthlyPlan->observation) ?> </span>
-                                                                    </li>
-                                                                </ul>
-                                                                <hr />
-                                                            </div>
-                                                            <div class="col-12 col-md-6">
-                                                                <ul class="list-group list-group-flush">
-
-
-
-
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Payment Id:</strong>
-                                                                        <span><?= h($monthlyPlan->payment_id) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Plan Type Id:</strong>
-                                                                        <span><?= h($monthlyPlan->plan_type_id) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Student Id:</strong>
-                                                                        <span><?= h($monthlyPlan->student_id) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Collaborator Id:</strong>
-                                                                        <span><?= h($monthlyPlan->collaborator_id) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Created:</strong>
-                                                                        <span><?= h($monthlyPlan->created) ?> </span>
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-                                                                        <strong>Modified:</strong>
-                                                                        <span><?= h($monthlyPlan->modified) ?> </span>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn modalView" id="viewButton" data-dismiss="modal">
-                                                        Fechar
-                                                    </button>
-                                                    <a href="<?= $this->Url->build(['action' => 'view', $monthlyPlan->id]) ?>" class="btn modalView">
-                                                        Ver Detalhes
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -331,55 +177,7 @@ $this->assign('title', 'Titulo');
 
 <?php
 include __DIR__ . '/add.php';
+include __DIR__ . '/filter.php';
+
+$this->Html->script('Global/format_currency.js', ['block' => true]);
 ?>
-
-<!-- Modal de Filtro -->
-<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-dialog-filter" role="document">
-        <div class="modal-content modal-content-filter">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">
-                    Filtrar Monthly Plans
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="filterForm" class="form-inline w-100" method="get"
-                    action="<?= $this->Url->build(['action' => 'index']) ?>">
-                    <div class="form-row w-100">
-                        <div class="form-group col-12">
-                            <!-- Adicione aqui os input para o filtro -->
-                            <?= $this->Form->control(
-                                'id',
-                                [
-                                    'type' => 'select',
-                                    'options' => null,
-                                    'empty' => 'Selecione uma opção',
-                                    'label' => false,
-                                    'class' => 'form-control w-100'
-                                ]
-                            )
-                            ?>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn modalCancel" id="cancelButton" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button class="btn modalView" type="submit" form="filterForm">
-                    Filtrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    var searchUrl = '<?= $this->Url->build(['action' => 'index']) ?>';
-</script>
-
-<?php $this->Html->script('Global/index.js', ['block' => true]); ?>

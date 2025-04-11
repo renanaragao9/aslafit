@@ -139,6 +139,7 @@ $menuSections = [
     'items' => [
       ['controller' => 'FormPayments', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Formas de pagamentos', 'permission' => 'FormPayments/index'],
       ['controller' => 'PlanTypes', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Tipos de planos', 'permission' => 'PlanTypes/index'],
+      ['controller' => 'MonthlyPlans', 'action' => 'index', 'icon' => 'fa-light fa-circle-notch', 'label' => 'Mensalidades', 'permission' => 'MonthlyPlans/index'],
     ],
   ],
   [
@@ -146,6 +147,12 @@ $menuSections = [
     'icon' => 'fa-regular fa-headset',
     'url' => '/chamados',
     'permission' => 'Calleds/index',
+  ],
+  [
+    'label' => 'Mídias',
+    'icon' => 'fa-solid fa-photo-film-music',
+    'url' => '/midias',
+    'permission' => 'Medias/index',
   ],
 ];
 
